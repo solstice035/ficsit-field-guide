@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { ALUMINIUM, IRON, OIL, chooserFrom } from './__fixtures__/recipes.ts';
+import { ALUMINIUM, IRON, OIL, chooserFrom, recipe } from './__fixtures__/recipes.ts';
 import { solve } from './solver.ts';
 
 const machinesOf = (result: ReturnType<typeof solve>, id: string): number =>
@@ -57,6 +57,54 @@ describe('solve', () => {
     expect(machinesOf(result, 'silica')).toBe(0);
     expect(rateOf(result.surplus, 'silica')).toBeCloseTo(50);
     expect(rateOf(result.inputs, 'quartz')).toBe(0);
+  });
+
+  it('only drops the over-supplied byproduct, not its upstream (dark matter regression)', () => {
+    // x makes 25 residue per craft; residue's own recipe consumes reanimated SAM,
+    // which is also needed by f. Only the residue recipe should be dropped.
+    const recipes = [
+      recipe(
+        'x',
+        12,
+        [['qe', 1]],
+        [
+          ['x', 1],
+          ['residue', 25],
+        ],
+      ),
+      recipe('residue', 6, [['rsam', 5]], [['residue', 10]]),
+      recipe('rsam', 2, [['sam', 4]], [['rsam', 1]]),
+      recipe(
+        'f',
+        6,
+        [
+          ['rsam', 4],
+          ['ingot', 24],
+        ],
+        [['f', 1]],
+      ),
+      recipe(
+        'dm',
+        2,
+        [
+          ['diamond', 1],
+          ['residue', 5],
+        ],
+        [['dm', 1]],
+      ),
+    ];
+    const result = solve(
+      [
+        { item: 'x', rate: 5 },
+        { item: 'f', rate: 5 },
+        { item: 'dm', rate: 1 },
+      ],
+      chooserFrom(recipes),
+    );
+    expect(result.inputs.find((i) => i.item === 'rsam')).toBeUndefined();
+    expect(machinesOf(result, 'residue')).toBe(0);
+    expect(machinesOf(result, 'rsam')).toBeCloseTo(20 / 30);
+    expect(rateOf(result.surplus, 'residue')).toBeCloseTo(125 - 5);
   });
 
   it('reports pure byproducts as surplus', () => {

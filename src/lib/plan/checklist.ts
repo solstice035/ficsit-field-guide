@@ -65,16 +65,34 @@ export function buildChecklist(plan: FactoryPlan): ChecklistStep[] {
     });
   }
 
+  if (plan.generators) {
+    const gen = plan.generators;
+    const row = plan.floor.rows.find((r) => r.key === 'generators');
+    steps.push({
+      id: 'generators',
+      title: `Build ${gen.count}× ${gen.building.name} (${Math.round(gen.powerMW)} MW)`,
+      details: [
+        `Feed: ${plan.outputs.map((o) => `${formatRate(o.rate, o.item)} ${itemName(o.item)}`).join(', ')}.`,
+        ...(row
+          ? [`Footprint ≈ ${row.foundationsLong} × ${row.foundationsDeep} foundations.`]
+          : []),
+        'Start the plant from another power source (or biomass) until the fuel line is running.',
+      ],
+    });
+  }
+
   steps.push({
     id: 'power',
     title: `Connect power: ${Math.round(plan.power.totalMW * 10) / 10} MW`,
     details: [
       `Machines ${Math.round(plan.power.productionMW * 10) / 10} MW, extraction ${Math.round(plan.power.extractionMW * 10) / 10} MW.`,
-      'Leave about 20% headroom on your grid for start-up and future expansion.',
+      plan.generators
+        ? `Net output to your grid ≈ ${Math.round(plan.power.generatedMW - plan.power.totalMW)} MW.`
+        : 'Leave about 20% headroom on your grid for start-up and future expansion.',
     ],
   });
 
-  for (const o of plan.outputs) {
+  for (const o of plan.generators ? [] : plan.outputs) {
     const edge = plan.edges.find((e) => e.to.kind === 'output' && e.item === o.item);
     steps.push({
       id: `output:${o.item}`,

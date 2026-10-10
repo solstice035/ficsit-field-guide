@@ -141,10 +141,26 @@ export function solve(
       system = [];
       break;
     }
-    const negative = new Set(system.filter((_, k) => (solution[k] ?? 0) < -TOLERANCE));
     machines = solution;
-    if (!negative.size) break;
-    system = system.filter((item) => !negative.has(item));
+    const negative = system
+      .map((item, k) => ({ item, x: solution[k] ?? 0 }))
+      .filter((n) => n.x < -TOLERANCE);
+    if (!negative.length) break;
+
+    // Drop one item per pass. Prefer a root cause: an item that another
+    // running recipe makes as a byproduct. Its upstream recipes may only look
+    // negative because of it, and must stay in the system.
+    const isByproductOfRunning = (item: string): boolean =>
+      system.some(
+        (other, k) =>
+          other !== item &&
+          (solution[k] ?? 0) > TOLERANCE &&
+          chosen.get(other)!.products.some((p) => p.item === item),
+      );
+    const root =
+      negative.find((n) => isByproductOfRunning(n.item)) ??
+      negative.reduce((a, b) => (b.x < a.x ? b : a));
+    system = system.filter((item) => item !== root.item);
   }
 
   // 3. Collect machines and flows.

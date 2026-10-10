@@ -8,7 +8,7 @@ import type { Building, ItemAmount, ItemForm, Purity, Recipe } from '../../data/
 import { billOfMaterials, type BomEntry } from '../calc/bom.ts';
 import { BELT_TIERS, type Conveyance, PIPE_TIERS, conveyanceFor } from '../calc/conveyance.ts';
 import { type ExtractionPlan, planExtraction } from '../calc/extraction.ts';
-import { type FloorPlan, planFloor } from '../calc/floorplan.ts';
+import { type FloorPlan, type FloorRowInput, planFloor } from '../calc/floorplan.ts';
 import {
   type ClockStrategy,
   type MachineSplit,
@@ -44,6 +44,8 @@ export interface PlanConfig {
   maxClock: number;
   /** Somersloops per machine, by recipe ID. */
   sloops: Record<string, number>;
+  /** Power plant fed by this plan (fuel and water are its targets). */
+  generators?: { buildingId: string; count: number };
 }
 
 export const DEFAULT_PLAN_CONFIG: PlanConfig = {
@@ -107,8 +109,15 @@ export interface PlanWarning {
   message: string;
 }
 
+export interface PlanGenerators {
+  building: Building;
+  count: number;
+  powerMW: number;
+}
+
 export interface FactoryPlan {
   config: PlanConfig;
+  generators?: PlanGenerators;
   groups: PlanGroup[];
   extraction: PlanExtraction[];
   /** Inputs with no extractor or recipe (bring in from elsewhere). */
@@ -116,7 +125,8 @@ export interface FactoryPlan {
   outputs: ItemRate[];
   surplus: ItemRate[];
   edges: PlanEdge[];
-  power: { productionMW: number; extractionMW: number; totalMW: number };
+  /** Consumption (production + extraction) and generation, in MW. */
+  power: { productionMW: number; extractionMW: number; totalMW: number; generatedMW: number };
   machineCount: number;
   shardCount: number;
   sloopCount: number;
@@ -370,6 +380,19 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
     0,
   );
 
+  // --- Power plant
+  const generatorBuilding = config.generators
+    ? BUILDING_BY_ID.get(config.generators.buildingId)
+    : undefined;
+  const generators: PlanGenerators | undefined =
+    generatorBuilding?.generator && config.generators && config.generators.count > 0
+      ? {
+          building: generatorBuilding,
+          count: config.generators.count,
+          powerMW: generatorBuilding.generator.powerMW * config.generators.count,
+        }
+      : undefined;
+
   // --- Bill of materials
   const machineCount = groups.reduce((n, g) => n + g.split.count, 0);
   const shardCount = groups.reduce((n, g) => n + g.shards, 0);
@@ -381,35 +404,54 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
       .filter((e) => e.pressurizers > 0 && pressurizer)
       .map((e) => ({ buildCost: pressurizer!.buildCost, count: e.pressurizers })),
   ];
+  if (generators) {
+    bomEntries.push({ buildCost: generators.building.buildCost, count: generators.count });
+  }
   if (shardCount)
     bomEntries.push({ buildCost: [{ item: 'Desc_CrystalShard_C', amount: 1 }], count: shardCount });
   if (sloopCount)
     bomEntries.push({ buildCost: [{ item: 'Desc_WAT1_C', amount: 1 }], count: sloopCount });
 
   // --- Floor plan
-  const floor = planFloor(
-    groups.map((g) => ({
-      key: g.key,
-      label: g.recipe.name,
-      buildingId: g.building.id,
-      count: g.split.count,
-      ...(g.building.footprint ? { footprint: g.building.footprint } : {}),
-      inputLanes: new Set(g.inputs.map((i) => i.item)).size,
-      outputLanes: new Set(g.outputs.map((o) => o.item)).size,
-    })),
-  );
+  const floorRows: FloorRowInput[] = groups.map((g) => ({
+    key: g.key,
+    label: g.recipe.name,
+    buildingId: g.building.id,
+    count: g.split.count,
+    ...(g.building.footprint ? { footprint: g.building.footprint } : {}),
+    inputLanes: new Set(g.inputs.map((i) => i.item)).size,
+    outputLanes: new Set(g.outputs.map((o) => o.item)).size,
+  }));
+  if (generators) {
+    floorRows.push({
+      key: 'generators',
+      label: generators.building.name,
+      buildingId: generators.building.id,
+      count: generators.count,
+      ...(generators.building.footprint ? { footprint: generators.building.footprint } : {}),
+      inputLanes: config.targets.length,
+      outputLanes: 1,
+    });
+  }
+  const floor = planFloor(floorRows);
 
   if (result.error) warnings.push({ level: 'warn', message: result.error });
 
   return {
     config,
+    ...(generators ? { generators } : {}),
     groups,
     extraction,
     imports,
     outputs: result.outputs,
     surplus: result.surplus,
     edges,
-    power: { productionMW, extractionMW, totalMW: productionMW + extractionMW },
+    power: {
+      productionMW,
+      extractionMW,
+      totalMW: productionMW + extractionMW,
+      generatedMW: generators?.powerMW ?? 0,
+    },
     machineCount,
     shardCount,
     sloopCount,
