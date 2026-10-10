@@ -1,0 +1,5 @@
+dist
+coverage
+data/raw
+src/data/generated
+package-lock.json
