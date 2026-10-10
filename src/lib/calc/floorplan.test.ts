@@ -26,30 +26,64 @@ describe('planFloor', () => {
     expect(plan.depthM).toBe(16);
   });
 
+  const twoRows = [
+    {
+      key: 'a',
+      label: 'A',
+      buildingId: 'x',
+      count: 1,
+      footprint: { w: 8, l: 10, h: 6 },
+      inputLanes: 1,
+      outputLanes: 1,
+    },
+    {
+      key: 'b',
+      label: 'B',
+      buildingId: 'y',
+      count: 2,
+      footprint: { w: 9, l: 16, h: 3 },
+      inputLanes: 2,
+      outputLanes: 1,
+    },
+  ];
+
   it('stacks rows with a gap and widens multi-input rows', () => {
-    const plan = planFloor([
-      {
-        key: 'a',
-        label: 'A',
-        buildingId: 'x',
-        count: 1,
-        footprint: { w: 8, l: 10, h: 6 },
-        inputLanes: 1,
-        outputLanes: 1,
-      },
-      {
-        key: 'b',
-        label: 'B',
-        buildingId: 'y',
-        count: 2,
-        footprint: { w: 9, l: 16, h: 3 },
-        inputLanes: 2,
-        outputLanes: 1,
-      },
-    ]);
+    const plan = planFloor(twoRows, { arrangement: 'stack' });
+    expect(plan.rows[1]!.offsetX).toBe(0);
     expect(plan.rows[1]!.offsetM).toBe(plan.rows[0]!.depthM + 4);
     expect(plan.rows[1]!.depthM).toBe(2 * 2 + 1 + 16 + 1 + 2);
     expect(plan.depthM).toBe(plan.rows[0]!.depthM + 4 + plan.rows[1]!.depthM);
+  });
+
+  it('packs rows side by side on shelves by default', () => {
+    const plan = planFloor(twoRows, { targetWidthM: 100 });
+    const [a, b] = plan.rows;
+    expect(b!.offsetM).toBe(0);
+    expect(b!.offsetX).toBe(a!.lengthM + 4);
+    expect(plan.widthM).toBe(a!.lengthM + 4 + b!.lengthM);
+    expect(plan.depthM).toBe(Math.max(a!.depthM, b!.depthM));
+  });
+
+  it('starts a new shelf when a row would exceed the target width', () => {
+    const plan = planFloor(twoRows, { targetWidthM: 20 });
+    expect(plan.rows[1]!.offsetX).toBe(0);
+    expect(plan.rows[1]!.offsetM).toBe(plan.rows[0]!.depthM + 4);
+  });
+
+  it('aims for a roughly square footprint with many rows', () => {
+    const rows = Array.from({ length: 9 }, (_, i) => ({
+      key: `r${i}`,
+      label: `R${i}`,
+      buildingId: 'x',
+      count: 2,
+      footprint: { w: 8, l: 10, h: 6 },
+      inputLanes: 1,
+      outputLanes: 1,
+    }));
+    const plan = planFloor(rows);
+    const ratio = plan.widthM / plan.depthM;
+    expect(ratio).toBeGreaterThan(0.5);
+    expect(ratio).toBeLessThan(2.5);
   });
 
   it('skips empty groups and falls back to an 8 m footprint', () => {

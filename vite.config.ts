@@ -5,6 +5,21 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: { port: 5173, open: false },
+  build: {
+    rolldownOptions: {
+      output: {
+        // Separate long-lived chunks: libraries and generated game data change rarely.
+        codeSplitting: {
+          groups: [
+            { name: 'vendor', test: /node_modules/ },
+            { name: 'game-data', test: /src[\\/]data[\\/]generated/ },
+          ],
+        },
+      },
+    },
+    // The generated game data (~800 kB raw, ~140 kB gzip) is one deliberate chunk.
+    chunkSizeWarningLimit: 1000,
+  },
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/test/setup.ts'],

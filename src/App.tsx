@@ -1,7 +1,8 @@
+import { useState } from 'react';
+import { RouterProvider } from 'react-router';
+import { createAppRouter } from './app/router.tsx';
+
 export function App() {
-  return (
-    <main className="p-6">
-      <h1 className="text-2xl">FICSIT Field Guide</h1>
-    </main>
-  );
+  const [router] = useState(createAppRouter);
+  return <RouterProvider router={router} />;
 }
