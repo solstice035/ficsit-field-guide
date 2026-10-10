@@ -167,10 +167,16 @@ function recipePowerMW(recipe: Recipe, building: Building): number {
   return building.powerMW;
 }
 
+/**
+ * Longest-path production depth. Only primary products count as "upstream":
+ * byproduct loops (water from Aluminum Scrap, Dark Matter Residue from Quantum
+ * Encoders) would otherwise inflate every stage in the loop.
+ */
 function computeStages(groups: PlanGroup[]): void {
   const producersOf = new Map<string, PlanGroup[]>();
   for (const g of groups) {
-    for (const o of g.outputs) producersOf.set(o.item, [...(producersOf.get(o.item) ?? []), g]);
+    const primary = g.recipe.products[0]?.item;
+    if (primary) producersOf.set(primary, [...(producersOf.get(primary) ?? []), g]);
   }
   for (const g of groups) g.stage = 1;
   for (let pass = 0; pass < groups.length; pass += 1) {
@@ -304,10 +310,12 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
       pressurizers: building.id === WELL_EXTRACTOR_ID ? 1 : 0,
     });
   }
-  for (const imp of imports) {
+  if (imports.length) {
     warnings.push({
       level: 'info',
-      message: `${itemName(imp.item)} (${round(imp.rate)}/min) has no extractor or selected recipe in this plan: bring it in or pick a recipe.`,
+      message: `Bring in from elsewhere (or pick a recipe): ${imports
+        .map((imp) => `${itemName(imp.item)} ${round(imp.rate)}/min`)
+        .join(', ')}.`,
     });
   }
 

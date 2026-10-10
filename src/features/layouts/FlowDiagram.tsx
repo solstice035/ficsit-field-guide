@@ -20,6 +20,8 @@ const W = 196;
 const H = 54;
 const GAP_X = 20;
 const GAP_Y = 64;
+const LINE_GAP = 14;
+const MAX_PER_LINE = 4;
 const PAD = 16;
 
 const refKey = (r: FlowNodeRef): string => `${r.kind}:${r.key}`;
@@ -87,7 +89,7 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
 
     const rows = new Map<number, typeof list>();
     for (const n of list) rows.set(n.stage, [...(rows.get(n.stage) ?? []), n]);
-    const widest = Math.max(...[...rows.values()].map((r) => r.length), 1);
+    const widest = Math.min(MAX_PER_LINE, Math.max(...[...rows.values()].map((r) => r.length), 1));
     const totalW = PAD * 2 + widest * W + (widest - 1) * GAP_X;
 
     // Suppliers of each node, for barycentric ordering.
@@ -98,6 +100,7 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
     }
 
     const placed = new Map<string, DiagramNode>();
+    let top = PAD;
     for (const stage of [...rows.keys()].sort((a, b) => a - b)) {
       const row = rows.get(stage)!;
       const centreOf = (ref: string): number => {
@@ -108,17 +111,21 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
       };
       const ordered =
         stage === 0 ? row : [...row].sort((a, b) => centreOf(a.ref) - centreOf(b.ref));
-      const rowW = ordered.length * W + (ordered.length - 1) * GAP_X;
-      const left = (totalW - rowW) / 2;
-      ordered.forEach((n, i) => {
-        placed.set(n.ref, { ...n, x: left + i * (W + GAP_X), y: PAD + stage * (H + GAP_Y) });
-      });
+      // Wrap wide stages onto several lines so the diagram fits the panel.
+      for (let start = 0; start < ordered.length; start += MAX_PER_LINE) {
+        const line = ordered.slice(start, start + MAX_PER_LINE);
+        const lineW = line.length * W + (line.length - 1) * GAP_X;
+        const left = (totalW - lineW) / 2;
+        line.forEach((n, i) => placed.set(n.ref, { ...n, x: left + i * (W + GAP_X), y: top }));
+        top += H + LINE_GAP;
+      }
+      top += GAP_Y - LINE_GAP;
     }
 
     return {
       nodes: placed,
       width: totalW,
-      height: PAD * 2 + (maxStage + 2) * (H + GAP_Y) - GAP_Y,
+      height: top - GAP_Y + PAD,
     };
   }, [plan]);
 

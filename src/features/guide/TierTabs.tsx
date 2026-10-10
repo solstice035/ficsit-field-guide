@@ -47,7 +47,7 @@ export function TierTabs({ activeTier }: { activeTier: number }) {
               Tier {tier.tier}
             </span>
             <span className="text-ink-muted block truncate text-xs">{tier.title}</span>
-            <span className="text-ink-faint num block text-[11px]">{pct}% done</span>
+            <span className="text-ink-faint num hidden text-[11px] sm:block">{pct}% done</span>
             <span
               aria-hidden="true"
               className={cx('absolute bottom-0 left-0 h-0.5', pct === 100 ? 'bg-ok' : 'bg-accent')}

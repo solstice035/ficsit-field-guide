@@ -2,7 +2,9 @@
 
 Interactive, local-first guide to **Satisfactory** (Update 1.2) for a **Rocky Desert** start. It takes you from HUB Upgrade 1 to Project Assembly, with one tab per tier, configurable factory layouts, node-purity-aware maths and an exploration tracker for Mercer Spheres, Somersloops, SAM, Hard Drives and Power Slugs.
 
-> Status: v1 in delivery. See [docs/PLAN.md](docs/PLAN.md).
+> Status: v1 complete: 10 tiers, 78 steps, 47 configurable layouts, 14 Rocky Desert sites, 1,764 collectibles. See [docs/PLAN.md](docs/PLAN.md).
+
+![Tier guide](docs/images/tier-guide.png)
 
 ## Quick start
 
@@ -20,6 +22,17 @@ No backend, API keys or runtime network calls. Progress is saved in your browser
 - **Factory layouts:** change the target rate, recipes (including alternates), Miner Mk, node purity, belt Mk, clock strategy or somersloops. Machine counts, clocks, power, belts, a flow diagram, a to-scale floor plan, the bill of materials and a build checklist all recalculate.
 - **Exploration:** vector world map plus "nearest uncollected" lists sorted by distance and bearing from your base. Hard Drive costs are mapped to the tier that makes them affordable, and collectibles can be ticked off as you find them.
 - **Calculator:** a free-form production planner on the same engine.
+
+| Layout configurator                                         | Exploration                             |
+| ----------------------------------------------------------- | --------------------------------------- |
+| ![Layout configurator](docs/images/layout-configurator.png) | ![Exploration](docs/images/explore.png) |
+
+### How the numbers are made
+
+- Game data is parsed from the game's own Docs file. All 276 machine recipes are cross-checked against SatisfactoryTools ([docs/DATA.md](docs/DATA.md)).
+- An exact linear solver handles byproducts and loops, such as the aluminium water and silica loop and Dark Matter Residue ([docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)).
+- Extraction uses the real nodes at each Rocky Desert site with their purity. You can override purity per node for randomised Update 1.2 Game Modes.
+- Every layout is checked by test to solve using only recipes available at its tier.
 
 ## Scripts
 

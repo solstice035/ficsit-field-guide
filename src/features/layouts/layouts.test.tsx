@@ -64,9 +64,9 @@ describe('layout configurator', () => {
   it('imports intermediates by default and can build the full chain', async () => {
     const { user } = renderRoute('/layouts/t6-modular-engines');
     await screen.findByRole('heading', { level: 1, name: 'Modular Engines' });
-    expect(screen.getByText(/Rubber \(15\/min\) has no extractor/)).toBeInTheDocument();
+    expect(screen.getByText(/Bring in from elsewhere.*Rubber 15\/min/)).toBeInTheDocument();
     await user.click(screen.getByRole('checkbox', { name: 'Build the full chain from ore' }));
-    expect(screen.queryByText(/Rubber \(15\/min\) has no extractor/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Bring in from elsewhere.*Rubber 15\/min/)).not.toBeInTheDocument();
   });
 
   it('runs a power plant layout', async () => {

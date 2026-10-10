@@ -3,7 +3,7 @@
 > Interactive, local-first website that walks a pioneer from HUB Upgrade 1 to Project Assembly (Tiers 0 to 9 and Space Elevator Phases 1 to 5) for a **Rocky Desert** start. It includes configurable factory layouts, node-purity-aware maths and an exploration tracker for Mercer Spheres, Somersloops, SAM, Hard Drives and Power Slugs.
 
 - **Owner:** Nick
-- **Status:** v1 in delivery (`feature/tier-guide-v1`)
+- **Status:** v1 delivered on `feature/tier-guide-v1`, awaiting review and merge to `dev` (see §15)
 - **Last updated:** 2026-10-10
 
 ---
@@ -23,7 +23,7 @@
 
 1. **Game version:** Update 1.2 (patch 1.2.4.0, 11 Aug 2026). Recipe and milestone data come from the 1.1 Docs, because 1.2 added buildables (Fluid Truck, Pipeline T-junction, SPWN, Upgraded Power Connectors) but changed no production recipes or milestone costs. The 1.2 additions are called out in guide text.
 2. **Start:** Rocky Desert. "Desert correction, rocky biome start" is read as the Rocky Desert starting area. The default base location is **(-1,640 m, -330 m)**, next to the 3 pure Iron and 1 pure Copper cluster. It can be changed in Settings.
-3. **Game mode:** default settings (no cost multipliers, default node purity). Purity overrides and a global "recipe cost multiplier" note are provided for non-default saves.
+3. **Game mode:** default settings (no cost multipliers, default node purity). Per-node purity overrides cover randomised-purity saves. Game Mode cost multipliers are not modelled yet (backlog).
 4. **Single player, single save.** Progress is stored in `localStorage` and can be exported or imported as JSON.
 5. **"Spheres and SAM things"** means Mercer Spheres, Somersloops and SAM ore. Hard Drives and Power Slugs are included as well because they drive the same exploration loop.
 6. **No copyrighted game artwork is bundled.** The map is a vector plot of game coordinates. You can drop your own map image into `public/map/` to use as a backdrop.
@@ -59,7 +59,7 @@ React 19 SPA (Vite 8)
 - Tailwind CSS 4.3, using CSS-variable theme tokens (FICSIT orange on graphite).
 - Zustand 5 with `persist`, for state stored in `localStorage` and versioned with migrations.
 - Vitest 5, React Testing Library, user-event, jsdom 30 and axe-core for a11y assertions. MSW is not needed because the app makes no HTTP calls.
-- ESLint 9 (typescript-eslint, react-hooks, jsx-a11y, react-refresh) and Prettier.
+- ESLint 10 (typescript-eslint, react-hooks, jsx-a11y-x, react-refresh) and Prettier. jsx-a11y-x is the maintained fork that supports ESLint 10.
 - `tsx` runs the TypeScript data scripts.
 
 **Folder structure**
@@ -218,7 +218,7 @@ Commits follow `{gitmoji} {scope}: {description}` at each phase boundary. Mergin
 | Purity or node changes from Game Modes (1.2)    | Per-node purity overrides in Settings                                                                                                 |
 | Terrain unknowns (cliffs, water) in site advice | "Verify in game" flags; advice is phrased as options, not absolutes                                                                   |
 | Solver edge cases (loops, byproducts)           | Clamp-and-resolve algorithm with explicit surplus and deficit reporting, and tests for the aluminium water loop and the HOR byproduct |
-| Bleeding-edge toolchain (Vite 8, TS 7)          | Pinned to compatible majors (TS 6.0, ESLint 9, React Router 7)                                                                        |
+| Bleeding-edge toolchain (Vite 8, TS 7)          | Pinned to compatible majors (TS 6.0, ESLint 10 + jsx-a11y-x, React Router 7)                                                          |
 
 ## 14. Backlog (post-v1)
 
@@ -227,3 +227,26 @@ Commits follow `{gitmoji} {scope}: {description}` at each phase boundary. Mergin
 - Train and drone logistics planner between sites.
 - Blueprint-sized layout export (foundation grid images).
 - Hosted deployment (static) and cross-device sync.
+- Game Mode cost multipliers (1.2) applied to milestones, Space Elevator and recipes.
+- Power requirements for crash sites that have no item cost (not in the source data).
+- Alternate-recipe tracking ("I have unlocked these Hard Drive alternates") so recipe pickers only offer what you own.
+
+## 15. Delivery log (v1, 2026-10-10)
+
+| Phase             | Result                                                                                                                                                         | Commit               |
+| ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| P0 Repo & tooling | Done. `main`/`dev`/`feature/tier-guide-v1`, Vite 8, React 19.3, TS 6.0 strict, Tailwind 4, Vitest 5, ESLint 10                                                 | `b2a2393`, `bf3f771` |
+| P1 Data pipeline  | Done. Own Docs parser; **276/276 machine recipes match SatisfactoryTools**; collectible totals match the wiki                                                  | `876e83a`            |
+| P2 Calc engine    | Done. Test-first; `lib/calc` line coverage 97.9%                                                                                                               | `03d8815`            |
+| P7 Content        | Done. 10 tiers, 78 steps (178 tasks), 14 sites, **47 layouts**, Space Elevator 1–5; every layout solves within its tier (commit message says 46; actual is 47) | `121a3ea`            |
+| P3–P6, P8 UI      | Done. Guide, configurator, exploration, calculator, settings, dashboard                                                                                        | `22b2b9d`            |
+| P9 QA & docs      | Done. 186 tests incl. axe on every page; browser smoke at 1440 px and 390 px; docs complete                                                                    | this commit          |
+
+**Deviations from the plan, and why:**
+
+- **ESLint 10 + `eslint-plugin-jsx-a11y-x`, not ESLint 9:** ESLint 9 is end-of-life, and the original jsx-a11y does not support 10.
+- **Top-to-bottom flow diagram:** chosen over left-to-right after browser testing. Wide stages wrap at 4 nodes, so Tier 9 chains fit the panel.
+- **Shelf-packed floor plan:** replaced a single column of rows after browser testing. It gives near-square, realistic footprints.
+- **Late-game layouts import intermediates** made by their own layouts, with a "full chain" toggle. This keeps each layout manageable.
+- **Power plants are generator-driven layouts.** Choose a generator count, and the fuel and water targets are derived from it.
+- **Collectible count is 1,764**, not 1,768: audio tapes and the cosmetic pickup were excluded.
