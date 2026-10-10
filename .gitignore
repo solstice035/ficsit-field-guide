@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+coverage/
+*.tsbuildinfo
+
+# Raw downloaded game data (regenerate with `npm run data:fetch`)
+data/raw/
+
+# Optional user-supplied map backdrop (Coffee Stain artwork, not redistributed)
+public/map/*.png
+public/map/*.jpg
+public/map/*.webp
+
+# Environment (none required today; never commit secrets)
+.env
+.env.*
+!.env.example
+
+# Logs and OS cruft
+*.log
+npm-debug.log*
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Playwright / screenshots from local QA
+.playwright-mcp/
+test-results/
