@@ -466,7 +466,7 @@
       "Flat surfaces stepped by tone (bg → panel → panel-2 → panel-3) and separated by bezel lines.",
       "Tabular numerals on every figure that can change.",
       "Status is never carried by colour alone: purity, task state and step kind always pair colour with text.",
-      "No game artwork or icons. Identity comes from type, colour tokens and text glyphs."
+      "Game item, building and resource icons speed up recognition but always sit beside the text name. The rest of the identity comes from type, colour tokens and text glyphs."
     ],
     "rules": [
       {
@@ -523,7 +523,7 @@
       "Don't add drop shadows, glows or floating cards.",
       "Don't use FICSIT Amber for decoration, secondary emphasis or a second competing call to action on the same screen.",
       "Don't use base FICSIT Amber (#fa9549) for small text; use Lit Amber.",
-      "Don't bundle game artwork, item icons or FICSIT logos. Use text, glyphs and colour tokens.",
+      "Don't show a game icon without its text name, and don't bundle FICSIT logos or map renders.",
       "Don't introduce a light theme or a second typeface without revisiting this document.",
       "Don't reuse the map's collectible series colours in UI chrome."
     ]

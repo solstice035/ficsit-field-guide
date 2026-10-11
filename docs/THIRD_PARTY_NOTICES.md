@@ -2,7 +2,7 @@
 
 ## Game data
 
-Satisfactory, its item, recipe, building and world data are © Coffee Stain Studios. This is an unofficial, non-commercial fan tool. No game artwork, icons or map renders are bundled; the optional map backdrop (`public/map/world.png`) is user-supplied and git-ignored.
+Satisfactory, its item, recipe, building and world data are © Coffee Stain Studios. This is an unofficial, non-commercial fan tool. Item, building and resource icons, where shown, are © Coffee Stain Studios and are used only to identify game items. No FICSIT logos or map renders are bundled; the optional map backdrop (`public/map/world.png`) is user-supplied and git-ignored.
 
 ## Shipped derived data
 

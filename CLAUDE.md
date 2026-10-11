@@ -25,7 +25,7 @@ Done = `npm run lint && npm run typecheck && npm test && npm run build` all gree
 - Units: rates are **per minute**; fluids in **m³**; world coordinates in **metres** (x east, y south, so north is −y).
 - Game IDs keep the game's class names (`Desc_IronPlate_C`, `Recipe_IronPlate_C`, `Build_SmelterMk1_C`, `Schematic_3-1_C`).
 - British English in prose and UI copy; game names keep the game's spelling (e.g. "Aluminum Ingot").
-- No game artwork or icons are bundled (copyright). Use text and colour tokens.
+- Game item, building and resource icons may be bundled (Nick's decision, 2026-10-11; copyright risk accepted). Always pair an icon with its text name, never icon-only, and credit Coffee Stain in `docs/THIRD_PARTY_NOTICES.md`. FICSIT logos and map renders stay out.
 - Accessibility: WAI-ARIA patterns for tabs and disclosures, labelled inputs, never colour-only status.
 
 ## Git

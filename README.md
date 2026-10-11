@@ -66,7 +66,7 @@ src/components/  accessible UI primitives
 
 ## Optional map backdrop
 
-The map is drawn from game coordinates and ships with no game artwork. To use a backdrop, save a square world-map render as `public/map/world.png` (git-ignored). It should span x −3,247 m to 4,253 m and y −3,750 m to 3,750 m. It will be picked up automatically.
+The map is drawn from game coordinates and ships with no map artwork. To use a backdrop, save a square world-map render as `public/map/world.png` (git-ignored). It should span x −3,247 m to 4,253 m and y −3,750 m to 3,750 m. It will be picked up automatically.
 
 ## Documentation
 

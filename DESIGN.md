@@ -159,7 +159,7 @@ Controls should feel like physical switches on that panel: tactile and sturdy, w
 - Flat surfaces stepped by tone (bg → panel → panel-2 → panel-3) and separated by bezel lines.
 - Tabular numerals on every figure that can change.
 - Status is never carried by colour alone: purity, task state and step kind always pair colour with text.
-- No game artwork or icons. Identity comes from type, colour tokens and text glyphs.
+- Game item, building and resource icons speed up recognition but always sit beside the text name. The rest of the identity comes from type, colour tokens and text glyphs.
 
 ## Colors
 
@@ -280,6 +280,16 @@ Tactile and sturdy: they should feel like switches on a console.
 ### Item chips
 
 - **Style:** a Raised Console fill, Bezel Line border and 4px radius. The tabular amount is in Lit Amber semibold, followed by the item name in Readout White. A tier badge is appended when the item is not yet producible.
+- **Icon (planned):** once icons ship, the item icon sits between the amount and the name at body size (about 20px), as decorative `alt=""` because the name follows. The order is amount, then icon, then name, so the figure still leads.
+
+### Game icons (planned)
+
+Item, building and resource icons are permitted but not yet implemented.
+
+- **Always labelled:** an icon never replaces the text name, in chips, tables, selectors, the flow diagram or map legends. When the name is adjacent the icon is decorative (`alt=""`); if an icon must stand alone, it gets the name as its accessible label and a visible tooltip on hover and focus.
+- **Sizes:** 16px inline in tables and badges, 20px in chips and lists, 32px in headers and cards. Never scale an icon up past its source resolution.
+- **No colour role:** icons carry their own artwork colours and never stand in for status. Purity, completion and warnings still use the colour-plus-text tokens.
+- **Containment:** icons sit on the surface as they are, with no amber tint, glow or extra frame.
 
 ### Cards / Containers
 
@@ -326,6 +336,6 @@ A card-styled disclosure. The summary row shows a zero-padded step number (`01`)
 - **Don't** add drop shadows, glows or floating cards.
 - **Don't** use FICSIT Amber for decoration, secondary emphasis or a second competing call to action on the same screen.
 - **Don't** use base FICSIT Amber (#fa9549) for small text; use Lit Amber.
-- **Don't** bundle game artwork, item icons or FICSIT logos. Use text, glyphs and colour tokens.
+- **Don't** show a game icon without its text name, and don't bundle FICSIT logos or map renders.
 - **Don't** introduce a light theme or a second typeface without revisiting this document.
 - **Don't** reuse the map's collectible series colours in UI chrome.

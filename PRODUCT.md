@@ -40,7 +40,8 @@ Generic calculators (Satisfactory Tools, Satisfactory Calculator) answer "how ma
 
 - Name: **FICSIT Field Guide**.
 - Voice: lightly in-world FICSIT. It may nod to the corporate "pioneer" tone, but instructions stay plain, direct and unambiguous. Role-play never obscures a number or an action.
-- **No game artwork, icons or logos are bundled** (copyright). Use text and colour tokens only. A user can drop their own map backdrop into `public/map/`.
+- **Game icons are allowed.** Item, building and resource icons may be bundled for fast recognition (decided 2026-10-11; the copyright risk is accepted). An icon always sits beside its text name and never replaces it. FICSIT logos and map renders are still not bundled; a user can drop their own map backdrop into `public/map/`.
+- **Undecided:** the icon source (extracted from a local game install or taken from a community dataset) and the pipeline that ships them.
 
 ## Evidence on Hand
 
