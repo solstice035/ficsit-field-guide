@@ -10,6 +10,8 @@ interface DiagramNode {
   ref: string;
   label: string;
   sub: string;
+  /** Extra hover detail. */
+  note?: string;
   stage: number;
   tone: Tone;
   x: number;
@@ -79,7 +81,10 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
       ...plan.extraction.map((e) => ({
         ref: `extract:${e.key}`,
         label: itemName(e.item),
-        sub: `${e.plan.nodes}× ${e.building.name}${e.building.id === 'Build_WaterPump_C' ? '' : ` · ${e.purity}`}`,
+        sub:
+          e.plan.shortfall > 1e-6
+            ? `${e.plan.nodes}× · short ${formatRate(e.plan.shortfall, e.item)}`
+            : `${e.plan.nodes}× ${e.building.name}${e.building.id === 'Build_WaterPump_C' ? '' : ` · ${e.purity}`}`,
         stage: 0,
         tone: 'extract' as const,
       })),
@@ -93,7 +98,12 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
       ...plan.groups.map((g) => ({
         ref: `group:${g.key}`,
         label: g.recipe.name,
-        sub: `${g.split.count}× ${g.building.name} @ ${formatClock(g.split.groups[0]?.clock ?? 1)}`,
+        sub: `${g.recycled.length ? '↻ ' : ''}${g.split.count}× ${g.building.name} @ ${formatClock(g.split.groups[0]?.clock ?? 1)}`,
+        ...(g.recycled.length
+          ? {
+              note: `Loops back ${g.recycled.map((r) => `${formatRate(r.rate, r.item)} ${itemName(r.item)}`).join(', ')} from its own output.`,
+            }
+          : {}),
         stage: g.stage,
         tone: 'group' as const,
       })),
@@ -297,7 +307,7 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
               <text x={10} y={39} fontSize={10.5} className="fill-ink-muted">
                 {truncate(n.sub, 32)}
               </text>
-              <title>{`${n.label}: ${n.sub}`}</title>
+              <title>{`${n.label}: ${n.sub}${n.note ? `. ${n.note}` : ''}`}</title>
             </g>
           ))}
         </svg>

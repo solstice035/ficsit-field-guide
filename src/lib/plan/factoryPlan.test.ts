@@ -102,6 +102,76 @@ describe('buildFactoryPlan (real data)', () => {
     );
   });
 
+  it('imports a raw resource with an empty override instead of extracting it', () => {
+    const plan = buildFactoryPlan({
+      targets: [{ item: 'Desc_OreIron_C', rate: 60 }],
+      recipeOverrides: { Desc_OreIron_C: '' },
+    });
+    expect(plan.imports).toEqual([{ item: 'Desc_OreIron_C', rate: 60 }]);
+    expect(plan.extraction).toEqual([]);
+    expect(plan.power.extractionMW).toBe(0);
+    expect(plan.bom).toEqual([]);
+  });
+
+  it('caps extraction edges at what the nodes can supply', () => {
+    const plan = buildFactoryPlan({
+      targets: [{ item: 'Desc_IronIngot_C', rate: 400 }],
+      resources: { Desc_OreIron_C: { purity: 'impure', nodes: 1 } },
+      maxBeltMk: 6,
+    });
+    const iron = plan.extraction.find((e) => e.item === 'Desc_OreIron_C')!;
+    const supplied = iron.rate - iron.plan.shortfall;
+    expect(iron.plan.shortfall).toBeGreaterThan(0);
+    const out = plan.edges
+      .filter((e) => e.from.kind === 'extract' && e.item === 'Desc_OreIron_C')
+      .reduce((n, e) => n + e.rate, 0);
+    expect(out).toBeCloseTo(supplied);
+  });
+
+  it('records flow a group recycles into itself', () => {
+    const plan = buildFactoryPlan({ targets: [{ item: 'Desc_UraniumCell_C', rate: 20 }] });
+    const cells = group(plan, 'Recipe_UraniumCell_C')!;
+    expect(cells.inputs.find((i) => i.item === 'Desc_SulfuricAcid_C')?.rate).toBeCloseTo(32);
+    expect(cells.recycled).toEqual([{ item: 'Desc_SulfuricAcid_C', rate: expect.closeTo(8) }]);
+    const into = plan.edges
+      .filter((e) => e.to.key === cells.key && e.item === 'Desc_SulfuricAcid_C')
+      .reduce((n, e) => n + e.rate, 0);
+    expect(into + cells.recycled[0]!.rate).toBeCloseTo(32);
+  });
+
+  it('carries generator waste into surplus, flow and warnings', () => {
+    const plan = buildFactoryPlan({
+      targets: [
+        { item: 'Desc_NuclearFuelRod_C', rate: 0.2 },
+        { item: 'Desc_Water_C', rate: 240 },
+      ],
+      recipeOverrides: { Desc_NuclearFuelRod_C: '' },
+      generators: {
+        buildingId: 'Build_GeneratorNuclear_C',
+        fuelId: 'Desc_NuclearFuelRod_C',
+        count: 1,
+      },
+    });
+    expect(plan.generators?.byproduct).toEqual({
+      item: 'Desc_NuclearWaste_C',
+      rate: expect.closeTo(10),
+    });
+    expect(plan.surplus.find((s) => s.item === 'Desc_NuclearWaste_C')?.rate).toBeCloseTo(10);
+    expect(
+      plan.edges.some(
+        (e) =>
+          e.from.kind === 'output' &&
+          e.to.kind === 'surplus' &&
+          e.item === 'Desc_NuclearWaste_C' &&
+          Math.abs(e.rate - 10) < 1e-6,
+      ),
+    ).toBe(true);
+    expect(
+      plan.warnings.some((w) => w.level === 'warn' && w.message.includes('Uranium Waste')),
+    ).toBe(true);
+    expect(buildChecklist(plan).some((s) => s.id === 'surplus:Desc_NuclearWaste_C')).toBe(true);
+  });
+
   it('produces a readable checklist', () => {
     const plan = buildFactoryPlan({
       targets: [{ item: 'Desc_IronPlateReinforced_C', rate: 5 }],

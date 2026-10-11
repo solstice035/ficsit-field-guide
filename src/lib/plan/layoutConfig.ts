@@ -7,6 +7,7 @@ import type { Purity } from '../../data/types.ts';
 import { SITE_BY_ID } from '../../content/sites.ts';
 import type { FactoryLayout, GeneratorSpecContent } from '../../content/types.ts';
 import { BELT_TIERS, PIPE_TIERS } from '../calc/conveyance.ts';
+import { type GeneratorOption, generatorFor } from '../calc/generators.ts';
 import type { ClockStrategy } from '../calc/power.ts';
 import type { ItemRate } from '../calc/solver.ts';
 import {
@@ -31,16 +32,9 @@ export function tierDefaults(tier: number): TierDefaults {
   return { minerMk, maxBeltMk: highest(BELT_TIERS), maxPipeMk: highest(PIPE_TIERS) };
 }
 
-export interface GeneratorDemand {
-  generatorId: string;
+export interface GeneratorDemand extends GeneratorOption {
   fuelId: string;
-  count: number;
   powerMW: number;
-  fuelPerMin: number;
-  supplementalId?: string;
-  supplementalPerMin: number;
-  byproductId?: string;
-  byproductPerMin: number;
 }
 
 /** Fuel and water a bank of generators consumes at 100%. */
@@ -48,23 +42,12 @@ export function generatorDemand(
   spec: GeneratorSpecContent,
   count = spec.count,
 ): GeneratorDemand | undefined {
-  const generator = BUILDING_BY_ID.get(spec.buildingId)?.generator;
-  const fuel = ITEM_BY_ID.get(spec.fuelId);
-  const fuelSpec = generator?.fuels.find((f) => f.item === spec.fuelId);
-  if (!generator || !fuel || !fuelSpec || fuel.energyMJ <= 0) return undefined;
-  const powerMW = generator.powerMW * count;
-  const fuelPerMin = (powerMW * 60) / fuel.energyMJ;
-  return {
-    generatorId: spec.buildingId,
-    fuelId: spec.fuelId,
-    count,
-    powerMW,
-    fuelPerMin,
-    ...(fuelSpec.supplemental ? { supplementalId: fuelSpec.supplemental } : {}),
-    supplementalPerMin: fuelSpec.supplemental ? powerMW * generator.supplementalPerMW : 0,
-    ...(fuelSpec.byproduct ? { byproductId: fuelSpec.byproduct.item } : {}),
-    byproductPerMin: fuelSpec.byproduct ? fuelPerMin * fuelSpec.byproduct.amount : 0,
-  };
+  const building = BUILDING_BY_ID.get(spec.buildingId);
+  if (!building?.generator) return undefined;
+  const powerMW = building.generator.powerMW * count;
+  const option = generatorFor(powerMW, building, ITEM_BY_ID.get(spec.fuelId));
+  if (!option?.fuelId) return undefined;
+  return { ...option, fuelId: option.fuelId, count, powerMW };
 }
 
 export interface ResourceAtSite {
@@ -185,6 +168,7 @@ export function resolveLayoutConfig(
       ? {
           generators: {
             buildingId: layout.generators.buildingId,
+            fuelId: layout.generators.fuelId,
             count: user.generatorCount ?? layout.generators.count,
           },
         }

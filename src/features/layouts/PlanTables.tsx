@@ -66,11 +66,19 @@ export function MachinesTable({ plan }: { plan: FactoryPlan }) {
               </td>
               <td className="num pr-3 text-right">{formatMW(g.powerMW)}</td>
               <td className="pr-3 text-xs">
-                {g.inputs.map((i) => (
-                  <div key={i.item}>
-                    {formatRate(i.rate, i.item)} {itemName(i.item)}
-                  </div>
-                ))}
+                {g.inputs.map((i) => {
+                  const recycled = g.recycled.find((r) => r.item === i.item);
+                  return (
+                    <div key={i.item}>
+                      {formatRate(i.rate, i.item)} {itemName(i.item)}
+                      {recycled && (
+                        <div className="text-ink-faint">
+                          incl. {formatRate(recycled.rate, i.item)} looped back from its own output
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </td>
               <td className="text-xs">
                 {g.outputs.map((o) => (
