@@ -336,6 +336,12 @@ The tier's steps as one numbered list of APG accordion rows (an `h3` holding the
 
 Milestone cards inside a step are display only: their tick is the step's linked "Submit" task. Unlocks list five names then "+n more". "Hide completed" (persisted) removes done and skipped rows and says how many are hidden.
 
+### Dashboard (signature)
+
+- **NEXT hero:** the enlarged NEXT on a hero panel. It shows the tier, then the zero-padded step number in Lit Amber and the step title (linked). The next task is a large switch (56px) in 18–20px semibold, with "After that:" showing the following task. The lead figures, "Skip step" on optional steps and "Open Tier n" come next, and "Then" lists the next three open steps with their kind glyphs. A finished tier shows the "Move to Tier n+1" offer; the last tier shows "Run complete".
+- **The run:** ten tier rows in the queue's rhythm: "Tn", title, progress bar, then status ("Current" in Lit Amber, "Done" with a check in Go Green, or "done / total"). The current tier's row carries the same amber border as the current step. Below 768px the bar drops to a second line.
+- **Space Elevator:** phases listed with "Phase n" in Elevator Violet, then "Delivered" with a check, or the tier it belongs to.
+
 ## Do's and Don'ts
 
 ### Do:
