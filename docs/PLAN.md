@@ -230,7 +230,12 @@ Commits follow `{gitmoji} {scope}: {description}` at each phase boundary. Mergin
 - Game Mode cost multipliers (1.2) applied to milestones, Space Elevator and recipes.
 - Power requirements for crash sites that have no item cost (not in the source data).
 - Alternate-recipe tracking ("I have unlocked these Hard Drive alternates") so recipe pickers only offer what you own.
-- Game icons for items, buildings and resources, always beside their names (see DESIGN.md, "Game icons"). Decide the source (local game install or community dataset) and add icons to the data pipeline.
+- Game icons for items, buildings and resources, always beside their names (see DESIGN.md, "Game icons"). **Source: the Satisfactory Wiki** ([Category:Icons](https://satisfactory.wiki.gg/wiki/Category:Icons)). Every item (189/193 matched by exact name) and building (35/37) has an icon there; the few misses differ only in the name (™ suffix) or category. Plan:
+  - `data:fetch` downloads each icon once through the MediaWiki API into `data/raw/icons/` (git-ignored), using a named user agent and paced requests.
+  - `data:build` maps icons to items and buildings by display name, with a small override list, and writes 64 px WebP files that are committed.
+  - A content test fails if any item or building lacks an icon.
+  - At runtime the app serves only its own files and never hotlinks the wiki, which keeps O5.
+  - Fallback: extract icons from a local game install with FModel if the wiki's 1.2 coverage turns out to be wrong.
 
 ## 15. Delivery log (v1, 2026-10-10)
 
