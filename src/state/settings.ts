@@ -2,13 +2,16 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { DEFAULT_BASE } from '../content/sites.ts';
 import type { Purity } from '../data/types.ts';
+import {
+  type BaseLocation,
+  parseBase,
+  parsePurityOverrides,
+  parseTier,
+  safeMerge,
+} from './schema.ts';
 import { STORAGE_KEYS, persistStorage } from './storage.ts';
 
-export interface BaseLocation {
-  x: number;
-  y: number;
-  z: number;
-}
+export type { BaseLocation };
 
 export interface SettingsState {
   base: BaseLocation;
@@ -28,6 +31,18 @@ const DEFAULTS = {
   purityOverrides: {},
 };
 
+type SettingsData = Pick<SettingsState, 'base' | 'currentTier' | 'purityOverrides'>;
+
+/** Validates persisted settings; base and tier are required, overrides default to none. */
+export function parseSettings(raw: Record<string, unknown>): SettingsData {
+  return {
+    base: parseBase(raw.base),
+    currentTier: parseTier(raw.currentTier),
+    purityOverrides:
+      raw.purityOverrides === undefined ? {} : parsePurityOverrides(raw.purityOverrides),
+  };
+}
+
 export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
@@ -43,6 +58,11 @@ export const useSettings = create<SettingsState>()(
         }),
       reset: () => set({ ...DEFAULTS, base: { ...DEFAULT_BASE } }),
     }),
-    { name: STORAGE_KEYS.settings, version: 1, storage: persistStorage },
+    {
+      name: STORAGE_KEYS.settings,
+      version: 1,
+      storage: persistStorage,
+      merge: safeMerge<SettingsState>(parseSettings),
+    },
   ),
 );

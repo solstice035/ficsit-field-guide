@@ -1,13 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { LayoutUserConfig } from '../lib/plan/layoutConfig.ts';
+import {
+  type CalculatorConfig,
+  DEFAULT_CALCULATOR,
+  parseCalculator,
+  parseLayoutConfigs,
+  safeMerge,
+} from './schema.ts';
 import { STORAGE_KEYS, persistStorage } from './storage.ts';
 
 /** Ad-hoc calculator plan (free-form targets) stored alongside layout configs. */
-export interface CalculatorConfig {
-  tier: number;
-  targets: { item: string; rate: number }[];
-}
+export type { CalculatorConfig };
 
 export interface LayoutsState {
   configs: Record<string, LayoutUserConfig>;
@@ -28,10 +32,15 @@ export interface LayoutsState {
 type RecordKeys = 'targetRates' | 'recipeOverrides' | 'purity' | 'nodes' | 'sloops';
 type RecordValue<K extends RecordKeys> = NonNullable<LayoutUserConfig[K]>[string];
 
-const DEFAULT_CALCULATOR: CalculatorConfig = {
-  tier: 2,
-  targets: [{ item: 'Desc_IronPlateReinforced_C', rate: 5 }],
-};
+type LayoutsData = Pick<LayoutsState, 'configs' | 'calculator'>;
+
+/** Validates persisted layout configs; an omitted calculator gets its defaults. */
+export function parseLayouts(raw: Record<string, unknown>): LayoutsData {
+  return {
+    configs: raw.configs === undefined ? {} : parseLayoutConfigs(raw.configs),
+    calculator: parseCalculator(raw.calculator),
+  };
+}
 
 export const useLayouts = create<LayoutsState>()(
   persist(
@@ -59,6 +68,11 @@ export const useLayouts = create<LayoutsState>()(
       setCalculator: (calculator) => set({ calculator }),
       reset: () => set({ configs: {}, calculator: DEFAULT_CALCULATOR }),
     }),
-    { name: STORAGE_KEYS.layouts, version: 1, storage: persistStorage },
+    {
+      name: STORAGE_KEYS.layouts,
+      version: 1,
+      storage: persistStorage,
+      merge: safeMerge<LayoutsState>(parseLayouts),
+    },
   ),
 );
