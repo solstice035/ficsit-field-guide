@@ -31,7 +31,7 @@ export function Tabs({ label, tabs, defaultTab, className }: TabsProps) {
       <div
         role="tablist"
         aria-label={label}
-        className="border-line flex gap-1 overflow-x-auto overflow-y-hidden border-b"
+        className="border-line scrollbar-none flex gap-1 overflow-x-auto overflow-y-hidden border-b"
       >
         {tabs.map((tab, index) => {
           const selected = index === active;
@@ -67,7 +67,7 @@ export function Tabs({ label, tabs, defaultTab, className }: TabsProps) {
           id={`${base}-panel-${current.id}`}
           aria-labelledby={`${base}-tab-${current.id}`}
           tabIndex={0}
-          className="pt-4 focus-visible:outline-none"
+          className="pt-4"
         >
           {current.content}
         </div>

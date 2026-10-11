@@ -20,7 +20,7 @@ import { type CollectibleType, PURITIES } from '../../data/types.ts';
 import { formatDistance } from '../../lib/geo/geo.ts';
 import { useExplore } from '../../state/explore.ts';
 import { useSettings } from '../../state/settings.ts';
-import { WorldMap, type MapPoint } from './WorldMap.tsx';
+import { MarkerGlyph, WorldMap, type MapPoint } from './WorldMap.tsx';
 import { COLLECTIBLE_META, COLLECTIBLE_TYPES, driveTier, locate } from './nearby.ts';
 
 const PURITY_COLOUR = { impure: '#ff8a8a', normal: '#ffd166', pure: '#5ee08f' } as const;
@@ -118,16 +118,15 @@ export function ExplorePage() {
 
       <section
         aria-label="Collection progress"
-        className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3"
       >
         {counts.map(({ type, total, got }) => (
           <div key={type} className="panel p-3">
             <div className="flex items-center justify-between gap-2">
               <span className="flex items-center gap-2 font-medium">
-                <span
-                  aria-hidden="true"
-                  className="inline-block size-3 rounded-full"
-                  style={{ background: COLLECTIBLE_META[type].colour }}
+                <MarkerGlyph
+                  shape={COLLECTIBLE_META[type].shape}
+                  colour={COLLECTIBLE_META[type].colour}
                 />
                 {COLLECTIBLE_META[type].plural}
               </span>
@@ -146,7 +145,7 @@ export function ExplorePage() {
         ))}
       </section>
 
-      <div className="grid gap-5 lg:grid-cols-[18rem_minmax(0,1fr)]">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[18rem_minmax(0,1fr)]">
         <aside aria-label="Map filters" className="space-y-4">
           <Panel title="Show" level={2}>
             <div className="space-y-2">
@@ -157,10 +156,9 @@ export function ExplorePage() {
                   onChange={(v) => setFilters({ types: { ...filters.types, [type]: v } })}
                   label={
                     <span className="flex items-center gap-2">
-                      <span
-                        aria-hidden="true"
-                        className="inline-block size-2.5 rounded-full"
-                        style={{ background: COLLECTIBLE_META[type].colour }}
+                      <MarkerGlyph
+                        shape={COLLECTIBLE_META[type].shape}
+                        colour={COLLECTIBLE_META[type].colour}
                       />
                       {COLLECTIBLE_META[type].plural}
                     </span>
@@ -197,6 +195,7 @@ export function ExplorePage() {
                 { value: '', label: 'None' },
                 ...RESOURCES.map((r) => ({ value: r.id, label: r.name })),
               ]}
+              {...(resource ? { hint: 'Shown as squares, coloured by purity.' } : {})}
             />
             {resource && (
               <div className="mt-2 flex flex-wrap gap-3">
@@ -314,7 +313,7 @@ function NearestTable({
   if (!rows.length)
     return <p className="text-ink-muted text-sm">Nothing left to collect. Well done, pioneer.</p>;
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table>
         <caption className="sr-only">{`Nearest ${COLLECTIBLE_META[type].plural}`}</caption>
         <thead>

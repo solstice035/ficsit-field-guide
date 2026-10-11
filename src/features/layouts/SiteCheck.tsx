@@ -21,7 +21,7 @@ export function SiteCheck({ layout, plan }: { layout: FactoryLayout; plan: Facto
 
   return (
     <div className="space-y-6">
-      <div className="overflow-x-auto">
+      <div className="relative overflow-x-auto">
         <table>
           <caption className="text-ink-muted mb-2 text-left text-sm">
             Nodes needed vs nodes available at{' '}

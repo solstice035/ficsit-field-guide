@@ -1,4 +1,4 @@
-import { useId, useMemo } from 'react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { itemName } from '../../data/gameData.ts';
 import { describeConveyance } from '../../lib/plan/checklist.ts';
 import type { FactoryPlan, FlowNodeRef } from '../../lib/plan/factoryPlan.ts';
@@ -26,6 +26,12 @@ const PAD = 16;
 
 const refKey = (r: FlowNodeRef): string => `${r.kind}:${r.key}`;
 
+const MIN_ZOOM = 0.25;
+const MAX_ZOOM = 2;
+const ZOOM_STEPS = [MIN_ZOOM, 0.33, 0.5, 0.67, 0.8, 1, 1.25, 1.5, MAX_ZOOM] as const;
+const ZOOM_BUTTON =
+  'border-line-strong hover:border-accent rounded border px-2.5 py-1 text-sm disabled:opacity-50';
+
 const TONE_STYLE: Record<Tone, { fill: string; stroke: string }> = {
   extract: { fill: '#1d2a22', stroke: '#5ee08f' },
   import: { fill: '#1d2533', stroke: '#7cc4ff' },
@@ -33,6 +39,28 @@ const TONE_STYLE: Record<Tone, { fill: string; stroke: string }> = {
   output: { fill: '#2e2216', stroke: '#fa9549' },
   surplus: { fill: '#2b2420', stroke: '#8f98a6' },
 };
+
+interface Box {
+  x: number;
+  y: number;
+}
+
+/**
+ * Edge labels sit at the curve's midpoint unless that lands on a box (wrapped
+ * stages leave only LINE_GAP between lines); then they move just above the target.
+ */
+function labelPosition(
+  x1: number,
+  x2: number,
+  mid: number,
+  y2: number,
+  boxes: readonly Box[],
+): { x: number; y: number } {
+  const x = (x1 + x2) / 2 + 4;
+  const y = mid + 3;
+  const hits = boxes.some((b) => x + 24 > b.x && x < b.x + W && y + 2 > b.y && y - 10 < b.y + H);
+  return hits ? { x: x2 + 4, y: y2 - 3 } : { x, y };
+}
 
 function truncate(text: string, max: number): string {
   return text.length > max ? `${text.slice(0, max - 1)}…` : text;
@@ -129,19 +157,84 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
     };
   }, [plan]);
 
+  const boxes = [...nodes.values()];
   const maxRate = plan.edges.reduce((m, e) => Math.max(m, e.rate), 1);
   const showLabels = plan.edges.length <= 40;
 
+  // 'fit' shrinks the diagram to the panel width (never enlarges it).
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [panelW, setPanelW] = useState<number | null>(null);
+  const [zoom, setZoom] = useState<number | 'fit'>('fit');
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(([entry]) => {
+      if (entry) setPanelW(entry.contentRect.width);
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const fitScale = panelW ? Math.min(1, panelW / width) : 1;
+  const scale = zoom === 'fit' ? fitScale : zoom;
+  const stepZoom = (dir: 1 | -1) => {
+    const next =
+      dir > 0
+        ? ZOOM_STEPS.find((z) => z > scale + 0.001)
+        : [...ZOOM_STEPS].reverse().find((z) => z < scale - 0.001);
+    if (next !== undefined) setZoom(next);
+  };
+
   return (
     <div className="space-y-2">
-      <p className="text-ink-faint text-xs">
-        Line thickness is proportional to flow. Hover a line or box for details. Orange = belts,
-        blue = pipes.
-      </p>
-      <div className="border-line bg-bg overflow-auto rounded-md border">
+      <div className="flex flex-wrap items-center gap-2">
+        <div role="group" aria-label="Diagram zoom" className="flex items-center gap-1">
+          <button
+            type="button"
+            aria-label="Zoom out"
+            onClick={() => stepZoom(-1)}
+            disabled={scale <= MIN_ZOOM + 0.001}
+            className={ZOOM_BUTTON}
+          >
+            −
+          </button>
+          <span className="num text-ink-muted w-12 text-center text-xs" aria-live="polite">
+            {Math.round(scale * 100)}%
+          </span>
+          <button
+            type="button"
+            aria-label="Zoom in"
+            onClick={() => stepZoom(1)}
+            disabled={scale >= MAX_ZOOM - 0.001}
+            className={ZOOM_BUTTON}
+          >
+            +
+          </button>
+          <button
+            type="button"
+            aria-pressed={zoom === 'fit'}
+            onClick={() => setZoom('fit')}
+            className={ZOOM_BUTTON}
+          >
+            Fit
+          </button>
+          <button
+            type="button"
+            aria-pressed={zoom === 1}
+            onClick={() => setZoom(1)}
+            className={ZOOM_BUTTON}
+          >
+            100%
+          </button>
+        </div>
+        <p className="text-ink-faint text-xs">
+          Line thickness is proportional to flow. Hover a line or box for details. Orange = belts,
+          blue = pipes.
+        </p>
+      </div>
+      <div ref={scrollRef} className="border-line bg-bg overflow-auto rounded-md border">
         <svg
-          width={width}
-          height={height}
+          width={width * scale}
+          height={height * scale}
           viewBox={`0 0 ${width} ${height}`}
           role="img"
           aria-labelledby={titleId}
@@ -174,10 +267,13 @@ export function FlowDiagram({ plan }: { plan: FactoryPlan }) {
                   </path>
                   {showLabels && (
                     <text
-                      x={(x1 + x2) / 2 + 4}
-                      y={mid + 3}
+                      {...labelPosition(x1, x2, mid, y2, boxes)}
                       className="fill-ink-muted"
                       fontSize={10}
+                      stroke="#111317"
+                      strokeWidth={3}
+                      strokeLinejoin="round"
+                      paintOrder="stroke"
                     >
                       {formatNumber(edge.rate)}
                     </text>

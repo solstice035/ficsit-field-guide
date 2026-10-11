@@ -23,7 +23,7 @@ export function AppShell() {
         Skip to content
       </a>
       <header className="border-line bg-panel/95 sticky top-0 z-40 border-b backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
+        <div className="mx-auto flex max-w-7xl flex-col gap-y-1.5 px-4 py-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:py-3">
           <NavLink
             to="/"
             className="text-ink flex items-center gap-2 font-semibold no-underline hover:no-underline"
@@ -39,8 +39,12 @@ export function AppShell() {
               <span className="text-ink-faint text-sm font-normal">· Rocky Desert</span>
             </span>
           </NavLink>
-          <nav aria-label="Primary" className="flex-1">
-            <ul className="flex flex-wrap gap-1">
+          {/* Phones: one scrollable row rather than three wrapped lines. */}
+          <nav
+            aria-label="Primary"
+            className="scrollbar-none -mx-4 min-w-0 overflow-x-auto px-4 sm:mx-0 sm:flex-1 sm:px-0"
+          >
+            <ul className="flex gap-1 sm:flex-wrap">
               {NAV.map((item) => (
                 <li key={item.to}>
                   <NavLink
@@ -48,7 +52,7 @@ export function AppShell() {
                     end={item.end}
                     className={({ isActive }) =>
                       cx(
-                        'block rounded px-3 py-1.5 text-sm font-medium no-underline hover:no-underline',
+                        'block rounded px-2.5 py-1.5 text-sm font-medium whitespace-nowrap sm:px-3 no-underline hover:no-underline',
                         isActive || (item.to === '/tier' && pathname.startsWith('/tier'))
                           ? 'bg-panel-3 text-ink'
                           : 'text-ink-muted hover:text-ink',

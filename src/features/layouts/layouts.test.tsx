@@ -51,6 +51,29 @@ describe('layout configurator', () => {
     });
   });
 
+  it('collapses the settings behind a disclosure on small screens', async () => {
+    const { user } = renderRoute('/layouts/t2-reinforced-plates');
+    const toggle = await screen.findByRole('button', { name: /Configure/ });
+    expect(toggle).toHaveAttribute('aria-expanded', 'false');
+    const region = document.getElementById(toggle.getAttribute('aria-controls')!);
+    expect(region).toHaveClass('hidden', 'lg:block');
+    await user.click(toggle);
+    expect(toggle).toHaveAttribute('aria-expanded', 'true');
+    expect(region).not.toHaveClass('hidden');
+  });
+
+  it('zooms the flow diagram in steps', async () => {
+    const { user } = renderRoute('/layouts/t2-reinforced-plates');
+    const zoom = await screen.findByRole('group', { name: 'Diagram zoom' });
+    await user.click(within(zoom).getByRole('button', { name: '100%' }));
+    expect(within(zoom).getByText('100%', { selector: 'span' })).toBeInTheDocument();
+    await user.click(within(zoom).getByRole('button', { name: 'Zoom in' }));
+    expect(within(zoom).getByText('125%')).toBeInTheDocument();
+    await user.click(within(zoom).getByRole('button', { name: 'Zoom out' }));
+    await user.click(within(zoom).getByRole('button', { name: 'Zoom out' }));
+    expect(within(zoom).getByText('80%')).toBeInTheDocument();
+  });
+
   it('switches between plan views', async () => {
     const { user } = renderRoute('/layouts/t2-reinforced-plates');
     await user.click(await screen.findByRole('tab', { name: 'Build list' }));

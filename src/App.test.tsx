@@ -24,6 +24,13 @@ describe('app shell and dashboard', () => {
     await expectNoA11yViolations(container);
   });
 
+  it('marks the current tier and lists the steps after the next one', async () => {
+    renderRoute('/');
+    const current = await screen.findByRole('link', { name: /Tier 0.*Current/ });
+    expect(current).toHaveAttribute('href', '/tier/0');
+    expect(screen.getByText('Then')).toBeInTheDocument();
+  });
+
   it('shows a not-found page for unknown routes', async () => {
     renderRoute('/nope');
     expect(await screen.findByRole('heading', { name: 'Page not found' })).toBeInTheDocument();
