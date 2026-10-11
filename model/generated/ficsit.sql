@@ -257,8 +257,8 @@ CREATE TABLE "SchematicUnlocks_scannerResources" (
 	PRIMARY KEY ("SchematicUnlocks_id", "scannerResources"),
 	FOREIGN KEY("SchematicUnlocks_id") REFERENCES "SchematicUnlocks" (id)
 );
-CREATE INDEX "ix_SchematicUnlocks_scannerResources_scannerResources" ON "SchematicUnlocks_scannerResources" ("scannerResources");
 CREATE INDEX "ix_SchematicUnlocks_scannerResources_SchematicUnlocks_id" ON "SchematicUnlocks_scannerResources" ("SchematicUnlocks_id");
+CREATE INDEX "ix_SchematicUnlocks_scannerResources_scannerResources" ON "SchematicUnlocks_scannerResources" ("scannerResources");
 
 CREATE TABLE "SchematicUnlocks_scannerObjects" (
 	"SchematicUnlocks_id" INTEGER,
@@ -266,8 +266,8 @@ CREATE TABLE "SchematicUnlocks_scannerObjects" (
 	PRIMARY KEY ("SchematicUnlocks_id", "scannerObjects"),
 	FOREIGN KEY("SchematicUnlocks_id") REFERENCES "SchematicUnlocks" (id)
 );
-CREATE INDEX "ix_SchematicUnlocks_scannerObjects_scannerObjects" ON "SchematicUnlocks_scannerObjects" ("scannerObjects");
 CREATE INDEX "ix_SchematicUnlocks_scannerObjects_SchematicUnlocks_id" ON "SchematicUnlocks_scannerObjects" ("SchematicUnlocks_id");
+CREATE INDEX "ix_SchematicUnlocks_scannerObjects_scannerObjects" ON "SchematicUnlocks_scannerObjects" ("scannerObjects");
 
 CREATE TABLE "ItemAmount" (
 	id INTEGER NOT NULL,
@@ -328,8 +328,8 @@ CREATE TABLE "Recipe_producedIn" (
 	FOREIGN KEY("Recipe_id") REFERENCES "Recipe" (id),
 	FOREIGN KEY("producedIn_id") REFERENCES "Building" (id)
 );
-CREATE INDEX "ix_Recipe_producedIn_producedIn_id" ON "Recipe_producedIn" ("producedIn_id");
 CREATE INDEX "ix_Recipe_producedIn_Recipe_id" ON "Recipe_producedIn" ("Recipe_id");
+CREATE INDEX "ix_Recipe_producedIn_producedIn_id" ON "Recipe_producedIn" ("producedIn_id");
 
 CREATE TABLE "ExtractorSpec_resources" (
 	"ExtractorSpec_id" INTEGER,
@@ -338,8 +338,8 @@ CREATE TABLE "ExtractorSpec_resources" (
 	FOREIGN KEY("ExtractorSpec_id") REFERENCES "ExtractorSpec" (id),
 	FOREIGN KEY(resources_id) REFERENCES "Item" (id)
 );
-CREATE INDEX "ix_ExtractorSpec_resources_resources_id" ON "ExtractorSpec_resources" (resources_id);
 CREATE INDEX "ix_ExtractorSpec_resources_ExtractorSpec_id" ON "ExtractorSpec_resources" ("ExtractorSpec_id");
+CREATE INDEX "ix_ExtractorSpec_resources_resources_id" ON "ExtractorSpec_resources" (resources_id);
 
 CREATE TABLE "Schematic_dependsOn" (
 	"Schematic_id" TEXT,
@@ -358,8 +358,8 @@ CREATE TABLE "SchematicUnlocks_recipes" (
 	FOREIGN KEY("SchematicUnlocks_id") REFERENCES "SchematicUnlocks" (id),
 	FOREIGN KEY(recipes_id) REFERENCES "Recipe" (id)
 );
-CREATE INDEX "ix_SchematicUnlocks_recipes_recipes_id" ON "SchematicUnlocks_recipes" (recipes_id);
 CREATE INDEX "ix_SchematicUnlocks_recipes_SchematicUnlocks_id" ON "SchematicUnlocks_recipes" ("SchematicUnlocks_id");
+CREATE INDEX "ix_SchematicUnlocks_recipes_recipes_id" ON "SchematicUnlocks_recipes" (recipes_id);
 
 CREATE TABLE "SchematicUnlocks_schematics" (
 	"SchematicUnlocks_id" INTEGER,
@@ -368,8 +368,8 @@ CREATE TABLE "SchematicUnlocks_schematics" (
 	FOREIGN KEY("SchematicUnlocks_id") REFERENCES "SchematicUnlocks" (id),
 	FOREIGN KEY(schematics_id) REFERENCES "Schematic" (id)
 );
-CREATE INDEX "ix_SchematicUnlocks_schematics_schematics_id" ON "SchematicUnlocks_schematics" (schematics_id);
 CREATE INDEX "ix_SchematicUnlocks_schematics_SchematicUnlocks_id" ON "SchematicUnlocks_schematics" ("SchematicUnlocks_id");
+CREATE INDEX "ix_SchematicUnlocks_schematics_schematics_id" ON "SchematicUnlocks_schematics" (schematics_id);
 
 CREATE TABLE "GeneratorFuel" (
 	id INTEGER NOT NULL,
