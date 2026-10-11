@@ -15,7 +15,11 @@ export function unlockSummary(schematic: Schematic): UnlockSummary {
   const scanner = new Set<string>();
   let inventorySlots = 0;
   const visit = (s: Schematic, depth: number): void => {
-    for (const id of s.unlocks.recipes) recipes.add(RECIPE_BY_ID.get(id)?.name ?? prettifyId(id));
+    // Recipes missing from RECIPE_BY_ID are cosmetic (customiser swatches/patterns): skip them.
+    for (const id of s.unlocks.recipes) {
+      const recipe = RECIPE_BY_ID.get(id);
+      if (recipe) recipes.add(recipe.name);
+    }
     for (const id of [...s.unlocks.scannerResources, ...s.unlocks.scannerObjects]) {
       scanner.add(ITEM_BY_ID.get(id)?.name ?? prettifyId(id));
     }
