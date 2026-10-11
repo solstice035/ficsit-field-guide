@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { cx } from '../../components/cx.ts';
 import { useRovingTabs } from '../../components/useRovingTabs.ts';
 import { TIERS } from '../../content/index.ts';
+import { useSettings } from '../../state/settings.ts';
 import { useAllTierProgress } from './progress.ts';
 import { TIER_PANEL_ID, tierTabId } from './tierTabIds.ts';
 
@@ -10,6 +11,7 @@ import { TIER_PANEL_ID, tierTabId } from './tierTabIds.ts';
 export function TierTabs({ activeTier }: { activeTier: number }) {
   const navigate = useNavigate();
   const progress = useAllTierProgress();
+  const currentTier = useSettings((s) => s.currentTier);
   const { refs, onKeyDown } = useRovingTabs(TIERS.length, (index) => navigate(`/tier/${index}`));
 
   // Keep the selected tab visible in the phone scroller (no-op when it already is).
@@ -60,7 +62,10 @@ export function TierTabs({ activeTier }: { activeTier: number }) {
             <span className="text-ink-muted line-clamp-2 min-h-8 text-xs md:line-clamp-1 md:min-h-0">
               {tier.title}
             </span>
-            <span className="text-ink-faint num block text-[11px]">{pct}% done</span>
+            <span className="text-ink-faint num block text-xs">
+              {tier.tier === currentTier && <span className="text-ink font-semibold">You · </span>}
+              {pct}% done
+            </span>
             <span
               aria-hidden="true"
               className={cx('absolute bottom-0 left-0 h-0.5', pct === 100 ? 'bg-ok' : 'bg-accent')}
