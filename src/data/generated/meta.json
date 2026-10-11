@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-10-10",
+  "gameVersion": "Update 1.1 Docs (valid for 1.2: no production recipe or milestone changes)",
+  "sources": [
+    {
+      "name": "Satisfactory Docs (en-US), via rockfactory/satisfactory-logistics",
+      "url": "https://raw.githubusercontent.com/rockfactory/satisfactory-logistics/bbd951f26507432d3e50923fb02d0348829b0752/data/docs-en.json",
+      "licence": "Game data © Coffee Stain Studios; repository MIT"
+    },
+    {
+      "name": "World resource nodes (rockfactory/satisfactory-logistics ← Hirashi3630/satisfactory_node_heatmap)",
+      "url": "https://raw.githubusercontent.com/rockfactory/satisfactory-logistics/bbd951f26507432d3e50923fb02d0348829b0752/src/recipes/WorldResourceNodes.json",
+      "licence": "MIT"
+    },
+    {
+      "name": "World collectibles (rockfactory/satisfactory-logistics)",
+      "url": "https://raw.githubusercontent.com/rockfactory/satisfactory-logistics/bbd951f26507432d3e50923fb02d0348829b0752/src/recipes/WorldCollectibles.json",
+      "licence": "MIT"
+    },
+    {
+      "name": "Building clearance boxes (rockfactory/satisfactory-logistics)",
+      "url": "https://raw.githubusercontent.com/rockfactory/satisfactory-logistics/bbd951f26507432d3e50923fb02d0348829b0752/src/recipes/FactoryBuildings.json",
+      "licence": "MIT"
+    }
+  ],
+  "counts": {
+    "items": 193,
+    "recipes": 850,
+    "buildings": 37,
+    "schematics": 348,
+    "nodes": 625,
+    "collectibles": 1764
+  }
+}
