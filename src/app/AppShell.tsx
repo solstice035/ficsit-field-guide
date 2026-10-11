@@ -2,6 +2,7 @@ import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { Link, NavLink, Outlet, ScrollRestoration, useLocation } from 'react-router';
 import { cx } from '../components/cx.ts';
 import { NextStrip } from '../features/guide/NextStrip.tsx';
+import { KeyboardShortcuts } from '../features/shortcuts/KeyboardShortcuts.tsx';
 import { useSettings } from '../state/settings.ts';
 import { storageStatus } from '../state/storage.ts';
 
@@ -113,7 +114,7 @@ export function AppShell() {
       </main>
       <footer className="border-line text-ink-faint border-t px-4 py-4 text-center text-xs">
         Unofficial fan tool. Satisfactory is © Coffee Stain Studios. Game data: Update 1.1 Docs
-        (valid for 1.2).
+        (valid for 1.2). <KeyboardShortcuts className="ml-2 text-xs" />
       </footer>
       <ScrollRestoration />
     </div>

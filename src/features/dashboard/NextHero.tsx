@@ -39,6 +39,7 @@ export function NextHero() {
           <Switch
             checked={false}
             onChange={tick}
+            keyShortcut="n"
             size="lg"
             label={<span className="text-lg font-semibold sm:text-xl">{next.task.label}</span>}
             className="mt-4"

@@ -32,7 +32,7 @@ export function NextStrip({ viewingTier }: NextStripProps) {
         fresh ? 'next-fresh' : 'bg-panel-2',
       )}
     >
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-1.5">
+      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-5 gap-y-1 px-4 py-1.5 lg:flex-nowrap">
         <span className="bg-accent text-accent-ink rounded px-2 py-0.5 text-xs font-bold">
           NEXT
         </span>
@@ -46,12 +46,13 @@ export function NextStrip({ viewingTier }: NextStripProps) {
             <Switch
               checked={false}
               onChange={tick}
+              keyShortcut="n"
               label={<span className="font-semibold sm:text-lg">{next.task.label}</span>}
-              className="min-w-0 flex-1 sm:flex-none"
+              className="min-w-0 flex-1"
             />
             <Link
               to={{ pathname: `/tier/${tier.tier}`, hash: stepAnchor(next.step.id) }}
-              className="text-ink-muted hidden text-sm no-underline hover:underline md:inline"
+              className="text-ink-muted hidden max-w-[16rem] min-w-0 shrink truncate text-sm no-underline hover:underline xl:inline"
             >
               Step {String(next.index + 1).padStart(2, '0')} · {next.step.title}
             </Link>
@@ -78,7 +79,7 @@ export function NextStrip({ viewingTier }: NextStripProps) {
                   layout={layout}
                   emphasis
                   className={cx(
-                    'ml-auto text-sm',
+                    'shrink-0 text-sm',
                     figuresOpen ? 'w-full pb-2' : 'hidden',
                     'sm:flex sm:w-auto sm:pb-0',
                   )}
@@ -89,7 +90,7 @@ export function NextStrip({ viewingTier }: NextStripProps) {
         ) : (
           <TierComplete tier={tier.tier} onAdvance={advanceTier} />
         )}
-        <GlanceLink className="hidden lg:inline-flex" />
+        <GlanceLink className="hidden shrink-0 lg:inline-flex" />
       </div>
     </section>
   );
