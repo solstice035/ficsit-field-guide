@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { KindGlyph } from '../../components/KindGlyph.tsx';
 import { Switch } from '../../components/Switch.tsx';
 import { cx } from '../../components/cx.ts';
+import { GlanceLink } from '../guide/GlanceLink.tsx';
 import { TierComplete } from '../guide/NextStrip.tsx';
 import { StepFigures } from '../guide/StepFigures.tsx';
 import { KIND_LABEL, stepAnchor, stepLayout } from '../guide/stepMeta.ts';
@@ -65,6 +66,7 @@ export function NextHero() {
             >
               Open Tier {tier.tier}
             </Link>
+            <GlanceLink />
           </div>
           {then.length > 0 && (
             <div className="border-line mt-6 border-t pt-4">

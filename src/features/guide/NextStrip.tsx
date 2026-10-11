@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { Switch } from '../../components/Switch.tsx';
 import { cx } from '../../components/cx.ts';
 import { TIERS } from '../../content/index.ts';
+import { GlanceLink } from './GlanceLink.tsx';
 import { StepFigures } from './StepFigures.tsx';
 import { stepAnchor, stepLayout } from './stepMeta.ts';
 import { useNextTask } from './useNextTask.ts';
@@ -88,6 +89,7 @@ export function NextStrip({ viewingTier }: NextStripProps) {
         ) : (
           <TierComplete tier={tier.tier} onAdvance={advanceTier} />
         )}
+        <GlanceLink className="hidden lg:inline-flex" />
       </div>
     </section>
   );

@@ -15,7 +15,8 @@ export interface StepFiguresProps {
 
 export function StepFigures({ layout, emphasis = false, className }: StepFiguresProps) {
   const { plan } = useLayoutPlan(layout);
-  const lead = cx('text-lg', emphasis ? 'text-accent-strong' : 'text-ink');
+  // The lead figure scales with the surrounding text (strip, hero, glance).
+  const lead = cx('text-[1.25em]', emphasis ? 'text-accent-strong' : 'text-ink');
   const output = plan.outputs[0];
   return (
     <dl className={cx('num flex flex-wrap items-baseline gap-x-5 gap-y-1', className)}>
