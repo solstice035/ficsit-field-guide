@@ -1,17 +1,16 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { CollectibleType, Purity } from '../data/types.ts';
+import {
+  DEFAULT_FILTERS,
+  type ExploreFilters,
+  parseFilters,
+  parseFlags,
+  safeMerge,
+} from './schema.ts';
 import { STORAGE_KEYS, persistStorage } from './storage.ts';
 
-export interface ExploreFilters {
-  types: Record<CollectibleType, boolean>;
-  hideCollected: boolean;
-  /** Only show crash sites whose unlock cost is producible by this tier (null = all). */
-  drivesUpToTier: number | null;
-  /** Resource node layer: item ID or '' for none. */
-  resource: string;
-  purities: Record<Purity, boolean>;
-}
+export { DEFAULT_FILTERS };
+export type { ExploreFilters };
 
 export interface ExploreState {
   collected: Record<string, true>;
@@ -21,20 +20,15 @@ export interface ExploreState {
   reset: () => void;
 }
 
-export const DEFAULT_FILTERS: ExploreFilters = {
-  types: {
-    mercerSphere: true,
-    somersloop: true,
-    hardDrive: true,
-    slugBlue: false,
-    slugYellow: false,
-    slugPurple: false,
-  },
-  hideCollected: true,
-  drivesUpToTier: null,
-  resource: '',
-  purities: { impure: true, normal: true, pure: true },
-};
+type ExploreData = Pick<ExploreState, 'collected' | 'filters'>;
+
+/** Validates persisted exploration state; omitted filters get their defaults. */
+export function parseExplore(raw: Record<string, unknown>): ExploreData {
+  return {
+    collected: raw.collected === undefined ? {} : parseFlags(raw.collected, 'collected list'),
+    filters: parseFilters(raw.filters),
+  };
+}
 
 export const useExplore = create<ExploreState>()(
   persist(
@@ -51,6 +45,11 @@ export const useExplore = create<ExploreState>()(
       setFilters: (patch) => set((s) => ({ filters: { ...s.filters, ...patch } })),
       reset: () => set({ collected: {}, filters: DEFAULT_FILTERS }),
     }),
-    { name: STORAGE_KEYS.explore, version: 1, storage: persistStorage },
+    {
+      name: STORAGE_KEYS.explore,
+      version: 1,
+      storage: persistStorage,
+      merge: safeMerge<ExploreState>(parseExplore),
+    },
   ),
 );

@@ -1,7 +1,8 @@
-import { useExplore } from './explore.ts';
-import { useLayouts } from './layouts.ts';
-import { useProgress } from './progress.ts';
-import { useSettings } from './settings.ts';
+import { parseExplore, useExplore } from './explore.ts';
+import { parseLayouts, useLayouts } from './layouts.ts';
+import { parseProgress, useProgress } from './progress.ts';
+import { StateError, isRecord } from './schema.ts';
+import { parseSettings, useSettings } from './settings.ts';
 
 export const BACKUP_VERSION = 1;
 
@@ -38,51 +39,35 @@ export function createBackup(now = new Date()): Backup {
   };
 }
 
-const isRecord = (v: unknown): v is Record<string, unknown> =>
-  typeof v === 'object' && v !== null && !Array.isArray(v);
-
 /**
  * Validates and restores a backup. Throws a user-readable error on bad input;
- * never partially applies an invalid file.
+ * the whole file is parsed before any store changes, so nothing is partially applied.
  */
 export function restoreBackup(raw: unknown): void {
   if (!isRecord(raw) || raw.app !== 'ficsit-field-guide') {
-    throw new Error('This file is not a FICSIT Field Guide backup.');
+    throw new StateError('This file is not a FICSIT Field Guide backup.');
   }
-  if (typeof raw.version !== 'number' || raw.version > BACKUP_VERSION) {
-    throw new Error('This backup was made by a newer version of the guide.');
+  if (typeof raw.version === 'number' && raw.version > BACKUP_VERSION) {
+    throw new StateError('This backup was made by a newer version of the guide.');
   }
-  const { progress, settings, layouts, explore } = raw as unknown as Backup;
-  if (![progress, settings, layouts, explore].every(isRecord)) {
-    throw new Error('The backup is missing sections.');
+  if (!Number.isInteger(raw.version) || (raw.version as number) < 1) {
+    throw new StateError('The backup has an unsupported version.');
   }
-  const base = settings.base;
-  if (
-    !isRecord(base) ||
-    ![base.x, base.y, base.z].every((n) => typeof n === 'number' && Number.isFinite(n))
-  ) {
-    throw new Error('The backup has an invalid base location.');
+  const { progress, settings, layouts, explore } = raw;
+  if (!isRecord(progress) || !isRecord(settings) || !isRecord(layouts) || !isRecord(explore)) {
+    throw new StateError('The backup is missing sections.');
   }
 
-  useProgress.setState({
-    tasks: progress.tasks ?? {},
-    milestones: progress.milestones ?? {},
-    research: progress.research ?? {},
-    phases: progress.phases ?? {},
-  });
-  useSettings.setState({
-    base: { x: base.x, y: base.y, z: base.z },
-    currentTier: Math.min(9, Math.max(0, Number(settings.currentTier) || 0)),
-    purityOverrides: settings.purityOverrides ?? {},
-  });
-  useLayouts.setState({
-    configs: layouts.configs ?? {},
-    ...(layouts.calculator ? { calculator: layouts.calculator } : {}),
-  });
-  useExplore.setState({
-    collected: explore.collected ?? {},
-    ...(explore.filters ? { filters: explore.filters } : {}),
-  });
+  const next = {
+    progress: parseProgress(progress),
+    settings: parseSettings(settings),
+    layouts: parseLayouts(layouts),
+    explore: parseExplore(explore),
+  };
+  useProgress.setState(next.progress);
+  useSettings.setState(next.settings);
+  useLayouts.setState(next.layouts);
+  useExplore.setState(next.explore);
 }
 
 export function resetAll(): void {

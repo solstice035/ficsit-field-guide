@@ -1,8 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { type Flags, parseFlags, safeMerge } from './schema.ts';
 import { STORAGE_KEYS, persistStorage } from './storage.ts';
-
-type Flags = Record<string, true>;
 
 export interface ProgressState {
   tasks: Flags;
@@ -28,6 +27,19 @@ const toggle = (flags: Flags, id: string): Flags => {
 
 const EMPTY = { tasks: {}, milestones: {}, research: {}, phases: {} };
 
+type ProgressData = Pick<ProgressState, 'tasks' | 'milestones' | 'research' | 'phases'>;
+
+/** Validates persisted progress; missing sections are empty. */
+export function parseProgress(raw: Record<string, unknown>): ProgressData {
+  const flags = (v: unknown, what: string): Flags => (v === undefined ? {} : parseFlags(v, what));
+  return {
+    tasks: flags(raw.tasks, 'task list'),
+    milestones: flags(raw.milestones, 'milestone list'),
+    research: flags(raw.research, 'research list'),
+    phases: flags(raw.phases, 'Space Elevator list'),
+  };
+}
+
 export const useProgress = create<ProgressState>()(
   persist(
     (set) => ({
@@ -38,6 +50,11 @@ export const useProgress = create<ProgressState>()(
       togglePhase: (phase) => set((s) => ({ phases: toggle(s.phases, String(phase)) })),
       reset: () => set(EMPTY),
     }),
-    { name: STORAGE_KEYS.progress, version: 1, storage: persistStorage },
+    {
+      name: STORAGE_KEYS.progress,
+      version: 1,
+      storage: persistStorage,
+      merge: safeMerge<ProgressState>(parseProgress),
+    },
   ),
 );
