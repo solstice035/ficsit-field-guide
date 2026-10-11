@@ -241,6 +241,7 @@ Linear (project _FICSIT Field Guide_) is the source of truth for the backlog. Se
   5. I-85 `/glance` page (big switch, cross-window sync, keep-awake).
   6. I-86 Keyboard shortcuts (`n`, `j`/`k`, `g`, `?`).
   7. I-87 Finish: Impeccable finish review, DESIGN.md update and critique re-run.
+  - **Built 2026-10-11 (overnight), on stacked local branches** `feature/i-81-icon-pipeline` → `i-82-milestone-links` → `i-83-next-strip-queue` → `i-84-dashboard` → `i-85-glance` → `i-86-keyboard-shortcuts` → `i-87-finish`, all on top of `feature/design-context`. Critique re-run: **28/40** before the final fix batch (target ≥ 32 not yet confirmed). Open: load Inter, amber body links, a tier-complete moment, phone strip placement.
 - **Decide on WCAG 2.2 AA** as the accessibility standard (Linear I-88). Until then, §10 stays at 2.1 AA.
 
 ## 15. Delivery log (v1, 2026-10-10)
