@@ -26,7 +26,7 @@ export function MachinesTable({ plan }: { plan: FactoryPlan }) {
   if (!plan.groups.length)
     return <p className="text-ink-muted text-sm">No machines in this plan.</p>;
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table>
         <caption className="sr-only">Machines by production stage</caption>
         <thead>
@@ -90,7 +90,7 @@ export function MachinesTable({ plan }: { plan: FactoryPlan }) {
 export function InputsTables({ plan }: { plan: FactoryPlan }) {
   return (
     <div className="space-y-6">
-      <div className="overflow-x-auto">
+      <div className="relative overflow-x-auto">
         <h3 className="mb-2 text-base">Extraction</h3>
         {plan.extraction.length === 0 ? (
           <p className="text-ink-muted text-sm">No raw resources extracted here.</p>
@@ -160,7 +160,7 @@ export function InputsTables({ plan }: { plan: FactoryPlan }) {
         </div>
       )}
 
-      <div className="overflow-x-auto">
+      <div className="relative overflow-x-auto">
         <h3 className="mb-2 text-base">Belts and pipes</h3>
         <table>
           <caption className="sr-only">Connections between machine groups</caption>
@@ -199,7 +199,7 @@ export function InputsTables({ plan }: { plan: FactoryPlan }) {
 
 export function BomTable({ plan, currentTier }: { plan: FactoryPlan; currentTier: number }) {
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <p className="text-ink-muted mb-2 text-sm">
         Build cost of every machine, extractor and generator in this plan (belts, pipes and
         foundations not included).

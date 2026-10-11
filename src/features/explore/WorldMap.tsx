@@ -86,6 +86,24 @@ function Marker({ point, r }: { point: MapPoint; r: number }) {
   }
 }
 
+/** Dark outline behind SVG text so labels stay legible over markers and rings. */
+const halo = (size: number) =>
+  ({
+    stroke: '#111317',
+    strokeWidth: size * 0.3,
+    strokeLinejoin: 'round',
+    paintOrder: 'stroke',
+  }) as const;
+
+/** A marker drawn at text size, so filter lists double as the map legend. */
+export function MarkerGlyph({ shape, colour }: { shape: MarkerShape; colour: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="-7 -7 14 14" className="inline-block size-3.5 shrink-0">
+      <Marker point={{ id: '', x: 0, y: 0, colour, shape, label: '' }} r={4.5} />
+    </svg>
+  );
+}
+
 /**
  * Pan/zoom vector map in world metres (north up: y grows southwards, as on
  * screen). Uses `/map/world.png` as a backdrop if the user has supplied one.
@@ -342,6 +360,7 @@ export function WorldMap({
               textAnchor="middle"
               className="fill-ink-muted"
               fontWeight={600}
+              {...halo(font)}
             >
               {l.text}
             </text>
@@ -389,6 +408,7 @@ export function WorldMap({
               fontSize={font * 1.1}
               fontWeight={700}
               className="fill-accent-strong"
+              {...halo(font)}
             >
               Base
             </text>

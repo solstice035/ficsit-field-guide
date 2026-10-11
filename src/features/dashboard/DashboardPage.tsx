@@ -1,5 +1,6 @@
 import { Link } from 'react-router';
 import { Badge } from '../../components/Badge.tsx';
+import { cx } from '../../components/cx.ts';
 import { Panel } from '../../components/Panel.tsx';
 import { ProgressBar } from '../../components/ProgressBar.tsx';
 import { SPACE_ELEVATOR_PHASES, TIERS } from '../../content/index.ts';
@@ -18,7 +19,9 @@ export function DashboardPage() {
   const progress = useAllTierProgress();
 
   const tier = TIERS[currentTier] ?? TIERS[0]!;
-  const nextStep = tier.steps.find((s) => s.tasks.some((t) => !tasks[t.id]));
+  const openSteps = tier.steps.filter((s) => s.tasks.some((t) => !tasks[t.id]));
+  const nextStep = openSteps[0];
+  const laterSteps = openSteps.slice(1, 4);
   const totals = progress.reduce(
     (acc, p) => ({ done: acc.done + p.done, total: acc.total + p.total }),
     { done: 0, total: 0 },
@@ -57,6 +60,23 @@ export function DashboardPage() {
               >
                 Continue Tier {tier.tier}
               </Link>
+              {laterSteps.length > 0 && (
+                <div className="border-line mt-5 border-t pt-4">
+                  <p className="text-ink-faint text-xs font-semibold tracking-wide uppercase">
+                    Then
+                  </p>
+                  <ol className="mt-2 space-y-1.5 text-sm">
+                    {laterSteps.map((s) => (
+                      <li key={s.id} className="flex gap-2">
+                        <span aria-hidden="true" className="text-ink-faint">
+                          →
+                        </span>
+                        <span className="text-ink-muted">{s.title}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
             </div>
           ) : (
             <p className="text-ok mt-4">
@@ -90,24 +110,33 @@ export function DashboardPage() {
       </div>
 
       <Panel title="Tiers">
-        <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-5">
-          {TIERS.map((t, i) => (
-            <li key={t.tier}>
-              <Link
-                to={`/tier/${t.tier}`}
-                className="border-line hover:border-accent bg-panel-2 block rounded-md border p-3 no-underline hover:no-underline"
-              >
-                <span className="text-accent-strong text-sm font-bold">Tier {t.tier}</span>
-                <span className="text-ink block truncate text-sm">{t.title}</span>
-                <ProgressBar
-                  value={progress[i]?.done ?? 0}
-                  max={progress[i]?.total ?? 0}
-                  label={`Tier ${t.tier} progress`}
-                  className="mt-2"
-                />
-              </Link>
-            </li>
-          ))}
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+          {TIERS.map((t, i) => {
+            const isCurrent = t.tier === tier.tier;
+            return (
+              <li key={t.tier}>
+                <Link
+                  to={`/tier/${t.tier}`}
+                  className={cx(
+                    'hover:border-accent flex h-full flex-col rounded-md border p-3 no-underline hover:no-underline',
+                    isCurrent ? 'border-accent bg-panel-3' : 'border-line bg-panel-2',
+                  )}
+                >
+                  <span className="flex items-center justify-between gap-2">
+                    <span className="text-accent-strong text-sm font-bold">Tier {t.tier}</span>
+                    {isCurrent && <Badge tone="accent">Current</Badge>}
+                  </span>
+                  <span className="text-ink mb-2 block text-sm">{t.title}</span>
+                  <ProgressBar
+                    value={progress[i]?.done ?? 0}
+                    max={progress[i]?.total ?? 0}
+                    label={`Tier ${t.tier} progress`}
+                    className="mt-auto"
+                  />
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </Panel>
 

@@ -1,4 +1,6 @@
+import { useId, useState } from 'react';
 import { Badge, TierBadge } from '../../components/Badge.tsx';
+import { cx } from '../../components/cx.ts';
 import { Panel } from '../../components/Panel.tsx';
 import { Tabs } from '../../components/Tabs.tsx';
 import { SITE_BY_ID } from '../../content/index.ts';
@@ -36,6 +38,8 @@ export function LayoutConfigurator({ layout, headless }: LayoutConfiguratorProps
   const site = layout.siteId ? SITE_BY_ID.get(layout.siteId) : undefined;
   const warnings = plan.warnings.filter((w) => w.level === 'warn');
   const infos = plan.warnings.filter((w) => w.level === 'info');
+  const [configOpen, setConfigOpen] = useState(false);
+  const configId = useId();
 
   return (
     <div className="space-y-5">
@@ -120,9 +124,28 @@ export function LayoutConfigurator({ layout, headless }: LayoutConfiguratorProps
           aria-label="Layout settings"
           className="lg:sticky lg:top-20 lg:max-h-[calc(100dvh-6rem)] lg:self-start lg:overflow-y-auto"
         >
-          <Panel title="Configure" level={2}>
-            <ConfigPanel layout={layout} user={user} config={config} plan={plan} />
-          </Panel>
+          {/* Below lg the settings collapse so the plan is not pushed a screen down. */}
+          <button
+            type="button"
+            aria-expanded={configOpen}
+            aria-controls={configId}
+            onClick={() => setConfigOpen((o) => !o)}
+            className="panel hover:border-line-strong flex w-full items-center justify-between gap-2 px-4 py-3 text-left font-semibold lg:hidden"
+          >
+            <span>Configure</span>
+            <span className="text-ink-muted text-sm font-normal">
+              {configOpen ? 'Hide settings' : 'Show settings'}{' '}
+              <span aria-hidden="true">{configOpen ? '▲' : '▼'}</span>
+            </span>
+          </button>
+          <div
+            id={configId}
+            className={cx(configOpen ? 'mt-2 block' : 'hidden', 'lg:mt-0 lg:block')}
+          >
+            <Panel title="Configure" level={2}>
+              <ConfigPanel layout={layout} user={user} config={config} plan={plan} />
+            </Panel>
+          </div>
         </aside>
 
         <Panel title="Plan" level={2} className="min-w-0">
