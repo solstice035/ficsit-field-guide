@@ -29,6 +29,10 @@ export default defineConfig({
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
       exclude: ['src/**/*.test.{ts,tsx}', 'src/test/**', 'src/main.tsx'],
+      // The pure calculation engine is test-first; keep it that way (PLAN.md).
+      thresholds: {
+        'src/lib/calc/**': { lines: 95, branches: 85 },
+      },
     },
   },
 });

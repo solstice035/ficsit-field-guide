@@ -6,7 +6,7 @@
  */
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import type { Collectible, Item, Recipe, Schematic } from '../../src/data/types.ts';
+import type { Building, Collectible, Item, Recipe, Schematic } from '../../src/data/types.ts';
 import { GENERATED_DIR, RAW_DIR, SOURCES } from './sources.ts';
 
 interface ToolsRecipe {
@@ -28,12 +28,35 @@ const recipes = load<Recipe[]>(join(GENERATED_DIR, 'recipes.json'));
 const items = load<Item[]>(join(GENERATED_DIR, 'items.json'));
 const schematics = load<Schematic[]>(join(GENERATED_DIR, 'schematics.json'));
 const collectibles = load<Collectible[]>(join(GENERATED_DIR, 'collectibles.json'));
+const buildings = load<Building[]>(join(GENERATED_DIR, 'buildings.json'));
 
 /**
  * Differences that are expected because our source is newer (1.1 Docs) than
  * SatisfactoryTools' 1.0 dataset. Add an entry with a reason, never silently.
  */
 const KNOWN_DIFFERENCES: Record<string, string> = {};
+
+/** Machine recipes we generate that SatisfactoryTools 1.0 lacks, with the reason. */
+const FICSMAS = 'FICSMAS seasonal recipe; SatisfactoryTools omits event content';
+const KNOWN_ONLY_OURS: Record<string, string> = Object.fromEntries(
+  [
+    'Recipe_CandyCane_C',
+    'Recipe_Fireworks_01_C',
+    'Recipe_Fireworks_02_C',
+    'Recipe_Fireworks_03_C',
+    'Recipe_Snow_C',
+    'Recipe_Snowball_C',
+    'Recipe_XmasBall1_C',
+    'Recipe_XmasBall2_C',
+    'Recipe_XmasBall3_C',
+    'Recipe_XmasBall4_C',
+    'Recipe_XmasBallCluster_C',
+    'Recipe_XmasBow_C',
+    'Recipe_XmasBranch_C',
+    'Recipe_XmasStar_C',
+    'Recipe_XmasWreath_C',
+  ].map((id) => [id, FICSMAS]),
+);
 
 const key = (list: { item: string; amount: number }[]): string =>
   list
@@ -45,12 +68,47 @@ const problems: string[] = [];
 const notes: string[] = [];
 let compared = 0;
 
+// Structural checks on generated recipes.
 const ours = new Map(recipes.map((r) => [r.id, r]));
+if (ours.size !== recipes.length) problems.push('recipes.json has duplicate recipe IDs');
+const buildingIds = new Set(buildings.map((b) => b.id));
+for (const r of recipes) {
+  if (!(Number.isFinite(r.durationS) && r.durationS > 0)) {
+    problems.push(`${r.id}: duration ${r.durationS} is not a positive number`);
+  }
+  for (const x of [...r.ingredients, ...r.products]) {
+    if (!(Number.isFinite(x.amount) && x.amount > 0)) {
+      problems.push(`${r.id}: ${x.item} amount ${x.amount} is not a positive number`);
+    }
+  }
+  for (const b of r.producedIn) {
+    if (b.startsWith('Build_') && !buildingIds.has(b)) {
+      problems.push(`${r.id}: produced in unknown building ${b}`);
+    }
+  }
+}
+
+// Machine recipe ID sets must match both ways, apart from listed exceptions.
+const theirIds = new Set(
+  Object.values(tools.recipes)
+    .filter((t) => t.inMachine)
+    .map((t) => t.className),
+);
+for (const r of recipes) {
+  if (!r.producedIn.length || r.buildGun || theirIds.has(r.id)) continue;
+  const reason = KNOWN_ONLY_OURS[r.id];
+  if (reason) notes.push(`only in ours: ${r.id} (known: ${reason})`);
+  else problems.push(`only in ours (unexplained): ${r.id}`);
+}
+
 for (const theirs of Object.values(tools.recipes)) {
   if (!theirs.inMachine) continue;
   const mine = ours.get(theirs.className);
   if (!mine) {
-    notes.push(`only in SatisfactoryTools: ${theirs.className}`);
+    const reason = KNOWN_DIFFERENCES[theirs.className];
+    (reason ? notes : problems).push(
+      `missing from recipes.json: ${theirs.className}${reason ? ` (known: ${reason})` : ''}`,
+    );
     continue;
   }
   compared += 1;
