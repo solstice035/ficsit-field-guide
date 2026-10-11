@@ -9,8 +9,9 @@ export type TierProgress = Count;
 export function useProgressFlags(): ProgressFlags {
   const tasks = useProgress((s) => s.tasks);
   const milestones = useProgress((s) => s.milestones);
+  const phases = useProgress((s) => s.phases);
   const skipped = useProgress((s) => s.skipped);
-  return { tasks, milestones, skipped };
+  return { tasks, milestones, phases, skipped };
 }
 
 /** Tasks done in a tier; each milestone counts once, through its "Submit" task. */

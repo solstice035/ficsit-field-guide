@@ -60,7 +60,7 @@ export const TIER_4: TierGuide = {
       tasks: [
         { id: 't4-p2-aw', label: 'Automated Wiring line running' },
         { id: 't4-p2-mall', label: 'Phase 2 Mall (or equivalent) running' },
-        { id: 't4-p2-deliver', label: 'Deliver Phase 2 (unlocks Tiers 5 & 6)' },
+        { id: 't4-p2-deliver', label: 'Deliver Phase 2 (unlocks Tiers 5 & 6)', phase: 2 },
       ],
       layoutIds: ['t4-automated-wiring', 't4-phase-2-mall'],
     },

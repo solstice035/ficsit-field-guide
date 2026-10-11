@@ -73,6 +73,8 @@ export interface GuideTask {
    * milestone are one event, stored once as the milestone's flag.
    */
   milestoneId?: string;
+  /** The Space Elevator phase this task delivers; stored once as the phase's flag. */
+  phase?: number;
 }
 
 export interface ExploreTarget {

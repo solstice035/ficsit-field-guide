@@ -51,7 +51,7 @@ export const TIER_2: TierGuide = {
         'A dedicated ore-to-Smart-Plating line finishes Phase 1 in about 25 minutes and unlocks Tiers 3 and 4.',
       tasks: [
         { id: 't2-p1-build', label: 'Build the Smart Plating line' },
-        { id: 't2-p1-deliver', label: 'Deliver 50 Smart Plating to the Space Elevator' },
+        { id: 't2-p1-deliver', label: 'Deliver 50 Smart Plating to the Space Elevator', phase: 1 },
       ],
       layoutIds: ['t2-smart-plating'],
     },
