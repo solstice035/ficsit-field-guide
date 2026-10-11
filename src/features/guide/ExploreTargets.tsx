@@ -8,6 +8,7 @@ import { useSettings } from '../../state/settings.ts';
 import {
   COLLECTIBLE_META,
   driveTier,
+  effectivePurity,
   nearestCollectibles,
   nearestNodes,
 } from '../explore/nearby.ts';
@@ -16,6 +17,7 @@ import {
 export function ExploreTargets({ targets }: { targets: readonly ExploreTarget[] }) {
   const base = useSettings((s) => s.base);
   const collected = useExplore((s) => s.collected);
+  const purityOverrides = useSettings((s) => s.purityOverrides);
   return (
     <div className="grid gap-3 md:grid-cols-2">
       {targets.map((target) => {
@@ -30,7 +32,8 @@ export function ExploreTargets({ targets }: { targets: readonly ExploreTarget[] 
                 {nodes.map(({ item, distance, compass }) => (
                   <li key={item.id} className="flex items-center justify-between gap-2">
                     <span>
-                      {itemName(resource)} <PurityBadge purity={item.purity} />
+                      {itemName(resource)}{' '}
+                      <PurityBadge purity={effectivePurity(item, purityOverrides)} />
                     </span>
                     <span className="text-ink-muted num">
                       {formatDistance(distance)} {compass}

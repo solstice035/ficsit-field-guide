@@ -1,6 +1,8 @@
-import { NavLink, Outlet, ScrollRestoration, useLocation } from 'react-router';
+import { useSyncExternalStore } from 'react';
+import { Link, NavLink, Outlet, ScrollRestoration, useLocation } from 'react-router';
 import { cx } from '../components/cx.ts';
 import { useSettings } from '../state/settings.ts';
+import { storageStatus } from '../state/storage.ts';
 
 const NAV = [
   { to: '/', label: 'Dashboard', end: true },
@@ -10,6 +12,21 @@ const NAV = [
   { to: '/calculator', label: 'Calculator', end: false },
   { to: '/settings', label: 'Settings', end: false },
 ];
+
+/** Persistent warning once the browser stops saving (blocked or full storage). */
+function StorageNotice() {
+  const persistent = useSyncExternalStore(storageStatus.subscribe, storageStatus.persistent);
+  return (
+    <div role="status" aria-live="polite" className="mx-auto w-full max-w-7xl px-4 empty:hidden">
+      {!persistent && (
+        <p className="border-warn/40 text-warn mt-4 rounded border px-3 py-2 text-sm">
+          ⚠ This browser isn&apos;t saving your progress (storage is blocked or full). Changes last
+          for this session only. <Link to="/settings">Export a backup</Link> before closing the tab.
+        </p>
+      )}
+    </div>
+  );
+}
 
 export function AppShell() {
   const currentTier = useSettings((s) => s.currentTier);
@@ -67,6 +84,7 @@ export function AppShell() {
           </nav>
         </div>
       </header>
+      <StorageNotice />
       <main
         id="main"
         tabIndex={-1}
