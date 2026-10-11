@@ -9,6 +9,7 @@ import {
   RECIPE_BY_ID,
   SCHEMATICS,
   SCHEMATIC_BY_ID,
+  itemName,
 } from '../data/gameData.ts';
 import { buildFactoryPlan } from '../lib/plan/factoryPlan.ts';
 import { resolveLayoutConfig } from '../lib/plan/layoutConfig.ts';
@@ -121,7 +122,13 @@ describe('layouts', () => {
   it.each(LAYOUTS.map((l) => [l.id, l] as const))('%s solves within its tier', (_id, layout) => {
     const plan = buildFactoryPlan(resolveLayoutConfig(layout));
     expect(plan.error).toBeUndefined();
-    expect(plan.warnings.filter((w) => w.level === 'warn').map((w) => w.message)).toEqual([]);
+    // Generator waste always warns (it needs storage); nothing else may.
+    const waste = plan.generators?.byproduct ? itemName(plan.generators.byproduct.item) : undefined;
+    expect(
+      plan.warnings
+        .filter((w) => w.level === 'warn' && !(waste && w.message.startsWith(waste)))
+        .map((w) => w.message),
+    ).toEqual([]);
     // Only the layout's declared imports may be imported.
     const allowed = new Set(layout.imports ?? []);
     expect(plan.imports.filter((i) => !allowed.has(i.item)).map((i) => i.item)).toEqual([]);
@@ -131,6 +138,14 @@ describe('layouts', () => {
     }
     for (const t of layout.targets) expect(itemTier(t.item)).toBeLessThanOrEqual(layout.tier);
     expect(plan.groups.length + plan.extraction.length).toBeGreaterThan(0);
+  });
+
+  it('shows 10 Uranium Waste/min for one reactor and warns about it', () => {
+    const plan = buildFactoryPlan(resolveLayoutConfig(LAYOUT_BY_ID.get('t8-nuclear-power')!));
+    expect(plan.surplus.find((s) => s.item === 'Desc_NuclearWaste_C')?.rate).toBeCloseTo(10);
+    expect(
+      plan.warnings.some((w) => w.level === 'warn' && w.message.startsWith('Uranium Waste 10/min')),
+    ).toBe(true);
   });
 
   it('builds everything from ore when full chain is on', () => {

@@ -9,6 +9,7 @@ import { billOfMaterials, type BomEntry } from '../calc/bom.ts';
 import { BELT_TIERS, type Conveyance, PIPE_TIERS, conveyanceFor } from '../calc/conveyance.ts';
 import { type ExtractionPlan, planExtraction } from '../calc/extraction.ts';
 import { type FloorPlan, type FloorRowInput, planFloor } from '../calc/floorplan.ts';
+import { generatorFor } from '../calc/generators.ts';
 import {
   type ClockStrategy,
   type MachineSplit,
@@ -45,7 +46,7 @@ export interface PlanConfig {
   /** Somersloops per machine, by recipe ID. */
   sloops: Record<string, number>;
   /** Power plant fed by this plan (fuel and water are its targets). */
-  generators?: { buildingId: string; count: number };
+  generators?: { buildingId: string; count: number; fuelId?: string };
 }
 
 export const DEFAULT_PLAN_CONFIG: PlanConfig = {
@@ -73,6 +74,8 @@ export interface PlanGroup {
   shards: number;
   inputs: ItemRate[];
   outputs: ItemRate[];
+  /** Part of `inputs` the group feeds back to itself from its own `outputs` (no edge drawn). */
+  recycled: ItemRate[];
   /** Production depth (1 = fed only by raw inputs). */
   stage: number;
 }
@@ -113,6 +116,8 @@ export interface PlanGenerators {
   building: Building;
   count: number;
   powerMW: number;
+  /** Waste the generators emit (e.g. Uranium Waste); also listed in `surplus`. */
+  byproduct?: ItemRate;
 }
 
 export interface FactoryPlan {
@@ -261,6 +266,7 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
           item: p.item,
           rate: p.amount * outputMultiplier * perMin,
         })),
+        recycled: [],
         stage: 1,
       },
     ];
@@ -273,9 +279,11 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
   const imports: ItemRate[] = [];
   for (const { item, rate } of result.inputs) {
     const setting = config.resources[item];
-    const building = isRawResource(item)
-      ? extractorFor(item, config.minerMk, setting?.extractorId)
-      : undefined;
+    // `''` forces an import, even for raw resources.
+    const building =
+      isRawResource(item) && config.recipeOverrides[item] !== ''
+        ? extractorFor(item, config.minerMk, setting?.extractorId)
+        : undefined;
     if (!building?.extractor) {
       imports.push({ item, rate });
       continue;
@@ -319,6 +327,34 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
     });
   }
 
+  // --- Power plant
+  const generatorBuilding = config.generators
+    ? BUILDING_BY_ID.get(config.generators.buildingId)
+    : undefined;
+  const generators: PlanGenerators | undefined =
+    generatorBuilding?.generator && config.generators && config.generators.count > 0
+      ? {
+          building: generatorBuilding,
+          count: config.generators.count,
+          powerMW: generatorBuilding.generator.powerMW * config.generators.count,
+        }
+      : undefined;
+  const fuelId = config.generators?.fuelId;
+  const burn =
+    generators && fuelId
+      ? generatorFor(generators.powerMW, generators.building, ITEM_BY_ID.get(fuelId))
+      : undefined;
+  if (generators && burn?.byproductId && burn.byproductPerMin > 0) {
+    generators.byproduct = { item: burn.byproductId, rate: burn.byproductPerMin };
+    warnings.push({
+      level: 'warn',
+      message: `${itemName(burn.byproductId)} ${round(burn.byproductPerMin)}/min: generators stop when it backs up. It cannot be sunk, so plan storage or reprocessing.`,
+    });
+  }
+  const surplus = generators?.byproduct
+    ? [...result.surplus, generators.byproduct]
+    : result.surplus;
+
   // --- Flow edges (proportional allocation of each item's supply to its demand)
   const edges: PlanEdge[] = [];
   const items = new Set<string>();
@@ -335,7 +371,11 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
       ),
       ...extraction
         .filter((e) => e.item === item)
-        .map((e) => ({ ref: { kind: 'extract' as const, key: e.key }, rate: e.rate })),
+        // Only what the nodes can supply; the shortfall is warned above.
+        .map((e) => ({
+          ref: { kind: 'extract' as const, key: e.key },
+          rate: e.rate - e.plan.shortfall,
+        })),
       ...imports
         .filter((i) => i.item === item)
         .map((i) => ({ ref: { kind: 'import' as const, key: i.item }, rate: i.rate })),
@@ -357,9 +397,12 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
     if (totalDemand <= 0) continue;
     for (const s of supply) {
       for (const d of demand) {
-        if (s.ref.kind === d.ref.kind && s.ref.key === d.ref.key) continue;
         const rate = (s.rate * d.rate) / totalDemand;
         if (rate < 1e-6) continue;
+        if (s.ref.kind === d.ref.kind && s.ref.key === d.ref.key) {
+          groups.find((g) => g.key === s.ref.key)?.recycled.push({ item, rate });
+          continue;
+        }
         edges.push({
           id: `${s.ref.kind}:${s.ref.key}→${d.ref.kind}:${d.ref.key}:${item}`,
           from: s.ref,
@@ -370,6 +413,19 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
         });
       }
     }
+  }
+  // Generator waste leaves the power plant (drawn as the output node).
+  const waste = generators?.byproduct;
+  const plantNode = result.outputs.find((o) => o.item === fuelId) ?? result.outputs[0];
+  if (waste && plantNode) {
+    edges.push({
+      id: `output:${plantNode.item}→surplus:${waste.item}:${waste.item}`,
+      from: { kind: 'output', key: plantNode.item },
+      to: { kind: 'surplus', key: waste.item },
+      item: waste.item,
+      rate: waste.rate,
+      conveyance: conveyanceFor(waste.rate, formOf(waste.item), config.maxBeltMk, config.maxPipeMk),
+    });
   }
   for (const e of edges) {
     if (e.conveyance.lines > 1) {
@@ -387,19 +443,6 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
     (n, e) => n + e.plan.powerMW + e.pressurizers * (pressurizer?.powerMW ?? 150),
     0,
   );
-
-  // --- Power plant
-  const generatorBuilding = config.generators
-    ? BUILDING_BY_ID.get(config.generators.buildingId)
-    : undefined;
-  const generators: PlanGenerators | undefined =
-    generatorBuilding?.generator && config.generators && config.generators.count > 0
-      ? {
-          building: generatorBuilding,
-          count: config.generators.count,
-          powerMW: generatorBuilding.generator.powerMW * config.generators.count,
-        }
-      : undefined;
 
   // --- Bill of materials
   // Generators count as machines too (power-plant layouts would otherwise show 0).
@@ -453,7 +496,7 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
     extraction,
     imports,
     outputs: result.outputs,
-    surplus: result.surplus,
+    surplus,
     edges,
     power: {
       productionMW,
