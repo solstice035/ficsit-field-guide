@@ -27,8 +27,12 @@ export const TIER_4: TierGuide = {
         'Upgrade manifolds downstream too, or the extra ore just backs up.',
       ],
       tasks: [
-        { id: 't4-as-submit', label: 'Submit Advanced Steel Production' },
-        { id: 't4-l3-submit', label: 'Submit Logistics Mk.3' },
+        {
+          id: 't4-as-submit',
+          label: 'Submit Advanced Steel Production',
+          milestoneId: 'Schematic_4-1_C',
+        },
+        { id: 't4-l3-submit', label: 'Submit Logistics Mk.3', milestoneId: 'Schematic_5-3_C' },
         { id: 't4-as-retrofit', label: 'Retrofit HUB Basin pure nodes with Miner Mk.2' },
       ],
       milestoneIds: ['Schematic_4-1_C', 'Schematic_5-3_C'],
@@ -67,7 +71,11 @@ export const TIER_4: TierGuide = {
       summary:
         'Power Storage smooths spikes, and Power Towers carry the grid across the cliffs. Scale coal to all three pure plateau nodes (1.8 GW).',
       tasks: [
-        { id: 't4-epi-submit', label: 'Submit Expanded Power Infrastructure' },
+        {
+          id: 't4-epi-submit',
+          label: 'Submit Expanded Power Infrastructure',
+          milestoneId: 'Schematic_4-3_C',
+        },
         { id: 't4-epi-storage', label: 'Add 2–4 Power Storage on the main grid' },
         { id: 't4-epi-scale', label: 'Scale coal power to 16–24 generators' },
       ],
@@ -81,7 +89,7 @@ export const TIER_4: TierGuide = {
       summary:
         'Fast travel between the HUB, the Steelworks and the NW Iron Field. Update 1.1 added Hypertube Junctions and Branches.',
       tasks: [
-        { id: 't4-ht-submit', label: 'Submit Hypertubes' },
+        { id: 't4-ht-submit', label: 'Submit Hypertubes', milestoneId: 'Schematic_4-4_C' },
         { id: 't4-ht-line', label: 'Run a Hypertube from the HUB to the NE Steelworks' },
       ],
       milestoneIds: ['Schematic_4-4_C'],
@@ -93,7 +101,7 @@ export const TIER_4: TierGuide = {
       summary:
         'Blueprint your manifold modules (e.g. 4 Smelters + 4 Constructors) and stamp them out.',
       tasks: [
-        { id: 't4-bp-submit', label: 'Submit FICSIT Blueprints' },
+        { id: 't4-bp-submit', label: 'Submit FICSIT Blueprints', milestoneId: 'Schematic_4-5_C' },
         { id: 't4-bp-module', label: 'Save a smelter/constructor manifold blueprint' },
       ],
       milestoneIds: ['Schematic_4-5_C'],

@@ -29,7 +29,7 @@ export const TIER_3: TierGuide = {
         'Scale later: all three pure nodes on Mk.1 give 360 coal/min = 24 generators = 1.8 GW.',
       ],
       tasks: [
-        { id: 't3-cp-submit', label: 'Submit Coal Power' },
+        { id: 't3-cp-submit', label: 'Submit Coal Power', milestoneId: 'Schematic_3-1_C' },
         { id: 't3-cp-water', label: 'Place 3 Water Extractors and pipe the water' },
         { id: 't3-cp-gens', label: 'Build 8 Coal Generators and connect the grid' },
         { id: 't3-cp-burners', label: 'Retire the Biomass Burners' },
@@ -44,7 +44,11 @@ export const TIER_3: TierGuide = {
       kind: 'milestone',
       summary: 'Foundries, Steel Ingots, Beams, Pipes and Versatile Framework.',
       tasks: [
-        { id: 't3-steel-submit', label: 'Submit Basic Steel Production' },
+        {
+          id: 't3-steel-submit',
+          label: 'Submit Basic Steel Production',
+          milestoneId: 'Schematic_3-4_C',
+        },
         { id: 't3-steel-build', label: 'Build the steel line at the NE Steelworks' },
       ],
       milestoneIds: ['Schematic_3-4_C'],
@@ -69,7 +73,11 @@ export const TIER_3: TierGuide = {
         'Update 1.2 reworked vehicle path recording. Record the route once and it replays reliably.',
       ],
       tasks: [
-        { id: 't3-veh-submit', label: 'Submit Vehicular Transport' },
+        {
+          id: 't3-veh-submit',
+          label: 'Submit Vehicular Transport',
+          milestoneId: 'Schematic_3-3_C',
+        },
         { id: 't3-veh-route', label: 'Truck Stations at the Steelworks and HUB; record a route' },
       ],
       milestoneIds: ['Schematic_3-3_C'],
@@ -80,7 +88,13 @@ export const TIER_3: TierGuide = {
       kind: 'milestone',
       summary:
         'The Xeno-Basher: a better melee weapon for cave clearing. Cheap and worth it before going deeper into the Quartz Cave.',
-      tasks: [{ id: 't3-eas-submit', label: 'Submit Enhanced Asset Security' }],
+      tasks: [
+        {
+          id: 't3-eas-submit',
+          label: 'Submit Enhanced Asset Security',
+          milestoneId: 'Schematic_4-2_C',
+        },
+      ],
       milestoneIds: ['Schematic_4-2_C'],
     },
     {

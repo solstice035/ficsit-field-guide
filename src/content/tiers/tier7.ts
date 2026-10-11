@@ -26,7 +26,7 @@ export const TIER_7: TierGuide = {
         'The uplands sit at ~180–240 m, so place the Alumina refineries where water is easy (pumps or a Fluid Truck), then belt Aluminum Scrap up.',
       ],
       tasks: [
-        { id: 't7-bx-submit', label: 'Submit Bauxite Refinement' },
+        { id: 't7-bx-submit', label: 'Submit Bauxite Refinement', milestoneId: 'Schematic_7-1_C' },
         { id: 't7-bx-ingots', label: 'Aluminium Ingot line running' },
         { id: 't7-bx-alclad', label: 'Alclad Sheets and Casings running' },
       ],
@@ -39,7 +39,9 @@ export const TIER_7: TierGuide = {
       title: 'Logistics Mk.5: 780/min',
       kind: 'logistics',
       summary: 'Mk.5 belts carry a pure node on Miner Mk.3 at 160% (780/min) on one belt.',
-      tasks: [{ id: 't7-l5-submit', label: 'Submit Logistics Mk.5' }],
+      tasks: [
+        { id: 't7-l5-submit', label: 'Submit Logistics Mk.5', milestoneId: 'Schematic_7-2_C' },
+      ],
       milestoneIds: ['Schematic_7-2_C'],
     },
     {
@@ -49,7 +51,11 @@ export const TIER_7: TierGuide = {
       summary:
         'Blender, Sulfuric Acid, Batteries, Radio Control Units, Supercomputers and Assembly Director Systems.',
       tasks: [
-        { id: 't7-csd-submit', label: 'Submit Control System Development' },
+        {
+          id: 't7-csd-submit',
+          label: 'Submit Control System Development',
+          milestoneId: 'Schematic_7-5_C',
+        },
         { id: 't7-csd-rcu', label: 'Radio Control Unit line running' },
         { id: 't7-csd-super', label: 'Supercomputer line running' },
       ],
@@ -83,7 +89,7 @@ export const TIER_7: TierGuide = {
       title: 'Hazmat Suit (before Uranium)',
       kind: 'milestone',
       summary: 'Hazmat Suit and Iodine-Infused Filters. Needed to work near Uranium in Tier 8.',
-      tasks: [{ id: 't7-hz-submit', label: 'Submit Hazmat Suit' }],
+      tasks: [{ id: 't7-hz-submit', label: 'Submit Hazmat Suit', milestoneId: 'Schematic_7-3_C' }],
       milestoneIds: ['Schematic_7-3_C'],
     },
     {
@@ -91,7 +97,7 @@ export const TIER_7: TierGuide = {
       title: 'Hoverpack',
       kind: 'milestone',
       summary: 'Flight along power lines: great for building tall factories on the uplands.',
-      tasks: [{ id: 't7-hp-submit', label: 'Submit Hoverpack' }],
+      tasks: [{ id: 't7-hp-submit', label: 'Submit Hoverpack', milestoneId: 'Schematic_8-3_C' }],
       milestoneIds: ['Schematic_8-3_C'],
     },
     {

@@ -24,7 +24,7 @@ export const TIER_2: TierGuide = {
       summary:
         'Re-belt every pure-node miner with Mk.2 belts: 60 → 120 ore/min each, no new miners needed.',
       tasks: [
-        { id: 't2-log2-submit', label: 'Submit Logistics Mk.2' },
+        { id: 't2-log2-submit', label: 'Submit Logistics Mk.2', milestoneId: 'Schematic_3-2_C' },
         { id: 't2-log2-upgrade', label: 'Upgrade miner output belts on pure nodes to Mk.2' },
       ],
       milestoneIds: ['Schematic_3-2_C'],
@@ -36,7 +36,7 @@ export const TIER_2: TierGuide = {
       summary:
         'Unlocks the Assembler plus Copper Sheet, Rotor, Modular Frame and Smart Plating recipes.',
       tasks: [
-        { id: 't2-pa-submit', label: 'Submit Part Assembly' },
+        { id: 't2-pa-submit', label: 'Submit Part Assembly', milestoneId: 'Schematic_2-1_C' },
         { id: 't2-pa-rip', label: 'Build the Reinforced Iron Plate line' },
         { id: 't2-pa-rotor', label: 'Build the Rotor line' },
       ],
@@ -70,7 +70,7 @@ export const TIER_2: TierGuide = {
       summary:
         'The Chainsaw clears foliage for building and gathers Biomass fast; Solid Biofuel keeps burners running longer.',
       tasks: [
-        { id: 't2-oc-submit', label: 'Submit Obstacle Clearing' },
+        { id: 't2-oc-submit', label: 'Submit Obstacle Clearing', milestoneId: 'Schematic_2-2_C' },
         { id: 't2-oc-biofuel', label: 'Switch Biomass Burners to Solid Biofuel' },
       ],
       milestoneIds: ['Schematic_2-2_C'],
@@ -82,7 +82,11 @@ export const TIER_2: TierGuide = {
       summary:
         'The AWESOME Sink turns surplus into FICSIT Coupons for the AWESOME Shop (cosmetics, extra buildables, even Hard Drives late on).',
       tasks: [
-        { id: 't2-sink-submit', label: 'Submit Resource Sink Bonus Program' },
+        {
+          id: 't2-sink-submit',
+          label: 'Submit Resource Sink Bonus Program',
+          milestoneId: 'Schematic_2-5_C',
+        },
         { id: 't2-sink-build', label: 'Place an AWESOME Sink fed by overflow from your malls' },
       ],
       milestoneIds: ['Schematic_2-5_C'],
@@ -91,9 +95,16 @@ export const TIER_2: TierGuide = {
       id: 't2-jump-pads',
       title: 'Jump Pads (optional)',
       kind: 'milestone',
+      optional: true,
       summary:
         'Handy for climbing the Rocky Desert cliffs before the Jetpack. Cheap, but skippable.',
-      tasks: [{ id: 't2-jp-submit', label: 'Submit Jump Pads (optional)' }],
+      tasks: [
+        {
+          id: 't2-jp-submit',
+          label: 'Submit Jump Pads (optional)',
+          milestoneId: 'Schematic_2-3_C',
+        },
+      ],
       milestoneIds: ['Schematic_2-3_C'],
     },
     {

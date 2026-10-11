@@ -32,6 +32,15 @@ export function taskIdsOf(tier: TierGuide): string[] {
   return tier.steps.flatMap((s) => s.tasks.map((t) => t.id));
 }
 
+/** Task ID → the milestone it submits, for every linked task. */
+export const MILESTONE_BY_TASK: ReadonlyMap<string, string> = new Map(
+  TIERS.flatMap((t) =>
+    t.steps.flatMap((s) =>
+      s.tasks.flatMap((task) => (task.milestoneId ? [[task.id, task.milestoneId] as const] : [])),
+    ),
+  ),
+);
+
 export function stepById(id: string): GuideStep | undefined {
   for (const tier of TIERS) {
     const step = tier.steps.find((s) => s.id === id);

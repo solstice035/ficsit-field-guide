@@ -27,7 +27,7 @@ export const TIER_5: TierGuide = {
         'Pipe the Heavy Oil Residue to a Residual Fuel refinery, or package it and sink it.',
       ],
       tasks: [
-        { id: 't5-oil-submit', label: 'Submit Oil Processing' },
+        { id: 't5-oil-submit', label: 'Submit Oil Processing', milestoneId: 'Schematic_5-1_C' },
         { id: 't5-oil-extract', label: 'Oil Extractors on both pure nodes' },
         { id: 't5-oil-refine', label: 'Plastic and Rubber refineries running' },
       ],
@@ -41,7 +41,7 @@ export const TIER_5: TierGuide = {
       kind: 'power',
       summary: '4 Fuel Generators = 1 GW on 80 m³/min of Fuel from 120 m³/min Crude.',
       tasks: [
-        { id: 't5-pp-submit', label: 'Submit Petroleum Power' },
+        { id: 't5-pp-submit', label: 'Submit Petroleum Power', milestoneId: 'Schematic_5-5_C' },
         { id: 't5-pp-build', label: 'Build the Fuel power plant' },
       ],
       milestoneIds: ['Schematic_5-5_C'],
@@ -61,7 +61,9 @@ export const TIER_5: TierGuide = {
       kind: 'milestone',
       summary:
         'Packagers turn fluids into items for vehicles, the AWESOME Sink and long-distance transport.',
-      tasks: [{ id: 't5-fp-submit', label: 'Submit Fluid Packaging' }],
+      tasks: [
+        { id: 't5-fp-submit', label: 'Submit Fluid Packaging', milestoneId: 'Schematic_5-4_C' },
+      ],
       milestoneIds: ['Schematic_5-4_C'],
     },
     {
@@ -74,7 +76,7 @@ export const TIER_5: TierGuide = {
         'A Fluid Truck can ferry Fuel or Water to sites where pipes are impractical, like the Coal Plateau.',
       ],
       tasks: [
-        { id: 't5-l4-submit', label: 'Submit Logistics Mk.4' },
+        { id: 't5-l4-submit', label: 'Submit Logistics Mk.4', milestoneId: 'Schematic_6-1_C' },
         { id: 't5-l4-truck', label: 'Set up a truck route: coast → HUB (Plastic, Rubber)' },
       ],
       milestoneIds: ['Schematic_6-1_C'],
@@ -84,7 +86,7 @@ export const TIER_5: TierGuide = {
       title: 'Jetpack',
       kind: 'milestone',
       summary: 'Vertical mobility for the Rocky Desert cliffs and the Coal Plateau.',
-      tasks: [{ id: 't5-jp-submit', label: 'Submit Jetpack' }],
+      tasks: [{ id: 't5-jp-submit', label: 'Submit Jetpack', milestoneId: 'Schematic_6-2_C' }],
       milestoneIds: ['Schematic_6-2_C'],
     },
     {

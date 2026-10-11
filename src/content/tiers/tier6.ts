@@ -23,7 +23,11 @@ export const TIER_6: TierGuide = {
       kind: 'milestone',
       summary: 'The Manufacturer (55 MW, 4 inputs). Computers and Heavy Modular Frames first.',
       tasks: [
-        { id: 't6-im-submit', label: 'Submit Industrial Manufacturing' },
+        {
+          id: 't6-im-submit',
+          label: 'Submit Industrial Manufacturing',
+          milestoneId: 'Schematic_5-2_C',
+        },
         { id: 't6-im-computers', label: 'Computer line running' },
         { id: 't6-im-hmf', label: 'Heavy Modular Frame line running' },
       ],
@@ -41,8 +45,16 @@ export const TIER_6: TierGuide = {
         'Freight Platforms load 2 belts each way. Fluid Freight Platforms carry Plastic feedstock, Fuel or Water.',
       ],
       tasks: [
-        { id: 't6-rail-submit', label: 'Submit Monorail Train Technology' },
-        { id: 't6-rail-signal', label: 'Submit Railway Signalling' },
+        {
+          id: 't6-rail-submit',
+          label: 'Submit Monorail Train Technology',
+          milestoneId: 'Schematic_6-3_C',
+        },
+        {
+          id: 't6-rail-signal',
+          label: 'Submit Railway Signalling',
+          milestoneId: 'Schematic_6-7_C',
+        },
         { id: 't6-rail-loop', label: 'Build the main rail loop with stations at each site' },
       ],
       milestoneIds: ['Schematic_6-3_C', 'Schematic_6-7_C'],
@@ -53,7 +65,13 @@ export const TIER_6: TierGuide = {
       kind: 'milestone',
       summary:
         '600 m³/min pipes and Pump Mk.2 (50 m head lift). Re-pipe the oil field and the Coal Plateau riser.',
-      tasks: [{ id: 't6-pe2-submit', label: 'Submit Pipeline Engineering Mk.2' }],
+      tasks: [
+        {
+          id: 't6-pe2-submit',
+          label: 'Submit Pipeline Engineering Mk.2',
+          milestoneId: 'Schematic_6-5_C',
+        },
+      ],
       milestoneIds: ['Schematic_6-5_C'],
     },
     {
@@ -84,7 +102,13 @@ export const TIER_6: TierGuide = {
       title: 'FICSIT Blueprints Mk.2',
       kind: 'milestone',
       summary: 'Larger blueprint designer: blueprint a full Manufacturer cell.',
-      tasks: [{ id: 't6-bp2-submit', label: 'Submit FICSIT Blueprints Mk.2' }],
+      tasks: [
+        {
+          id: 't6-bp2-submit',
+          label: 'Submit FICSIT Blueprints Mk.2',
+          milestoneId: 'Schematic_6-6_C',
+        },
+      ],
       milestoneIds: ['Schematic_6-6_C'],
     },
     {
