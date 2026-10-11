@@ -282,9 +282,9 @@ Tactile and sturdy: they should feel like switches on a console.
 - **Style:** a Raised Console fill, Bezel Line border and 4px radius. The tabular amount is in Lit Amber semibold, followed by the item name in Readout White. A tier badge is appended when the item is not yet producible.
 - **Icon (planned):** once icons ship, the item icon sits between the amount and the name at body size (about 20px), as decorative `alt=""` because the name follows. The order is amount, then icon, then name, so the figure still leads.
 
-### Game icons (planned)
+### Game icons
 
-Item, building and resource icons are permitted but not yet implemented.
+Item, building and resource icons ship as 64 px WebP in `public/icons/` (see `docs/DATA.md`) and render through `GameIcon`. Item chips (`ItemAmounts`) show them at 20 px; the redesign (I-83 onwards) adds the rest.
 
 - **Always labelled:** an icon never replaces the text name, in chips, tables, selectors, the flow diagram or map legends. When the name is adjacent the icon is decorative (`alt=""`); if an icon must stand alone, it gets the name as its accessible label and a visible tooltip on hover and focus.
 - **Sizes:** 16px inline in tables and badges, 20px in chips and lists, 32px in headers and cards. Never scale an icon up past its source resolution.

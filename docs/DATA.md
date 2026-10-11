@@ -6,7 +6,20 @@ All game data the app uses is generated, committed, and reproducible.
 npm run data:fetch    # download pinned sources → data/raw/ (git-ignored) + sources.lock.json
 npm run data:build    # parse → src/data/generated/*.json
 npm run data:verify   # cross-check vs SatisfactoryTools + world totals; exit 1 on drift
+
+npm run data:fetch-icons   # one icon per item and building → data/raw/icons/ + icons.lock.json
+npm run data:build-icons   # 64 px WebP → public/icons/<class name>.webp + src/data/generated/icons.json
 ```
+
+## Game icons
+
+- **Source:** the Satisfactory Wiki (`satisfactory.wiki.gg`) through the MediaWiki API. Each item or building maps to `File:<display name>.png`, following the wiki's redirects (so `Factory Cart™` resolves to `Factory Cart.png`).
+- **Guard:** the resolved file must sit in an icon category ("Item icons", "Building icons" and so on) and be at least 64 px. The wiki redirects missing icons to an "Unknown" placeholder (category "FP icons"), which the guard rejects, so a bad match fails the fetch instead of shipping a placeholder.
+- **Overrides:** `ICON_OVERRIDES` in `scripts/data/sources.ts`. Three have no wiki icon (checked 2026-10-11): SAM Fluctuator, Converter and Quantum Encoder. They come from greeny/SatisfactoryTools at the pinned commit.
+- **Politeness:** a named User-Agent, one request a second, and cached files are skipped unless their source URL changed. The icon scripts stay out of `data:fetch`, so CI never calls the wiki.
+- **Output:** 230 icons, about 600 KiB of WebP, served from the app's own origin. Nothing hotlinks the wiki at runtime.
+- **Test:** `src/content/content.test.ts` fails if any item or building lacks `public/icons/<id>.webp`.
+- **Fallback:** extract the icons from a local game install with FModel if the wiki falls behind a patch.
 
 ## Sources (pinned by commit SHA in `scripts/data/sources.ts`)
 
