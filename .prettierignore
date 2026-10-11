@@ -3,3 +3,5 @@ coverage
 data/raw
 src/data/generated
 package-lock.json
+model/generated
+dist-data

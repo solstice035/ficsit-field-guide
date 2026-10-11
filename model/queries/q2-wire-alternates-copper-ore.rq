@@ -1,0 +1,22 @@
+# Q2. Alternate Wire recipes that use less Copper Ore per Wire than the standard
+# recipe, assuming the standard Copper Ingot recipe.
+SELECT DISTINCT ?recipe ?orePerWire
+WHERE {
+  fgd:Recipe_IngotCopper_C
+    ficsit:ingredients [ ficsit:item fgd:Desc_OreCopper_C ; ficsit:amount ?oreIn ] ;
+    ficsit:products [ ficsit:item fgd:Desc_CopperIngot_C ; ficsit:amount ?ingotOut ] .
+  fgd:Recipe_Wire_C
+    ficsit:ingredients [ ficsit:item fgd:Desc_CopperIngot_C ; ficsit:amount ?stdIn ] ;
+    ficsit:products [ ficsit:item fgd:Desc_Wire_C ; ficsit:amount ?stdOut ] .
+  ?recipe a ficsit:Recipe ;
+    ficsit:alternate true ;
+    ficsit:producedIn ?building ;
+    ficsit:products [ ficsit:item fgd:Desc_Wire_C ; ficsit:amount ?out ] .
+  OPTIONAL {
+    ?recipe ficsit:ingredients [ ficsit:item fgd:Desc_CopperIngot_C ; ficsit:amount ?in ]
+  }
+  # Brackets are required: Oxigraph 0.5.11 groups chained / and - from the right.
+  BIND ((COALESCE(?in, 0) * ?oreIn) / (?ingotOut * ?out) AS ?orePerWire)
+  FILTER (?orePerWire < (?stdIn * ?oreIn) / (?ingotOut * ?stdOut))
+}
+ORDER BY ?orePerWire ?recipe

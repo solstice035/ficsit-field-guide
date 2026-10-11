@@ -1,0 +1,14 @@
+# Q5. Resource nodes within 1 km of the default base (-1,640 m, -330 m) that
+# supply a raw input of the standard Steel Ingot chain.
+SELECT ?node ?resource ?purity (?d2 AS ?distanceSquared)
+WHERE {
+  fgd:Desc_SteelIngot_C ficsit:madeFrom* ?resource .
+  ?node a ficsit:ResourceNode ;
+    ficsit:resource ?resource ;
+    ficsit:purity ?purity ;
+    ficsit:x ?x ;
+    ficsit:y ?y .
+  BIND ((?x + 1640) * (?x + 1640) + (?y + 330) * (?y + 330) AS ?d2)
+  FILTER (?d2 <= 1000000)
+}
+ORDER BY ?d2 ?node

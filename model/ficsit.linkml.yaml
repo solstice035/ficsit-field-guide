@@ -1,0 +1,472 @@
+id: https://solstice035.github.io/ficsit-field-guide/vocab
+name: ficsit
+title: FICSIT Field Guide game-data model
+description: >-
+  Single source of truth for the FICSIT Field Guide's game data. Generates JSON
+  Schema, SQL DDL, a JSON-LD context and SHACL shapes (see model/README.md).
+  Units: rates per minute, fluids in m³, power in MW, durations in seconds,
+  world coordinates in metres (x east, y south; north is −y).
+  Data is community-sourced from open-source projects and the Satisfactory
+  Wiki; it may lag game patches. Verify in game.
+license: MIT
+version: 0.1.0
+
+prefixes:
+  ficsit: https://solstice035.github.io/ficsit-field-guide/vocab#
+  fgd: https://solstice035.github.io/ficsit-field-guide/id/
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+default_prefix: ficsit
+default_range: string
+
+imports:
+  - linkml:types
+
+classes:
+  GameData:
+    tree_root: true
+    description: Container for one generated game-data bundle.
+    slots:
+      - items
+      - recipes
+      - buildings
+      - schematics
+      - resourceNodes
+      - collectibles
+    slot_usage:
+      recipes:
+        inlined_as_list: true
+      schematics:
+        inlined_as_list: true
+
+  Item:
+    description: An item, fluid or gas (`Desc_*_C`).
+    class_uri: ficsit:Item
+    slots:
+      - id
+      - name
+      - description
+      - form
+      - sinkPoints
+      - energyMJ
+      - radioactive
+      - isResource
+
+  ItemAmount:
+    description: A quantity of one item, used for ingredients, products and costs.
+    class_uri: ficsit:ItemAmount
+    slots:
+      - item
+      - amount
+
+  Ingredient:
+    is_a: ItemAmount
+    description: >-
+      An input to a recipe. A distinct class (not just ItemAmount) so the
+      relational and graph views keep ingredients and products apart.
+    class_uri: ficsit:Ingredient
+
+  Product:
+    is_a: ItemAmount
+    description: An output of a recipe.
+    class_uri: ficsit:Product
+
+  Recipe:
+    description: A recipe (`Recipe_*_C`). Fluid amounts are in m³.
+    class_uri: ficsit:Recipe
+    slots:
+      - id
+      - name
+      - alternate
+      - durationS
+      - ingredients
+      - products
+      - producedIn
+      - handcraft
+      - buildGun
+      - workshop
+      - variablePower
+
+  VariablePower:
+    class_uri: ficsit:VariablePower
+    slots:
+      - minMW
+      - maxMW
+
+  Building:
+    description: A factory, extractor, generator or logistics building (`Build_*_C`).
+    class_uri: ficsit:Building
+    slots:
+      - id
+      - name
+      - category
+      - powerMW
+      - powerExponent
+      - sloopSlots
+      - footprint
+      - buildCost
+      - extractor
+      - generator
+      - beltRate
+      - pipeRate
+      - variablePower
+
+  Footprint:
+    description: Clearance box in metres.
+    class_uri: ficsit:Footprint
+    slots:
+      - w
+      - l
+      - h
+
+  ExtractorSpec:
+    class_uri: ficsit:ExtractorSpec
+    slots:
+      - baseRatePerMin
+      - resources
+
+  GeneratorSpec:
+    class_uri: ficsit:GeneratorSpec
+    slots:
+      - powerMW
+      - fuels
+      - supplementalPerMW
+
+  GeneratorFuel:
+    class_uri: ficsit:GeneratorFuel
+    slots:
+      - item
+      - supplemental
+      - byproduct
+
+  Schematic:
+    description: A milestone, MAM node, alternate or other unlock (`Schematic_*_C`).
+    class_uri: ficsit:Schematic
+    slots:
+      - id
+      - name
+      - type
+      - tier
+      - cost
+      - timeS
+      - unlocks
+      - dependsOn
+      - mamTree
+    slot_usage:
+      type:
+        range: SchematicType
+
+  SchematicUnlocks:
+    class_uri: ficsit:SchematicUnlocks
+    slots:
+      - recipes
+      - schematics
+      - scannerResources
+      - scannerObjects
+      - inventorySlots
+      - armSlots
+    slot_usage:
+      recipes:
+        description: Recipes this schematic unlocks (references).
+      schematics:
+        description: Schematics this schematic unlocks (references).
+
+  ResourceNode:
+    description: >-
+      A resource node, well or geyser in the world. `resource` is an item ID,
+      or `geothermal` for geysers.
+    class_uri: ficsit:ResourceNode
+    slots:
+      - id
+      - resource
+      - purity
+      - type
+      - x
+      - y
+      - z
+    slot_usage:
+      type:
+        range: NodeType
+
+  Collectible:
+    description: A Mercer Sphere, Somersloop, Hard Drive crash site or Power Slug.
+    class_uri: ficsit:Collectible
+    slots:
+      - id
+      - type
+      - x
+      - y
+      - z
+      - unlockCost
+    slot_usage:
+      type:
+        range: CollectibleType
+
+slots:
+  # --- identity -------------------------------------------------------------
+  id:
+    identifier: true
+    range: uriorcurie
+    description: The game's class name, e.g. `Desc_IronPlate_C`.
+  name:
+    slot_uri: schema:name
+  description:
+    slot_uri: schema:description
+
+  # --- containers -------------------------------------------------------------
+  items:
+    range: Item
+    multivalued: true
+    inlined_as_list: true
+  recipes:
+    range: Recipe
+    multivalued: true
+  buildings:
+    range: Building
+    multivalued: true
+    inlined_as_list: true
+  schematics:
+    range: Schematic
+    multivalued: true
+  resourceNodes:
+    range: ResourceNode
+    multivalued: true
+    inlined_as_list: true
+  collectibles:
+    range: Collectible
+    multivalued: true
+    inlined_as_list: true
+
+  # --- items ------------------------------------------------------------------
+  form:
+    range: ItemForm
+    required: true
+  sinkPoints:
+    range: integer
+    description: AWESOME Sink points per item (0 if unsinkable).
+  energyMJ:
+    range: double
+    description: Energy per item, or per m³ for fluids (0 if not a fuel).
+    unit:
+      ucum_code: MJ
+  radioactive:
+    range: boolean
+  isResource:
+    range: boolean
+    description: Raw resource extracted from the world.
+
+  item:
+    range: Item
+    required: true
+  amount:
+    range: double
+    required: true
+    description: Item count, or m³ for fluids.
+
+  # --- recipes ----------------------------------------------------------------
+  alternate:
+    range: boolean
+    required: true
+  durationS:
+    range: double
+    required: true
+    unit:
+      ucum_code: s
+  ingredients:
+    range: Ingredient
+    multivalued: true
+    inlined_as_list: true
+  products:
+    range: Product
+    multivalued: true
+    inlined_as_list: true
+  producedIn:
+    range: Building
+    multivalued: true
+    description: Factory buildings that can run this recipe.
+  handcraft:
+    range: boolean
+  buildGun:
+    range: boolean
+  workshop:
+    range: boolean
+  variablePower:
+    range: VariablePower
+    inlined: true
+  minMW:
+    range: double
+    unit:
+      ucum_code: MW
+  maxMW:
+    range: double
+    unit:
+      ucum_code: MW
+
+  # --- buildings --------------------------------------------------------------
+  category:
+    range: BuildingCategory
+    required: true
+  powerMW:
+    range: double
+    unit:
+      ucum_code: MW
+  powerExponent:
+    range: double
+  sloopSlots:
+    range: integer
+  footprint:
+    range: Footprint
+    inlined: true
+  w:
+    range: double
+    unit:
+      ucum_code: m
+  l:
+    range: double
+    unit:
+      ucum_code: m
+  h:
+    range: double
+    unit:
+      ucum_code: m
+  buildCost:
+    range: ItemAmount
+    multivalued: true
+    inlined_as_list: true
+  extractor:
+    range: ExtractorSpec
+    inlined: true
+  baseRatePerMin:
+    range: double
+    unit:
+      ucum_code: /min
+  resources:
+    range: Item
+    multivalued: true
+  generator:
+    range: GeneratorSpec
+    inlined: true
+  fuels:
+    range: GeneratorFuel
+    multivalued: true
+    inlined_as_list: true
+  supplemental:
+    range: Item
+  byproduct:
+    range: ItemAmount
+    inlined: true
+  supplementalPerMW:
+    range: double
+    unit:
+      ucum_code: m3/min/MW
+  beltRate:
+    range: double
+    unit:
+      ucum_code: /min
+  pipeRate:
+    range: double
+    unit:
+      ucum_code: m3/min
+
+  # --- schematics -------------------------------------------------------------
+  tier:
+    range: integer
+    required: true
+  cost:
+    range: ItemAmount
+    multivalued: true
+    inlined_as_list: true
+  timeS:
+    range: double
+    unit:
+      ucum_code: s
+  unlocks:
+    range: SchematicUnlocks
+    inlined: true
+  scannerResources:
+    multivalued: true
+  scannerObjects:
+    multivalued: true
+  inventorySlots:
+    range: integer
+  armSlots:
+    range: integer
+  dependsOn:
+    range: Schematic
+    multivalued: true
+  mamTree:
+
+  # --- world ------------------------------------------------------------------
+  resource:
+    range: Item
+    required: true
+    description: Item ID of the resource, or `geothermal` for geysers.
+  purity:
+    range: Purity
+    required: true
+  type:
+    required: true
+    description: Kind of schematic, node or collectible (range set per class).
+  x:
+    range: double
+    required: true
+    unit:
+      ucum_code: m
+  y:
+    range: double
+    required: true
+    unit:
+      ucum_code: m
+  z:
+    range: double
+    required: true
+    unit:
+      ucum_code: m
+  unlockCost:
+    range: ItemAmount
+    multivalued: true
+    inlined_as_list: true
+
+enums:
+  ItemForm:
+    permissible_values:
+      solid:
+      liquid:
+      gas:
+  Purity:
+    permissible_values:
+      impure:
+      normal:
+      pure:
+  BuildingCategory:
+    permissible_values:
+      production:
+      extractor:
+      generator:
+      logistics:
+  SchematicType:
+    permissible_values:
+      tutorial:
+      milestone:
+      mam:
+      alternate:
+      hard-drive:
+      resource-sink:
+      custom:
+      customization:
+  NodeType:
+    permissible_values:
+      node:
+      well-core:
+      well-satellite:
+      geyser:
+  CollectibleType:
+    permissible_values:
+      mercerSphere:
+      somersloop:
+      hardDrive:
+      slugBlue:
+      slugYellow:
+      slugPurple:

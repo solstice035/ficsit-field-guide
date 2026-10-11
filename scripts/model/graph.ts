@@ -1,0 +1,362 @@
+/**
+ * Builds the two published views of the game data from the generated JSON:
+ *
+ * - a SQLite database whose tables come from the LinkML-generated DDL
+ *   (`model/generated/ficsit.sql`), and
+ * - an RDF graph produced by applying the LinkML-generated JSON-LD context
+ *   (`model/generated/ficsit.context.jsonld`) to the same JSON.
+ *
+ * Both views are derived from `model/ficsit.linkml.yaml`; see model/README.md.
+ */
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { DatabaseSync } from 'node:sqlite';
+import rdf from '@zazuko/env/web.js';
+import jsonld from 'jsonld';
+import { Store, type Term, defaultGraph as oxigraphDefaultGraph } from 'oxigraph';
+import SHACLValidator from 'rdf-validate-shacl';
+import type {
+  Building,
+  Collectible,
+  DataMeta,
+  Item,
+  ItemAmount,
+  Recipe,
+  ResourceNode,
+  Schematic,
+} from '../../src/data/types.ts';
+
+export const ROOT = join(import.meta.dirname, '..', '..');
+export const MODEL_DIR = join(ROOT, 'model', 'generated');
+const DATA_DIR = join(ROOT, 'src', 'data', 'generated');
+
+/** Namespace for data IRIs (`fgd:Desc_IronPlate_C`). */
+export const DATA_NS = 'https://solstice035.github.io/ficsit-field-guide/id/';
+/** Namespace for the vocabulary (`ficsit:Recipe`, `ficsit:producedIn`). */
+export const VOCAB_NS = 'https://solstice035.github.io/ficsit-field-guide/vocab#';
+
+export interface GameData {
+  items: Item[];
+  recipes: Recipe[];
+  buildings: Building[];
+  schematics: Schematic[];
+  resourceNodes: ResourceNode[];
+  collectibles: Collectible[];
+}
+
+function readJson<T>(path: string): T {
+  return JSON.parse(readFileSync(path, 'utf8')) as T;
+}
+
+export function loadGameData(): GameData {
+  return {
+    items: readJson(join(DATA_DIR, 'items.json')),
+    recipes: readJson(join(DATA_DIR, 'recipes.json')),
+    buildings: readJson(join(DATA_DIR, 'buildings.json')),
+    schematics: readJson(join(DATA_DIR, 'schematics.json')),
+    resourceNodes: readJson(join(DATA_DIR, 'nodes.json')),
+    collectibles: readJson(join(DATA_DIR, 'collectibles.json')),
+  };
+}
+
+export function loadMeta(): DataMeta {
+  return readJson(join(DATA_DIR, 'meta.json'));
+}
+
+// ---------------------------------------------------------------------------
+// SQLite
+
+export function buildSqlite(data: GameData, path = ':memory:'): DatabaseSync {
+  // Load first, then report dangling references with `foreignKeyGaps` rather than
+  // failing on the first one: the sources don't guarantee referential integrity.
+  const db = new DatabaseSync(path, { enableForeignKeyConstraints: false });
+  db.exec(readFileSync(join(MODEL_DIR, 'ficsit.sql'), 'utf8'));
+
+  const insert = (table: string, row: Record<string, unknown>): number => {
+    const cols = Object.keys(row);
+    const sql = `INSERT INTO "${table}" (${cols.map((c) => `"${c}"`).join(', ')}) VALUES (${cols
+      .map(() => '?')
+      .join(', ')})`;
+    const values = Object.values(row).map((v) =>
+      typeof v === 'boolean' ? (v ? 1 : 0) : (v ?? null),
+    ) as (string | number | null)[];
+    return Number(db.prepare(sql).run(...values).lastInsertRowid);
+  };
+  const amounts = (table: string, owner: Record<string, string>, list: ItemAmount[] = []) => {
+    for (const a of list) insert(table, { item: a.item, amount: a.amount, ...owner });
+  };
+  const variablePower = (vp?: { minMW: number; maxMW: number }) =>
+    vp ? insert('VariablePower', vp) : null;
+
+  db.exec('BEGIN');
+  for (const i of data.items) insert('Item', { ...i });
+  for (const r of data.recipes) {
+    insert('Recipe', {
+      id: r.id,
+      name: r.name,
+      alternate: r.alternate,
+      durationS: r.durationS,
+      handcraft: r.handcraft,
+      buildGun: r.buildGun,
+      workshop: r.workshop,
+      variablePower_id: variablePower(r.variablePower),
+    });
+    amounts('Ingredient', { Recipe_id: r.id }, r.ingredients);
+    amounts('Product', { Recipe_id: r.id }, r.products);
+    for (const b of r.producedIn)
+      insert('Recipe_producedIn', { Recipe_id: r.id, producedIn_id: b });
+  }
+  for (const b of data.buildings) {
+    const extractorId = b.extractor
+      ? insert('ExtractorSpec', { baseRatePerMin: b.extractor.baseRatePerMin })
+      : null;
+    for (const res of b.extractor?.resources ?? []) {
+      insert('ExtractorSpec_resources', { ExtractorSpec_id: extractorId, resources_id: res });
+    }
+    const generatorId = b.generator
+      ? insert('GeneratorSpec', {
+          powerMW: b.generator.powerMW,
+          supplementalPerMW: b.generator.supplementalPerMW,
+        })
+      : null;
+    for (const f of b.generator?.fuels ?? []) {
+      insert('GeneratorFuel', {
+        item: f.item,
+        supplemental: f.supplemental,
+        GeneratorSpec_id: generatorId,
+        byproduct_id: f.byproduct ? insert('ItemAmount', { ...f.byproduct }) : null,
+      });
+    }
+    insert('Building', {
+      id: b.id,
+      name: b.name,
+      category: b.category,
+      powerMW: b.powerMW,
+      powerExponent: b.powerExponent,
+      sloopSlots: b.sloopSlots,
+      beltRate: b.beltRate,
+      pipeRate: b.pipeRate,
+      footprint_id: b.footprint ? insert('Footprint', { ...b.footprint }) : null,
+      extractor_id: extractorId,
+      generator_id: generatorId,
+      variablePower_id: variablePower(b.variablePower),
+    });
+    amounts('ItemAmount', { Building_id: b.id }, b.buildCost);
+  }
+  for (const s of data.schematics) {
+    const u = s.unlocks;
+    const unlocksId = insert('SchematicUnlocks', {
+      inventorySlots: u.inventorySlots,
+      armSlots: u.armSlots,
+    });
+    for (const r of u.recipes)
+      insert('SchematicUnlocks_recipes', { SchematicUnlocks_id: unlocksId, recipes_id: r });
+    for (const x of u.schematics) {
+      insert('SchematicUnlocks_schematics', { SchematicUnlocks_id: unlocksId, schematics_id: x });
+    }
+    for (const x of u.scannerResources) {
+      insert('SchematicUnlocks_scannerResources', {
+        SchematicUnlocks_id: unlocksId,
+        scannerResources: x,
+      });
+    }
+    for (const x of u.scannerObjects) {
+      insert('SchematicUnlocks_scannerObjects', {
+        SchematicUnlocks_id: unlocksId,
+        scannerObjects: x,
+      });
+    }
+    insert('Schematic', {
+      id: s.id,
+      name: s.name,
+      type: s.type,
+      tier: s.tier,
+      timeS: s.timeS,
+      mamTree: s.mamTree,
+      unlocks_id: unlocksId,
+    });
+    amounts('ItemAmount', { Schematic_id: s.id }, s.cost);
+    for (const d of s.dependsOn)
+      insert('Schematic_dependsOn', { Schematic_id: s.id, dependsOn_id: d });
+  }
+  for (const n of data.resourceNodes) insert('ResourceNode', { ...n });
+  for (const c of data.collectibles) {
+    insert('Collectible', { id: c.id, type: c.type, x: c.x, y: c.y, z: c.z });
+    amounts('ItemAmount', { Collectible_id: c.id }, c.unlockCost);
+  }
+  db.exec('COMMIT');
+  return db;
+}
+
+export interface ForeignKeyGap {
+  table: string;
+  parent: string;
+  count: number;
+}
+
+/** References that point at nothing (SQLite's own foreign-key check). */
+export function foreignKeyGaps(db: DatabaseSync): ForeignKeyGap[] {
+  const rows = db.prepare('PRAGMA foreign_key_check').all() as { table: string; parent: string }[];
+  const counts = new Map<string, ForeignKeyGap>();
+  for (const r of rows) {
+    const key = `${r.table}→${r.parent}`;
+    const gap = counts.get(key) ?? { table: r.table, parent: r.parent, count: 0 };
+    gap.count += 1;
+    counts.set(key, gap);
+  }
+  return [...counts.values()].sort(
+    (a, b) => a.table.localeCompare(b.table) || a.parent.localeCompare(b.parent),
+  );
+}
+
+// ---------------------------------------------------------------------------
+// RDF
+
+/** Adds `@type` to every object so it matches its SHACL node shape. */
+function typed<T extends object>(type: string, value: T, nested: Record<string, string> = {}) {
+  const out: Record<string, unknown> = { '@type': type, ...value };
+  for (const [key, nestedType] of Object.entries(nested)) {
+    const v = out[key];
+    if (Array.isArray(v)) out[key] = v.map((x: object) => ({ '@type': nestedType, ...x }));
+    else if (v && typeof v === 'object') out[key] = { '@type': nestedType, ...v };
+  }
+  return out;
+}
+
+export function toJsonLd(data: GameData): object {
+  const context = readJson<{ '@context': object }>(join(MODEL_DIR, 'ficsit.context.jsonld'))[
+    '@context'
+  ];
+  const graph = [
+    ...data.items.map((x) => typed('Item', x)),
+    ...data.recipes.map((x) =>
+      typed('Recipe', x, {
+        ingredients: 'Ingredient',
+        products: 'Product',
+        variablePower: 'VariablePower',
+      }),
+    ),
+    ...data.buildings.map((b) => {
+      const generator = b.generator && {
+        ...b.generator,
+        fuels: b.generator.fuels.map((f) => typed('GeneratorFuel', f, { byproduct: 'ItemAmount' })),
+      };
+      return typed(
+        'Building',
+        { ...b, ...(generator ? { generator } : {}) },
+        {
+          footprint: 'Footprint',
+          buildCost: 'ItemAmount',
+          extractor: 'ExtractorSpec',
+          generator: 'GeneratorSpec',
+          variablePower: 'VariablePower',
+        },
+      );
+    }),
+    ...data.schematics.map((x) =>
+      typed('Schematic', x, { cost: 'ItemAmount', unlocks: 'SchematicUnlocks' }),
+    ),
+    ...data.resourceNodes.map((x) => typed('ResourceNode', x)),
+    ...data.collectibles.map((x) => typed('Collectible', x, { unlockCost: 'ItemAmount' })),
+  ];
+  return { '@context': [context, { '@base': DATA_NS }], '@graph': graph };
+}
+
+/** N-Quads for the whole graph (default graph only). */
+export async function toNQuads(data: GameData): Promise<string> {
+  return (await jsonld.toRDF(toJsonLd(data) as jsonld.JsonLdDocument, {
+    format: 'application/n-quads',
+  })) as unknown as string;
+}
+
+export async function buildStore(data: GameData): Promise<Store> {
+  const store = new Store();
+  store.load(await toNQuads(data), { format: 'application/n-quads' });
+  return store;
+}
+
+export const SPARQL_PREFIXES = `PREFIX ficsit: <${VOCAB_NS}>
+PREFIX fgd: <${DATA_NS}>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+`;
+
+/** Strips the data namespace so SPARQL results compare with SQL ids. */
+export function localId(iri: string): string {
+  return iri.startsWith(DATA_NS) ? iri.slice(DATA_NS.length) : iri;
+}
+
+// ---------------------------------------------------------------------------
+// Queries (model/queries/*.sql and *.rq)
+
+const QUERY_DIR = join(ROOT, 'model', 'queries');
+
+export type Row = Record<string, string | number>;
+
+/** Adds the derived `made_from` view (see model/queries/derive.sql). */
+export function deriveSql(db: DatabaseSync): void {
+  db.exec(readFileSync(join(QUERY_DIR, 'derive.sql'), 'utf8'));
+}
+
+/** Adds derived `ficsit:madeFrom` triples (see model/queries/derive.ru). */
+export function deriveRdf(store: Store): void {
+  store.update(SPARQL_PREFIXES + readFileSync(join(QUERY_DIR, 'derive.ru'), 'utf8'));
+}
+
+export function runSql(db: DatabaseSync, name: string): Row[] {
+  const sql = readFileSync(join(QUERY_DIR, `${name}.sql`), 'utf8');
+  return (db.prepare(sql).all() as Row[]).map((row) => ({ ...row }));
+}
+
+export function runSparql(store: Store, name: string): Row[] {
+  const query = SPARQL_PREFIXES + readFileSync(join(QUERY_DIR, `${name}.rq`), 'utf8');
+  const results = store.query(query) as Map<string, Term>[];
+  return results.map((binding) => {
+    const row: Row = {};
+    for (const [key, term] of binding) {
+      if (term.termType === 'Literal') {
+        const numeric = NUMERIC_TYPES.has(term.datatype.value);
+        row[key] = numeric ? Number(term.value) : term.value;
+      } else {
+        row[key] = localId(term.value);
+      }
+    }
+    return row;
+  });
+}
+
+const XSD = 'http://www.w3.org/2001/XMLSchema#';
+const NUMERIC_TYPES = new Set(['integer', 'decimal', 'float', 'double'].map((t) => XSD + t));
+
+// ---------------------------------------------------------------------------
+// SHACL
+
+export interface ShaclSummary {
+  conforms: boolean;
+  /** Violation counts keyed by `<constraint> <path>`. */
+  violations: Record<string, number>;
+}
+
+/** Validates the default graph against the LinkML-generated SHACL shapes. */
+export async function validateShacl(store: Store): Promise<ShaclSummary> {
+  const shapesStore = new Store();
+  shapesStore.load(readFileSync(join(MODEL_DIR, 'ficsit.shacl.ttl'), 'utf8'), {
+    format: 'text/turtle',
+  });
+  const toDataset = (s: Store) =>
+    rdf.dataset(
+      [...s.match(null, null, null, oxigraphDefaultGraph())].map((q) =>
+        rdf.quad(q.subject as never, q.predicate as never, q.object as never),
+      ),
+    );
+  const validator = new SHACLValidator(toDataset(shapesStore), { factory: rdf });
+  const report = await validator.validate(toDataset(store));
+  const violations: Record<string, number> = {};
+  for (const result of report.results) {
+    const component = result.sourceConstraintComponent?.value.split('#')[1] ?? '?';
+    const path = result.path?.value.split('#')[1] ?? '?';
+    const key = `${component} ${path}`;
+    violations[key] = (violations[key] ?? 0) + 1;
+  }
+  return { conforms: report.conforms, violations };
+}

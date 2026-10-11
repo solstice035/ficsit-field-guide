@@ -46,3 +46,16 @@ jobs:
       - name: Fetch pinned sources
         run: npm run data:fetch
       - run: npm run data:verify
+
+  model:
+    name: Knowledge model in sync
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        run: python3 -m pip install --user uv==0.11.32
+      - name: Regenerate model/generated from the LinkML schema
+        run: sh model/gen.sh
+      - name: Fail if model/generated is stale
+        run: git diff --exit-code -- model/generated

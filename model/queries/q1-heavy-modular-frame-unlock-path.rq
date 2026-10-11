@@ -1,0 +1,17 @@
+# Q1. Every item in the standard Heavy Modular Frame chain, with the earliest
+# milestone tier that unlocks a standard recipe for it.
+SELECT ?item (MIN(?tier) AS ?minTier)
+WHERE {
+  fgd:Desc_ModularFrameHeavy_C ficsit:madeFrom* ?item .
+  ?recipe a ficsit:Recipe ;
+    ficsit:alternate false ;
+    ficsit:producedIn ?building ;
+    ficsit:products/ficsit:item ?item .
+  ?schematic a ficsit:Schematic ;
+    ficsit:unlocks/ficsit:recipes ?recipe ;
+    ficsit:tier ?tier ;
+    ficsit:type ?type .
+  FILTER (?type IN ("milestone", "tutorial"))
+}
+GROUP BY ?item
+ORDER BY DESC(?minTier) ?item

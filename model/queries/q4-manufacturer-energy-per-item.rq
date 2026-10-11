@@ -1,0 +1,11 @@
+# Q4. Manufacturer recipes ranked by energy per item made (MJ = MW × s / items).
+SELECT ?recipe ?product ?mjPerItem
+WHERE {
+  ?recipe a ficsit:Recipe ;
+    ficsit:producedIn fgd:Build_ManufacturerMk1_C ;
+    ficsit:durationS ?duration ;
+    ficsit:products [ ficsit:item ?product ; ficsit:amount ?amount ] .
+  fgd:Build_ManufacturerMk1_C ficsit:powerMW ?mw .
+  BIND ((?mw * ?duration) / ?amount AS ?mjPerItem)
+}
+ORDER BY DESC(?mjPerItem) ?recipe ?product

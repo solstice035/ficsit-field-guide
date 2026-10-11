@@ -1,0 +1,843 @@
+{
+    "$defs": {
+        "Building": {
+            "additionalProperties": false,
+            "description": "A factory, extractor, generator or logistics building (`Build_*_C`).",
+            "properties": {
+                "beltRate": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "buildCost": {
+                    "items": {
+                        "$ref": "#/$defs/ItemAmount"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "category": {
+                    "$ref": "#/$defs/BuildingCategory"
+                },
+                "extractor": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ExtractorSpec"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "footprint": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/Footprint"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "generator": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/GeneratorSpec"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "id": {
+                    "description": "The game's class name, e.g. `Desc_IronPlate_C`.",
+                    "type": "string"
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "pipeRate": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "powerExponent": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "powerMW": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "sloopSlots": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "variablePower": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/VariablePower"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "category"
+            ],
+            "title": "Building",
+            "type": "object"
+        },
+        "BuildingCategory": {
+            "description": "",
+            "enum": [
+                "production",
+                "extractor",
+                "generator",
+                "logistics"
+            ],
+            "title": "BuildingCategory",
+            "type": "string"
+        },
+        "Collectible": {
+            "additionalProperties": false,
+            "description": "A Mercer Sphere, Somersloop, Hard Drive crash site or Power Slug.",
+            "properties": {
+                "id": {
+                    "description": "The game's class name, e.g. `Desc_IronPlate_C`.",
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/$defs/CollectibleType",
+                    "description": "Kind of schematic, node or collectible (range set per class)."
+                },
+                "unlockCost": {
+                    "items": {
+                        "$ref": "#/$defs/ItemAmount"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "z": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "id",
+                "type",
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "Collectible",
+            "type": "object"
+        },
+        "CollectibleType": {
+            "description": "",
+            "enum": [
+                "mercerSphere",
+                "somersloop",
+                "hardDrive",
+                "slugBlue",
+                "slugYellow",
+                "slugPurple"
+            ],
+            "title": "CollectibleType",
+            "type": "string"
+        },
+        "ExtractorSpec": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "baseRatePerMin": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "resources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "ExtractorSpec",
+            "type": "object"
+        },
+        "Footprint": {
+            "additionalProperties": false,
+            "description": "Clearance box in metres.",
+            "properties": {
+                "h": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "l": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "w": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "title": "Footprint",
+            "type": "object"
+        },
+        "GameData": {
+            "additionalProperties": false,
+            "description": "Container for one generated game-data bundle.",
+            "properties": {
+                "buildings": {
+                    "items": {
+                        "$ref": "#/$defs/Building"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "collectibles": {
+                    "items": {
+                        "$ref": "#/$defs/Collectible"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "items": {
+                    "items": {
+                        "$ref": "#/$defs/Item"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "recipes": {
+                    "items": {
+                        "$ref": "#/$defs/Recipe"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "resourceNodes": {
+                    "items": {
+                        "$ref": "#/$defs/ResourceNode"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "schematics": {
+                    "items": {
+                        "$ref": "#/$defs/Schematic"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "GameData",
+            "type": "object"
+        },
+        "GeneratorFuel": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "byproduct": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/ItemAmount"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "item": {
+                    "type": "string"
+                },
+                "supplemental": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "item"
+            ],
+            "title": "GeneratorFuel",
+            "type": "object"
+        },
+        "GeneratorSpec": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "fuels": {
+                    "items": {
+                        "$ref": "#/$defs/GeneratorFuel"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "powerMW": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "supplementalPerMW": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "title": "GeneratorSpec",
+            "type": "object"
+        },
+        "Ingredient": {
+            "additionalProperties": false,
+            "description": "An input to a recipe. A distinct class (not just ItemAmount) so the relational and graph views keep ingredients and products apart.",
+            "properties": {
+                "amount": {
+                    "description": "Item count, or m\u00b3 for fluids.",
+                    "type": "number"
+                },
+                "item": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "item",
+                "amount"
+            ],
+            "title": "Ingredient",
+            "type": "object"
+        },
+        "Item": {
+            "additionalProperties": false,
+            "description": "An item, fluid or gas (`Desc_*_C`).",
+            "properties": {
+                "description": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "energyMJ": {
+                    "description": "Energy per item, or per m\u00b3 for fluids (0 if not a fuel).",
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "form": {
+                    "$ref": "#/$defs/ItemForm"
+                },
+                "id": {
+                    "description": "The game's class name, e.g. `Desc_IronPlate_C`.",
+                    "type": "string"
+                },
+                "isResource": {
+                    "description": "Raw resource extracted from the world.",
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "radioactive": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "sinkPoints": {
+                    "description": "AWESOME Sink points per item (0 if unsinkable).",
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "form"
+            ],
+            "title": "Item",
+            "type": "object"
+        },
+        "ItemAmount": {
+            "additionalProperties": false,
+            "description": "A quantity of one item, used for ingredients, products and costs.",
+            "properties": {
+                "amount": {
+                    "description": "Item count, or m\u00b3 for fluids.",
+                    "type": "number"
+                },
+                "item": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "item",
+                "amount"
+            ],
+            "title": "ItemAmount",
+            "type": "object"
+        },
+        "ItemForm": {
+            "description": "",
+            "enum": [
+                "solid",
+                "liquid",
+                "gas"
+            ],
+            "title": "ItemForm",
+            "type": "string"
+        },
+        "NodeType": {
+            "description": "",
+            "enum": [
+                "node",
+                "well-core",
+                "well-satellite",
+                "geyser"
+            ],
+            "title": "NodeType",
+            "type": "string"
+        },
+        "Product": {
+            "additionalProperties": false,
+            "description": "An output of a recipe.",
+            "properties": {
+                "amount": {
+                    "description": "Item count, or m\u00b3 for fluids.",
+                    "type": "number"
+                },
+                "item": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "item",
+                "amount"
+            ],
+            "title": "Product",
+            "type": "object"
+        },
+        "Purity": {
+            "description": "",
+            "enum": [
+                "impure",
+                "normal",
+                "pure"
+            ],
+            "title": "Purity",
+            "type": "string"
+        },
+        "Recipe": {
+            "additionalProperties": false,
+            "description": "A recipe (`Recipe_*_C`). Fluid amounts are in m\u00b3.",
+            "properties": {
+                "alternate": {
+                    "type": "boolean"
+                },
+                "buildGun": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "durationS": {
+                    "type": "number"
+                },
+                "handcraft": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The game's class name, e.g. `Desc_IronPlate_C`.",
+                    "type": "string"
+                },
+                "ingredients": {
+                    "items": {
+                        "$ref": "#/$defs/Ingredient"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "producedIn": {
+                    "description": "Factory buildings that can run this recipe.",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "products": {
+                    "items": {
+                        "$ref": "#/$defs/Product"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "variablePower": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/VariablePower"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "workshop": {
+                    "type": [
+                        "boolean",
+                        "null"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "alternate",
+                "durationS"
+            ],
+            "title": "Recipe",
+            "type": "object"
+        },
+        "ResourceNode": {
+            "additionalProperties": false,
+            "description": "A resource node, well or geyser in the world. `resource` is an item ID, or `geothermal` for geysers.",
+            "properties": {
+                "id": {
+                    "description": "The game's class name, e.g. `Desc_IronPlate_C`.",
+                    "type": "string"
+                },
+                "purity": {
+                    "$ref": "#/$defs/Purity"
+                },
+                "resource": {
+                    "description": "Item ID of the resource, or `geothermal` for geysers.",
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/$defs/NodeType",
+                    "description": "Kind of schematic, node or collectible (range set per class)."
+                },
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "z": {
+                    "type": "number"
+                }
+            },
+            "required": [
+                "id",
+                "resource",
+                "purity",
+                "type",
+                "x",
+                "y",
+                "z"
+            ],
+            "title": "ResourceNode",
+            "type": "object"
+        },
+        "Schematic": {
+            "additionalProperties": false,
+            "description": "A milestone, MAM node, alternate or other unlock (`Schematic_*_C`).",
+            "properties": {
+                "cost": {
+                    "items": {
+                        "$ref": "#/$defs/ItemAmount"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "dependsOn": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "id": {
+                    "description": "The game's class name, e.g. `Desc_IronPlate_C`.",
+                    "type": "string"
+                },
+                "mamTree": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "name": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                },
+                "tier": {
+                    "type": "integer"
+                },
+                "timeS": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "type": {
+                    "$ref": "#/$defs/SchematicType",
+                    "description": "Kind of schematic, node or collectible (range set per class)."
+                },
+                "unlocks": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/$defs/SchematicUnlocks"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "type",
+                "tier"
+            ],
+            "title": "Schematic",
+            "type": "object"
+        },
+        "SchematicType": {
+            "description": "",
+            "enum": [
+                "tutorial",
+                "milestone",
+                "mam",
+                "alternate",
+                "hard-drive",
+                "resource-sink",
+                "custom",
+                "customization"
+            ],
+            "title": "SchematicType",
+            "type": "string"
+        },
+        "SchematicUnlocks": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "armSlots": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "inventorySlots": {
+                    "type": [
+                        "integer",
+                        "null"
+                    ]
+                },
+                "recipes": {
+                    "description": "Recipes this schematic unlocks (references).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "scannerObjects": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "scannerResources": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                },
+                "schematics": {
+                    "description": "Schematics this schematic unlocks (references).",
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": [
+                        "array",
+                        "null"
+                    ]
+                }
+            },
+            "title": "SchematicUnlocks",
+            "type": "object"
+        },
+        "VariablePower": {
+            "additionalProperties": false,
+            "description": "",
+            "properties": {
+                "maxMW": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                },
+                "minMW": {
+                    "type": [
+                        "number",
+                        "null"
+                    ]
+                }
+            },
+            "title": "VariablePower",
+            "type": "object"
+        }
+    },
+    "$id": "https://solstice035.github.io/ficsit-field-guide/vocab",
+    "$schema": "https://json-schema.org/draft/2019-09/schema",
+    "additionalProperties": false,
+    "description": "Container for one generated game-data bundle.",
+    "metamodel_version": "1.12.0",
+    "properties": {
+        "buildings": {
+            "items": {
+                "$ref": "#/$defs/Building"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "collectibles": {
+            "items": {
+                "$ref": "#/$defs/Collectible"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "items": {
+            "items": {
+                "$ref": "#/$defs/Item"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "recipes": {
+            "items": {
+                "$ref": "#/$defs/Recipe"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "resourceNodes": {
+            "items": {
+                "$ref": "#/$defs/ResourceNode"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        },
+        "schematics": {
+            "items": {
+                "$ref": "#/$defs/Schematic"
+            },
+            "type": [
+                "array",
+                "null"
+            ]
+        }
+    },
+    "title": "ficsit",
+    "type": "object",
+    "version": "0.1.0"
+}
+

@@ -1,0 +1,4 @@
+# Q3. Every item that transitively depends on Raw Quartz through standard recipes.
+SELECT DISTINCT ?item
+WHERE { ?item ficsit:madeFrom+ fgd:Desc_RawQuartz_C }
+ORDER BY ?item

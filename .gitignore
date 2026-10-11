@@ -30,3 +30,6 @@ npm-debug.log*
 # Playwright / screenshots from local QA
 .playwright-mcp/
 test-results/
+
+# Built knowledge-model views (npm run data:graph)
+dist-data/

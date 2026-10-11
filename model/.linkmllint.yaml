@@ -1,0 +1,6 @@
+# Slot and enum names deliberately match the app's JSON keys (camelCase) and
+# the game's own values, so the generated JSON Schema validates existing data.
+extends: recommended
+rules:
+  standard_naming:
+    level: disabled
