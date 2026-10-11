@@ -19,7 +19,7 @@ export function MilestoneCard({ schematicId, compact }: MilestoneCardProps) {
   const unlocks = unlockSummary(schematic);
 
   return (
-    <article className="border-line bg-panel-2 rounded-md border p-3">
+    <article className="tile p-3">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <Checkbox
           checked={done}

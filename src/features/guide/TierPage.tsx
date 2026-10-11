@@ -35,7 +35,7 @@ export function TierPage() {
         role="tabpanel"
         id={TIER_PANEL_ID}
         aria-labelledby={tierTabId(tier.tier)}
-        className="space-y-6"
+        className="space-y-10"
       >
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -66,24 +66,32 @@ export function TierPage() {
           </div>
         </header>
 
-        <div className="grid gap-6 lg:grid-cols-3">
-          <Panel title="Briefing" className="lg:col-span-2">
-            <div className="space-y-2">
-              {tier.briefing.map((p) => (
-                <p key={p} className="text-ink-muted leading-relaxed">
-                  {p}
-                </p>
-              ))}
-            </div>
-          </Panel>
-          <Panel title="Goals">
-            <ul className="text-ink-muted list-disc space-y-1 pl-5">
-              {tier.goals.map((g) => (
-                <li key={g}>{g}</li>
-              ))}
-            </ul>
-          </Panel>
-        </div>
+        <Panel variant="hero">
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <section aria-labelledby="briefing-heading">
+              <h2 id="briefing-heading" className="eyebrow mb-2">
+                Briefing
+              </h2>
+              <div className="space-y-3">
+                {tier.briefing.map((p) => (
+                  <p key={p} className="leading-relaxed">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </section>
+            <section aria-labelledby="goals-heading" className="border-line lg:border-l lg:pl-8">
+              <h2 id="goals-heading" className="eyebrow mb-2">
+                Goals
+              </h2>
+              <ul className="text-ink-muted list-disc space-y-1.5 pl-5">
+                {tier.goals.map((g) => (
+                  <li key={g}>{g}</li>
+                ))}
+              </ul>
+            </section>
+          </div>
+        </Panel>
 
         {tier.spaceElevatorPhase !== undefined && <PhaseCard phase={tier.spaceElevatorPhase} />}
 
@@ -98,10 +106,7 @@ export function TierPage() {
           </div>
         </Panel>
 
-        <section aria-labelledby="steps-heading">
-          <h2 id="steps-heading" className="mb-3 text-lg">
-            Step by step
-          </h2>
+        <Panel title="Step by step">
           <ol className="space-y-3">
             {tier.steps.map((step, index) => (
               <StepCard
@@ -112,7 +117,7 @@ export function TierPage() {
               />
             ))}
           </ol>
-        </section>
+        </Panel>
       </div>
     </div>
   );

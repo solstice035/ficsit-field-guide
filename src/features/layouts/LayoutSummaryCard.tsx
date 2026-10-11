@@ -15,7 +15,7 @@ export function LayoutSummaryCard({ layout }: { layout: FactoryLayout }) {
     : plan.outputs.map((o) => `${formatRate(o.rate, o.item)} ${itemName(o.item)}`).join(' + ');
 
   return (
-    <article className="border-line bg-panel-2 hover:border-line-strong flex flex-col gap-2 rounded-md border p-3">
+    <article className="tile hover:bg-panel-2 flex flex-col gap-2 p-4">
       <div className="flex items-start justify-between gap-2">
         <h4 className="font-semibold">
           <Link to={`/layouts/${layout.id}`}>{layout.name}</Link>

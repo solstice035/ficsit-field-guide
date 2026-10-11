@@ -16,7 +16,7 @@ export function ResearchList({ ids }: { ids: readonly string[] }) {
         if (!s) return null;
         const unlocks = unlockSummary(s);
         return (
-          <li key={id} className="border-line bg-panel-2 rounded-md border p-3">
+          <li key={id} className="tile p-3">
             <div className="flex flex-wrap items-start justify-between gap-2">
               <Checkbox
                 checked={!!research[id]}

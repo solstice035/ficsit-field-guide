@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router';
 import { Segmented } from '../../components/Fields.tsx';
+import { Panel } from '../../components/Panel.tsx';
 import { LAYOUTS, LAYOUT_BY_ID, TIERS } from '../../content/index.ts';
 import { LayoutConfigurator } from './LayoutConfigurator.tsx';
 import { LayoutSummaryCard } from './LayoutSummaryCard.tsx';
@@ -11,7 +12,7 @@ export function LayoutsIndexPage() {
   const tiers = [...new Set(shown.map((l) => l.tier))];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <header className="space-y-2">
         <h1 className="text-2xl sm:text-3xl">Factory layouts</h1>
         <p className="text-ink-muted max-w-3xl">
@@ -29,10 +30,7 @@ export function LayoutsIndexPage() {
         />
       </header>
       {tiers.map((t) => (
-        <section key={t} aria-labelledby={`layouts-tier-${t}`}>
-          <h2 id={`layouts-tier-${t}`} className="mb-3 text-lg">
-            Tier {t} · {TIERS[t]?.title}
-          </h2>
+        <Panel key={t} title={`Tier ${t} · ${TIERS[t]?.title ?? ''}`}>
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {shown
               .filter((l) => l.tier === t)
@@ -40,7 +38,7 @@ export function LayoutsIndexPage() {
                 <LayoutSummaryCard key={l.id} layout={l} />
               ))}
           </div>
-        </section>
+        </Panel>
       ))}
     </div>
   );

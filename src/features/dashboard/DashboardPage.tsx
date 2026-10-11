@@ -28,7 +28,7 @@ export function DashboardPage() {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-10">
       <header className="space-y-2">
         <p className="text-accent-strong text-sm font-semibold tracking-wide uppercase">
           Rocky Desert · Update 1.2
@@ -40,77 +40,94 @@ export function DashboardPage() {
         </p>
       </header>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Panel title={`You are on Tier ${tier.tier}: ${tier.title}`} className="lg:col-span-2">
-          <ProgressBar
-            value={progress[tier.tier]?.done ?? 0}
-            max={progress[tier.tier]?.total ?? 0}
-            label={`Tier ${tier.tier} progress`}
-          />
-          {nextStep ? (
-            <div className="mt-4">
-              <p className="text-ink-faint text-xs font-semibold tracking-wide uppercase">
-                Next step
-              </p>
-              <p className="mt-1 text-lg font-semibold">{nextStep.title}</p>
-              <p className="text-ink-muted mt-1">{nextStep.summary}</p>
-              <Link
-                to={`/tier/${tier.tier}`}
-                className="bg-accent text-accent-ink mt-3 inline-block rounded px-4 py-2 font-semibold no-underline hover:no-underline"
-              >
-                Continue Tier {tier.tier}
-              </Link>
-              {laterSteps.length > 0 && (
-                <div className="border-line mt-5 border-t pt-4">
-                  <p className="text-ink-faint text-xs font-semibold tracking-wide uppercase">
-                    Then
-                  </p>
-                  <ol className="mt-2 space-y-1.5 text-sm">
-                    {laterSteps.map((s) => (
-                      <li key={s.id} className="flex gap-2">
-                        <span aria-hidden="true" className="text-ink-faint">
-                          →
-                        </span>
-                        <span className="text-ink-muted">{s.title}</span>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              )}
-            </div>
-          ) : (
-            <p className="text-ok mt-4">
-              Every step in this tier is ticked off.{' '}
-              {tier.tier < 9 && (
-                <Link to={`/tier/${tier.tier + 1}`}>On to Tier {tier.tier + 1}</Link>
-              )}
+      <Panel variant="hero">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+          <div>
+            <p className="text-accent-strong text-xs font-semibold tracking-wide uppercase">
+              You are on Tier {tier.tier} · {tier.title}
             </p>
-          )}
-        </Panel>
+            <ProgressBar
+              value={progress[tier.tier]?.done ?? 0}
+              max={progress[tier.tier]?.total ?? 0}
+              label={`Tier ${tier.tier} progress`}
+              className="mt-2 max-w-md"
+            />
+            {nextStep ? (
+              <>
+                <p className="eyebrow mt-5">Next step</p>
+                <h2 className="mt-1 text-2xl">{nextStep.title}</h2>
+                <p className="text-ink-muted mt-2">{nextStep.summary}</p>
+                <Link
+                  to={`/tier/${tier.tier}`}
+                  className="bg-accent text-accent-ink mt-4 inline-block rounded-md px-4 py-2 font-semibold no-underline hover:no-underline"
+                >
+                  Continue Tier {tier.tier}
+                </Link>
+                {laterSteps.length > 0 && (
+                  <>
+                    <p className="eyebrow mt-6">Then</p>
+                    <ol className="mt-2 space-y-1.5 text-sm">
+                      {laterSteps.map((s) => (
+                        <li key={s.id} className="flex gap-2">
+                          <span aria-hidden="true" className="text-ink-faint">
+                            →
+                          </span>
+                          <span className="text-ink-muted">{s.title}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <h2 className="mt-5 text-2xl">Tier {tier.tier} is complete</h2>
+                <p className="text-ok mt-2">
+                  Every step in this tier is ticked off.{' '}
+                  {tier.tier < 9 && (
+                    <Link to={`/tier/${tier.tier + 1}`}>On to Tier {tier.tier + 1}</Link>
+                  )}
+                </p>
+              </>
+            )}
+          </div>
 
-        <Panel title="Overall">
-          <ProgressBar value={totals.done} max={totals.total} label="Overall progress" />
-          <p className="text-ink-muted num mt-2 text-sm">
-            {totals.done} of {totals.total} tasks and milestones
-          </p>
-          <h3 className="mt-4 mb-2 text-sm">Space Elevator</h3>
-          <ul className="space-y-1 text-sm">
-            {SPACE_ELEVATOR_PHASES.map((p) => (
-              <li key={p.phase} className="flex items-center justify-between gap-2">
-                <span>
-                  Phase {p.phase}: {p.name}
-                </span>
-                <Badge tone={phases[String(p.phase)] ? 'ok' : 'neutral'}>
-                  {phases[String(p.phase)] ? 'Delivered' : `Tier ${p.deliverInTier}`}
-                </Badge>
-              </li>
-            ))}
-          </ul>
-        </Panel>
-      </div>
+          <div className="border-line lg:border-l lg:pl-8">
+            <h2 className="eyebrow">Overall</h2>
+            <p className="mt-1 flex items-baseline gap-2">
+              <span className="num text-3xl font-bold">
+                {totals.total ? Math.round((totals.done / totals.total) * 100) : 0}%
+              </span>
+              <span className="text-ink-faint num text-sm">
+                {totals.done} of {totals.total} tasks and milestones
+              </span>
+            </p>
+            <ProgressBar
+              value={totals.done}
+              max={totals.total}
+              label="Overall progress"
+              showText={false}
+              className="mt-2"
+            />
+            <h3 className="eyebrow mt-6 mb-2">Space Elevator</h3>
+            <ul className="space-y-1.5 text-sm">
+              {SPACE_ELEVATOR_PHASES.map((p) => (
+                <li key={p.phase} className="flex items-center justify-between gap-2">
+                  <span className="text-ink-muted">
+                    Phase {p.phase}: {p.name}
+                  </span>
+                  <Badge tone={phases[String(p.phase)] ? 'ok' : 'neutral'}>
+                    {phases[String(p.phase)] ? 'Delivered' : `Tier ${p.deliverInTier}`}
+                  </Badge>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </Panel>
 
       <Panel title="Tiers">
-        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="grid grid-cols-2 gap-2 lg:grid-cols-5">
           {TIERS.map((t, i) => {
             const isCurrent = t.tier === tier.tier;
             return (
@@ -118,8 +135,8 @@ export function DashboardPage() {
                 <Link
                   to={`/tier/${t.tier}`}
                   className={cx(
-                    'hover:border-accent flex h-full flex-col rounded-md border p-3 no-underline hover:no-underline',
-                    isCurrent ? 'border-accent bg-panel-3' : 'border-line bg-panel-2',
+                    'tile hover:bg-panel-2 flex h-full flex-col p-3 no-underline hover:no-underline',
+                    isCurrent && 'bg-panel-3 shadow-[inset_3px_0_0_var(--color-accent)]',
                   )}
                 >
                   <span className="flex items-center justify-between gap-2">
@@ -140,19 +157,19 @@ export function DashboardPage() {
         </ul>
       </Panel>
 
-      <Panel title="Alien artefacts" actions={<Link to="/explore">Open Explore</Link>}>
-        <ul className="grid gap-3 sm:grid-cols-3">
+      <Panel title="Alien artefacts" actions={<Link to="/explore">Open Explore →</Link>}>
+        <ul className="grid gap-6 sm:grid-cols-3">
           {(['mercerSphere', 'somersloop', 'hardDrive'] as const).map((type) => {
             const all = COLLECTIBLES.filter((c) => c.type === type);
             const got = all.filter((c) => collected[c.id]).length;
             return (
-              <li key={type} className="border-line bg-panel-2 rounded-md border p-3">
-                <p className="font-semibold">{COLLECTIBLE_META[type].plural}</p>
-                <p className="num text-2xl font-bold">
+              <li key={type}>
+                <p className="text-ink-muted font-medium">{COLLECTIBLE_META[type].plural}</p>
+                <p className="num text-3xl font-bold">
                   {got}
                   <span className="text-ink-faint text-base font-normal"> / {all.length}</span>
                 </p>
-                <p className="text-ink-faint text-xs">{COLLECTIBLE_META[type].blurb}</p>
+                <p className="text-ink-faint mt-1 text-xs">{COLLECTIBLE_META[type].blurb}</p>
               </li>
             );
           })}

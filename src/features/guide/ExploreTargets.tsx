@@ -24,10 +24,7 @@ export function ExploreTargets({ targets }: { targets: readonly ExploreTarget[] 
           const resource = target.resource ?? '';
           const nodes = nearestNodes(resource, base, Math.min(count, 6));
           return (
-            <div
-              key={`${target.kind}-${resource}`}
-              className="border-line bg-panel-2 rounded-md border p-3"
-            >
+            <div key={`${target.kind}-${resource}`} className="tile p-3">
               <h5 className="text-sm font-semibold">{target.note}</h5>
               <ol className="mt-2 space-y-1 text-sm">
                 {nodes.map(({ item, distance, compass }) => (
@@ -50,7 +47,7 @@ export function ExploreTargets({ targets }: { targets: readonly ExploreTarget[] 
         const meta = COLLECTIBLE_META[target.kind];
         const list = nearestCollectibles(target.kind, base, Math.min(count, 6), collected);
         return (
-          <div key={target.kind} className="border-line bg-panel-2 rounded-md border p-3">
+          <div key={target.kind} className="tile p-3">
             <h5 className="text-sm font-semibold">
               <span
                 aria-hidden="true"

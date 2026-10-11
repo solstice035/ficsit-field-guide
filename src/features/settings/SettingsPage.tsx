@@ -4,9 +4,13 @@ import { NumberField, SelectField } from '../../components/Fields.tsx';
 import { Panel } from '../../components/Panel.tsx';
 import { DEFAULT_BASE, SITES } from '../../content/index.ts';
 import { DATA_META, NODE_BY_ID, itemName } from '../../data/gameData.ts';
-import type { Purity } from '../../data/types.ts';
+import type { Purity, ResourceNode } from '../../data/types.ts';
 import { createBackup, resetAll, restoreBackup } from '../../state/backup.ts';
 import { useSettings } from '../../state/settings.ts';
+
+/** Purity applies to ordinary nodes and well satellites, not well cores or geysers. */
+const isOverridable = (node: ResourceNode | undefined): node is ResourceNode =>
+  !!node && node.type !== 'well-core' && node.resource !== 'geothermal';
 
 export function SettingsPage() {
   const { base, setBase, currentTier, setCurrentTier, purityOverrides, setPurityOverride } =
@@ -42,7 +46,7 @@ export function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <header>
         <h1 className="text-2xl sm:text-3xl">Settings</h1>
       </header>
@@ -109,50 +113,48 @@ export function SettingsPage() {
         description="Using Update 1.2 Game Modes with randomised purity? Set what your save actually has. Layout defaults update automatically."
       >
         <div className="space-y-5">
-          {SITES.map((site) => (
-            <section key={site.id} aria-labelledby={`purity-${site.id}`}>
-              <h3 id={`purity-${site.id}`} className="mb-2 text-base">
-                {site.name}
-              </h3>
-              <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-                {site.nodeIds.map((id) => {
-                  const node = NODE_BY_ID.get(id);
-                  if (!node || node.type === 'well-core' || node.resource === 'geothermal')
-                    return null;
-                  const override = purityOverrides[id];
-                  return (
-                    <li
-                      key={id}
-                      className="border-line bg-panel-2 flex items-end justify-between gap-2 rounded border p-2"
-                    >
-                      <div className="text-sm">
-                        <p>{itemName(node.resource)}</p>
-                        <p className="text-ink-faint text-xs">
-                          Default <PurityBadge purity={node.purity} /> · ({Math.round(node.x)},{' '}
-                          {Math.round(node.y)})
-                        </p>
-                      </div>
-                      <SelectField
-                        label={`${itemName(node.resource)} purity at ${Math.round(node.x)}, ${Math.round(node.y)}`}
-                        hideLabel
-                        value={override ?? ''}
-                        onChange={(v) =>
-                          setPurityOverride(id, (v || undefined) as Purity | undefined)
-                        }
-                        options={[
-                          { value: '', label: 'Default' },
-                          { value: 'impure', label: 'Impure' },
-                          { value: 'normal', label: 'Normal' },
-                          { value: 'pure', label: 'Pure' },
-                        ]}
-                        className="w-28"
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
-            </section>
-          ))}
+          {SITES.filter((site) => site.nodeIds.some((id) => isOverridable(NODE_BY_ID.get(id)))).map(
+            (site) => (
+              <section key={site.id} aria-labelledby={`purity-${site.id}`}>
+                <h3 id={`purity-${site.id}`} className="mb-2 text-base">
+                  {site.name}
+                </h3>
+                <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                  {site.nodeIds.map((id) => {
+                    const node = NODE_BY_ID.get(id);
+                    if (!isOverridable(node)) return null;
+                    const override = purityOverrides[id];
+                    return (
+                      <li key={id} className="tile flex items-end justify-between gap-2 p-2">
+                        <div className="text-sm">
+                          <p>{itemName(node.resource)}</p>
+                          <p className="text-ink-faint text-xs">
+                            Default <PurityBadge purity={node.purity} /> · ({Math.round(node.x)},{' '}
+                            {Math.round(node.y)})
+                          </p>
+                        </div>
+                        <SelectField
+                          label={`${itemName(node.resource)} purity at ${Math.round(node.x)}, ${Math.round(node.y)}`}
+                          hideLabel
+                          value={override ?? ''}
+                          onChange={(v) =>
+                            setPurityOverride(id, (v || undefined) as Purity | undefined)
+                          }
+                          options={[
+                            { value: '', label: 'Default' },
+                            { value: 'impure', label: 'Impure' },
+                            { value: 'normal', label: 'Normal' },
+                            { value: 'pure', label: 'Pure' },
+                          ]}
+                          className="w-28"
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            ),
+          )}
         </div>
       </Panel>
 

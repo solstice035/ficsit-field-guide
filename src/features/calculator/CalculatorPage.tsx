@@ -37,7 +37,7 @@ export function CalculatorPage() {
     });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <header className="space-y-2">
         <h1 className="text-2xl sm:text-3xl">Production calculator</h1>
         <p className="text-ink-muted max-w-3xl">
@@ -46,7 +46,7 @@ export function CalculatorPage() {
         </p>
       </header>
 
-      <Panel title="Targets" level={2}>
+      <Panel title="Targets" level={2} variant="card">
         <div className="space-y-3">
           {calculator.targets.map((t, i) => (
             <div
