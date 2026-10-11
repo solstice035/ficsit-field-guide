@@ -342,6 +342,10 @@ Milestone cards inside a step are display only: their tick is the step's linked 
 - **The run:** ten tier rows in the queue's rhythm: "Tn", title, progress bar, then status ("Current" in Lit Amber, "Done" with a check in Go Green, or "done / total"). The current tier's row carries the same amber border as the current step. Below 768px the bar drops to a second line.
 - **Space Elevator:** phases listed with "Phase n" in Elevator Violet, then "Delivered" with a check, or the tier it belongs to.
 
+### Glance (signature)
+
+`/glance` is its own window for a second monitor, with no app chrome. A thin top line shows the tier, a "Keep screen awake" switch (Screen Wake Lock; when the browser can't, a quiet note instead) and "Open the guide". Below it, the NEXT panel sits centred: the step number in Lit Amber and the title at 48px (30px on phones), the task beside an 80px switch at 36px, "After that:" at 24px, then the figures. It reads from about a metre away. Ticks sync with every other open window through `storage` events. "Glance ↗" opens it from the NEXT strip (from 1024px) and the dashboard hero.
+
 ## Do's and Don'ts
 
 ### Do:
