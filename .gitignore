@@ -30,3 +30,6 @@ npm-debug.log*
 # Playwright / screenshots from local QA
 .playwright-mcp/
 test-results/
+
+# Impeccable decision-page session state (transient)
+.impeccable/questions/

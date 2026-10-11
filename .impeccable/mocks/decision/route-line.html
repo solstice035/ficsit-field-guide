@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><title>Route Line · Tier 2</title>
+<style>
+:root{--bg:#111317;--p:#1a1d23;--p2:#22262e;--p3:#2b3039;--l:#3a414d;--ls:#4d5563;--ink:#eceef2;--mu:#b3bac6;--fa:#8f98a6;--a:#fa9549;--as:#ffb878;--ai:#1a1206;--ok:#5ee08f;--info:#7cc4ff}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink);font:400 14px/1.43 system-ui,-apple-system,"Segoe UI",sans-serif}
+.num{font-variant-numeric:tabular-nums}
+header{height:56px;display:flex;align-items:center;gap:28px;padding:0 32px;background:var(--p);border-bottom:1px solid var(--l)}
+.logo{display:flex;gap:8px;align-items:center;font-weight:600}.logo b{width:28px;height:28px;display:grid;place-items:center;background:var(--a);color:var(--ai);border-radius:4px;font-weight:900}
+nav{display:flex;gap:4px}nav a{padding:8px 12px;border-radius:4px;color:var(--mu);font-weight:500}nav a.on{background:var(--p3);color:var(--ink)}
+.glance{margin-left:auto;border:1px solid var(--ls);border-radius:4px;padding:8px 14px}
+.run{position:relative;height:64px;margin:16px 32px 0;display:flex;justify-content:space-between;align-items:center}
+.run::before{content:"";position:absolute;left:12px;right:12px;top:31px;height:4px;background:var(--p3)}
+.run::after{content:"";position:absolute;left:12px;width:22%;top:31px;height:4px;background:var(--ok)}
+.st{position:relative;z-index:1;display:grid;justify-items:center;gap:6px;font-size:12px;color:var(--fa)}
+.st i{width:16px;height:16px;border-radius:50%;background:var(--bg);border:3px solid var(--ls)}
+.st.d i{border-color:var(--ok);background:var(--ok)}.st.c i{width:26px;height:26px;border:5px solid var(--a);background:var(--bg)}.st.c{color:var(--as);font-weight:700}
+main{display:grid;grid-template-columns:420px 1fr;gap:28px;padding:14px 32px}
+.line{position:relative;padding-left:40px}
+.line::before{content:"";position:absolute;left:15px;top:14px;bottom:14px;width:4px;background:var(--p3)}
+.line::after{content:"";position:absolute;left:15px;top:14px;height:72px;width:4px;background:var(--ok)}
+.s{position:relative;min-height:56px;display:flex;flex-direction:column;justify-content:center}
+.s::before{content:"";position:absolute;left:-33px;top:50%;margin-top:-9px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:3px solid var(--ls)}
+.s.d{color:var(--fa)}.s.d::before{background:var(--ok);border-color:var(--ok)}
+.s.c::before{left:-38px;margin-top:-14px;width:28px;height:28px;border:5px solid var(--a)}
+.s.c b{color:var(--as);font-size:16px}.s small{color:var(--fa);font-size:12px}.s.l{color:var(--mu)}
+.detail{background:linear-gradient(135deg,color-mix(in srgb,var(--a) 8%,var(--p)),var(--p) 55%);border:1px solid color-mix(in srgb,var(--a) 40%,var(--l));border-radius:8px;padding:22px 26px}
+.k{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--fa)}
+h1{font-size:26px;font-weight:600;letter-spacing:-.02em;margin:6px 0 16px}
+.task{display:flex;align-items:center;gap:16px;min-height:56px;border:1px solid var(--ls);background:var(--p2);border-radius:8px;padding:0 16px;font-size:17px;margin-bottom:8px}
+.task.n{background:transparent;border-color:var(--l);color:var(--mu);font-size:15px}
+.sw{width:52px;height:30px;border-radius:15px;background:var(--p3);border:1px solid var(--ls);position:relative;flex:none}.sw::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:var(--mu)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.fig{background:var(--p2);border-radius:8px;padding:12px 14px}.fig b{display:block;font-size:24px;font-weight:700;color:var(--as)}.fig span{color:var(--mu);font-size:12px}
+.branch{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.br{border:1px solid var(--l);border-radius:8px;padding:12px 14px}.br p{display:flex;justify-content:space-between;padding:4px 0}.br em{font-style:normal;color:var(--ok)}
+</style></head><body>
+<header><div class="logo"><b>F</b>FICSIT Field Guide</div>
+<nav><a class="on">Tier guide</a><a>Dashboard</a><a>Layouts</a><a>Explore</a><a>Calculator</a><a>Settings</a></nav>
+<a class="glance">Open glance view ↗</a></header>
+<div class="run num"><span class="st d"><i></i>T0</span><span class="st d"><i></i>T1</span><span class="st c"><i></i>T2 Part Assembly</span><span class="st"><i></i>T3</span><span class="st"><i></i>T4</span><span class="st"><i></i>T5</span><span class="st"><i></i>T6</span><span class="st"><i></i>T7</span><span class="st"><i></i>T8</span><span class="st"><i></i>T9 Launch</span></div>
+<main>
+<div class="line num">
+<div class="s d">01 Logistics Mk.2<small>Done</small></div>
+<div class="s d">02 Part Assembly: Assemblers<small>Done</small></div>
+<div class="s c"><b>03 Space Elevator Phase 1</b><small>Now · 0 / 2 tasks</small></div>
+<div class="s l">04 Modular Frames</div>
+<div class="s l">05 Obstacle Clearing</div>
+<div class="s l">06 Resource Sink Bonus Program</div>
+<div class="s l">07 Jump Pads (optional)</div>
+<div class="s l">08 Quickwire and Caterium research</div>
+<div class="s l">09 Second copper source: West Coast</div>
+<div class="s l">10 First Hard Drives</div></div>
+<section class="detail"><p class="k">Step 03 of 10 · Space Elevator</p>
+<h1>Space Elevator Phase 1: 50 Smart Plating</h1>
+<div class="task"><span class="sw"></span>Build the Smart Plating line</div>
+<div class="task n"><span class="sw"></span>Deliver 50 Smart Plating to the Space Elevator</div>
+<div class="grid num"><div class="fig"><b>2/min</b><span>Smart Plating</span></div><div class="fig"><b>1</b><span>Assembler</span></div><div class="fig"><b>15 MW</b><span>Power</span></div><div class="fig"><b>0 / 50</b><span>Delivered</span></div></div>
+<div class="branch num"><div class="br"><p class="k">Layout</p><p><span>Smart Plating (Phase 1)</span><span>→</span></p><p><span>Reinforced Iron Plate</span><span>→</span></p></div>
+<div class="br"><p class="k">Sites from base</p><p><span>HUB / Starter</span><em>Iron ×3 Pure</em></p><p><span>Caterium Ridge · 490 m N</span><em>Pure</em></p></div></div>
+</section></main></body></html>
