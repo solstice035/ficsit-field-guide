@@ -260,6 +260,22 @@
           "oklch(95.0% 0.142 20.9)"
         ]
       },
+      "elevator": {
+        "role": "identity",
+        "displayName": "Elevator Violet",
+        "canonical": "#b9a2ff",
+        "oklch": "oklch(76.8% 0.132 294.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.132 294.4)",
+          "oklch(26.4% 0.132 294.4)",
+          "oklch(37.9% 0.132 294.4)",
+          "oklch(49.3% 0.132 294.4)",
+          "oklch(60.7% 0.132 294.4)",
+          "oklch(72.1% 0.132 294.4)",
+          "oklch(83.6% 0.132 294.4)",
+          "oklch(95.0% 0.132 294.4)"
+        ]
+      },
       "purity-impure": {
         "role": "status",
         "displayName": "Impure",
