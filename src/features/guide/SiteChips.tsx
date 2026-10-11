@@ -14,7 +14,7 @@ export function SiteChips({ ids }: { ids: readonly string[] }) {
         if (!site) return null;
         const where = locate(site.centre, base);
         return (
-          <li key={id} className="border-line bg-panel-2 rounded-md border p-3">
+          <li key={id} className="tile p-3">
             <div className="flex items-baseline justify-between gap-2">
               <Link to={`/explore?site=${id}`} className="font-semibold">
                 {site.name}

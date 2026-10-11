@@ -76,6 +76,31 @@
     @apply bg-panel border-line rounded-lg border;
   }
 
+  /* The page's single call to action: amber-tinted, one step louder than .panel. */
+  .panel-hero {
+    @apply rounded-xl border;
+    border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-line));
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-accent) 9%, var(--color-panel)) 0%,
+      var(--color-panel) 55%
+    );
+  }
+
+  /* Borderless item inside an open section; lifts one surface step inside a box. */
+  .tile {
+    @apply bg-panel rounded-lg;
+  }
+
+  :is(.panel, .panel-hero) .tile {
+    @apply bg-panel-2;
+  }
+
+  /* Small uppercase label above a heading or group. */
+  .eyebrow {
+    @apply text-ink-faint text-xs font-semibold tracking-wide uppercase;
+  }
+
   .num {
     font-variant-numeric: tabular-nums;
   }

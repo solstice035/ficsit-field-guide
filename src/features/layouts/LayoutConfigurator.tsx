@@ -17,7 +17,7 @@ import { useLayoutPlan } from './useLayoutPlan.ts';
 
 function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
-    <div className="border-line bg-panel-2 rounded-md border px-3 py-2">
+    <div className="tile px-3 py-2">
       <dt className="text-ink-faint text-xs">{label}</dt>
       <dd className="num text-lg font-semibold">{value}</dd>
       {sub && <dd className="text-ink-faint text-xs">{sub}</dd>}
@@ -142,7 +142,7 @@ export function LayoutConfigurator({ layout, headless }: LayoutConfiguratorProps
             id={configId}
             className={cx(configOpen ? 'mt-2 block' : 'hidden', 'lg:mt-0 lg:block')}
           >
-            <Panel title="Configure" level={2}>
+            <Panel title="Configure" level={2} variant="card">
               <ConfigPanel layout={layout} user={user} config={config} plan={plan} />
             </Panel>
           </div>

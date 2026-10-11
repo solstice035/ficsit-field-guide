@@ -106,7 +106,7 @@ export function ExplorePage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <header className="space-y-2">
         <h1 className="text-2xl sm:text-3xl">Exploration</h1>
         <p className="text-ink-muted max-w-3xl">
@@ -121,7 +121,7 @@ export function ExplorePage() {
         className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3"
       >
         {counts.map(({ type, total, got }) => (
-          <div key={type} className="panel p-3">
+          <div key={type} className="tile p-3">
             <div className="flex items-center justify-between gap-2">
               <span className="flex items-center gap-2 font-medium">
                 <MarkerGlyph
@@ -147,7 +147,7 @@ export function ExplorePage() {
 
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[18rem_minmax(0,1fr)]">
         <aside aria-label="Map filters" className="space-y-4">
-          <Panel title="Show" level={2}>
+          <Panel title="Show" level={2} variant="card">
             <div className="space-y-2">
               {COLLECTIBLE_TYPES.map((type) => (
                 <Checkbox
@@ -211,7 +211,7 @@ export function ExplorePage() {
             )}
           </Panel>
 
-          <Panel title="Your base" level={2}>
+          <Panel title="Your base" level={2} variant="card">
             <p className="text-ink-muted num text-sm">
               x {Math.round(base.x)} m, y {Math.round(base.y)} m
             </p>
@@ -226,7 +226,7 @@ export function ExplorePage() {
           </Panel>
 
           {selected && (
-            <Panel title="Selected" level={2}>
+            <Panel title="Selected" level={2} variant="card">
               <SelectedDetails
                 id={selected.id}
                 base={base}
@@ -237,7 +237,7 @@ export function ExplorePage() {
           )}
         </aside>
 
-        <div className="min-w-0 space-y-5">
+        <div className="min-w-0 space-y-8">
           <WorldMap
             points={points}
             base={base}

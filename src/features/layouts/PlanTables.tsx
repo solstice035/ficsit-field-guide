@@ -245,7 +245,7 @@ export function ChecklistView({ plan, layoutId }: { plan: FactoryPlan; layoutId:
       {steps.map((step, i) => {
         const id = `layout:${layoutId}:${step.id}`;
         return (
-          <li key={step.id} className="border-line bg-panel-2 rounded-md border p-3">
+          <li key={step.id} className="tile p-3">
             <Checkbox
               checked={!!tasks[id]}
               onChange={() => toggle(id)}
