@@ -222,6 +222,8 @@ Commits follow `{gitmoji} {scope}: {description}` at each phase boundary. Mergin
 
 ## 14. Backlog (post-v1)
 
+Linear (project _FICSIT Field Guide_) is the source of truth for the backlog. See [BACKLOG_REVIEW.md](BACKLOG_REVIEW.md) for the coverage and MoSCoW review against the wider tools ecosystem (2026-10-11).
+
 - Save-file import, to auto-tick collected items and detect unlocked alternates.
 - LP-optimal planner (minimise raw inputs or power), with an alternate-recipe recommender.
 - Train and drone logistics planner between sites.
