@@ -402,7 +402,8 @@ export function buildFactoryPlan(input: Partial<PlanConfig>): FactoryPlan {
       : undefined;
 
   // --- Bill of materials
-  const machineCount = groups.reduce((n, g) => n + g.split.count, 0);
+  // Generators count as machines too (power-plant layouts would otherwise show 0).
+  const machineCount = groups.reduce((n, g) => n + g.split.count, 0) + (generators?.count ?? 0);
   const shardCount = groups.reduce((n, g) => n + g.shards, 0);
   const sloopCount = groups.reduce((n, g) => n + g.sloopsPerMachine * g.split.count, 0);
   const bomEntries: BomEntry[] = [
