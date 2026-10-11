@@ -1,6 +1,6 @@
 import { tierForCost } from '../../data/availability.ts';
 import { COLLECTIBLES, NODES } from '../../data/gameData.ts';
-import type { Collectible, CollectibleType, ResourceNode } from '../../data/types.ts';
+import type { Collectible, CollectibleType, Purity, ResourceNode } from '../../data/types.ts';
 import { type Point2D, bearingDeg, compass8, distance2D } from '../../lib/geo/geo.ts';
 
 export interface Located<T> {
@@ -15,14 +15,41 @@ export function locate<T extends Point2D>(item: T, from: Point2D): Located<T> {
   return { item, distance: distance2D(from, item), bearing, compass: compass8(bearing) };
 }
 
+/** A node's purity after the user's Game Mode overrides. */
+export function effectivePurity(
+  node: ResourceNode,
+  overrides: Readonly<Record<string, Purity>>,
+): Purity {
+  return overrides[node.id] ?? node.purity;
+}
+
+/** Map filters that decide which collectibles are shown (map markers and lists alike). */
+export interface CollectibleFilter {
+  collected: Readonly<Record<string, true>>;
+  hideCollected: boolean;
+  /** Hide crash sites not openable by this tier (null = show all). */
+  drivesUpToTier: number | null;
+}
+
+export function collectibleVisible(c: Collectible, filter: CollectibleFilter): boolean {
+  if (filter.hideCollected && filter.collected[c.id]) return false;
+  return !(
+    c.type === 'hardDrive' &&
+    filter.drivesUpToTier !== null &&
+    driveTier(c) > filter.drivesUpToTier
+  );
+}
+
 export function nearestCollectibles(
   type: CollectibleType,
   from: Point2D,
   n: number,
   collected: Readonly<Record<string, true>> = {},
   includeCollected = false,
+  drivesUpToTier: number | null = null,
 ): Located<Collectible>[] {
-  return COLLECTIBLES.filter((c) => c.type === type && (includeCollected || !collected[c.id]))
+  const filter = { collected, hideCollected: !includeCollected, drivesUpToTier };
+  return COLLECTIBLES.filter((c) => c.type === type && collectibleVisible(c, filter))
     .map((c) => locate(c, from))
     .sort((a, b) => a.distance - b.distance)
     .slice(0, n);

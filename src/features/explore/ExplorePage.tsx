@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router';
 import { Badge, PurityBadge, TierBadge } from '../../components/Badge.tsx';
 import { Checkbox } from '../../components/Checkbox.tsx';
@@ -21,48 +21,67 @@ import { formatDistance } from '../../lib/geo/geo.ts';
 import { useExplore } from '../../state/explore.ts';
 import { useSettings } from '../../state/settings.ts';
 import { MarkerGlyph, WorldMap, type MapPoint } from './WorldMap.tsx';
-import { COLLECTIBLE_META, COLLECTIBLE_TYPES, driveTier, locate } from './nearby.ts';
+import {
+  COLLECTIBLE_META,
+  COLLECTIBLE_TYPES,
+  collectibleVisible,
+  driveTier,
+  effectivePurity,
+  locate,
+  nearestCollectibles,
+} from './nearby.ts';
 
 const PURITY_COLOUR = { impure: '#ff8a8a', normal: '#ffd166', pure: '#5ee08f' } as const;
 const RESOURCES = ITEMS.filter((i) => i.isResource);
+const RESOURCE_IDS = new Set(RESOURCES.map((r) => r.id));
 
 export function ExplorePage() {
-  const [params] = useSearchParams();
+  const [params, setParams] = useSearchParams();
   const base = useSettings((s) => s.base);
   const setBase = useSettings((s) => s.setBase);
   const currentTier = useSettings((s) => s.currentTier);
+  const purityOverrides = useSettings((s) => s.purityOverrides);
   const { collected, filters, setFilters, toggleCollected } = useExplore();
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [picking, setPicking] = useState(false);
 
-  // Deep links: ?type=…, ?resource=…, ?site=…
-  const linkedType = params.get('type') as CollectibleType | null;
-  const linkedResource = params.get('resource');
+  // Deep links: ?type=… and ?resource=… seed the filters once, then leave the
+  // URL so the controls stay editable; ?site=… focuses the map.
   const linkedSite = params.get('site') ? SITE_BY_ID.get(params.get('site')!) : undefined;
+  const [listTab] = useState(() => params.get('type') ?? 'mercerSphere');
   const [focus, setFocus] = useState(() =>
     linkedSite ? { x: linkedSite.centre.x, y: linkedSite.centre.y, nonce: 1 } : null,
   );
-  const types = useMemo(
-    () =>
-      linkedType && linkedType in filters.types
-        ? { ...filters.types, [linkedType]: true }
-        : filters.types,
-    [filters.types, linkedType],
-  );
-  const resource = linkedResource ?? filters.resource;
+  useEffect(() => {
+    const type = params.get('type') as CollectibleType | null;
+    const resource = params.get('resource');
+    if (!type && resource === null) return;
+    const { filters: current, setFilters: apply } = useExplore.getState();
+    apply({
+      ...(type && type in current.types ? { types: { ...current.types, [type]: true } } : {}),
+      ...(resource !== null && (resource === '' || RESOURCE_IDS.has(resource)) ? { resource } : {}),
+    });
+    setParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('type');
+        next.delete('resource');
+        return next;
+      },
+      { replace: true },
+    );
+  }, [params, setParams]);
+  const { types, resource } = filters;
 
   const points = useMemo<MapPoint[]>(() => {
     const list: MapPoint[] = [];
+    const filter = {
+      collected,
+      hideCollected: filters.hideCollected,
+      drivesUpToTier: filters.drivesUpToTier,
+    };
     for (const c of COLLECTIBLES) {
-      if (!types[c.type]) continue;
-      const isCollected = !!collected[c.id];
-      if (isCollected && filters.hideCollected) continue;
-      if (
-        c.type === 'hardDrive' &&
-        filters.drivesUpToTier !== null &&
-        driveTier(c) > filters.drivesUpToTier
-      )
-        continue;
+      if (!types[c.type] || !collectibleVisible(c, filter)) continue;
       const meta = COLLECTIBLE_META[c.type];
       list.push({
         id: c.id,
@@ -71,25 +90,34 @@ export function ExplorePage() {
         colour: meta.colour,
         shape: meta.shape,
         label: meta.label,
-        dim: isCollected,
+        dim: !!collected[c.id],
       });
     }
     if (resource) {
       for (const n of NODES) {
-        if (n.resource !== resource || n.type === 'well-core' || !filters.purities[n.purity])
+        const purity = effectivePurity(n, purityOverrides);
+        if (n.resource !== resource || n.type === 'well-core' || !filters.purities[purity])
           continue;
         list.push({
           id: n.id,
           x: n.x,
           y: n.y,
-          colour: PURITY_COLOUR[n.purity],
+          colour: PURITY_COLOUR[purity],
           shape: 'square',
-          label: `${itemName(n.resource)} (${n.purity})`,
+          label: `${itemName(n.resource)} (${purity})`,
         });
       }
     }
     return list;
-  }, [types, collected, filters.hideCollected, filters.drivesUpToTier, filters.purities, resource]);
+  }, [
+    types,
+    collected,
+    filters.hideCollected,
+    filters.drivesUpToTier,
+    filters.purities,
+    resource,
+    purityOverrides,
+  ]);
 
   const selected = selectedId
     ? (COLLECTIBLE_BY_ID.get(selectedId) ?? NODE_BY_ID.get(selectedId))
@@ -263,7 +291,7 @@ export function ExplorePage() {
           <Panel title="Nearest to your base" level={2}>
             <Tabs
               label="Collectible lists"
-              defaultTab={linkedType ?? 'mercerSphere'}
+              defaultTab={listTab}
               tabs={COLLECTIBLE_TYPES.map((type) => ({
                 id: type,
                 label: COLLECTIBLE_META[type].plural,
@@ -273,6 +301,7 @@ export function ExplorePage() {
                     base={base}
                     collected={collected}
                     hideCollected={filters.hideCollected}
+                    drivesUpToTier={filters.drivesUpToTier}
                     currentTier={currentTier}
                     onToggle={toggleCollected}
                     onLocate={locateOnMap}
@@ -292,6 +321,7 @@ interface NearestTableProps {
   base: { x: number; y: number; z: number };
   collected: Record<string, true>;
   hideCollected: boolean;
+  drivesUpToTier: number | null;
   currentTier: number;
   onToggle: (id: string) => void;
   onLocate: (id: string, x: number, y: number) => void;
@@ -302,14 +332,12 @@ function NearestTable({
   base,
   collected,
   hideCollected,
+  drivesUpToTier,
   currentTier,
   onToggle,
   onLocate,
 }: NearestTableProps) {
-  const rows = COLLECTIBLES.filter((c) => c.type === type && (!hideCollected || !collected[c.id]))
-    .map((c) => locate(c, base))
-    .sort((a, b) => a.distance - b.distance)
-    .slice(0, 30);
+  const rows = nearestCollectibles(type, base, 30, collected, !hideCollected, drivesUpToTier);
   if (!rows.length)
     return <p className="text-ink-muted text-sm">Nothing left to collect. Well done, pioneer.</p>;
   return (
@@ -397,6 +425,7 @@ function SelectedDetails({
   collected: boolean;
   onToggle: () => void;
 }) {
+  const purityOverrides = useSettings((s) => s.purityOverrides);
   const c = COLLECTIBLE_BY_ID.get(id);
   const n = NODE_BY_ID.get(id);
   const point = c ?? n;
@@ -406,7 +435,7 @@ function SelectedDetails({
     <div className="space-y-2 text-sm">
       <p className="font-semibold">
         {c ? COLLECTIBLE_META[c.type].label : n ? `${itemName(n.resource)} node` : ''}{' '}
-        {n && <PurityBadge purity={n.purity} />}
+        {n && <PurityBadge purity={effectivePurity(n, purityOverrides)} />}
       </p>
       <p className="text-ink-muted num">
         {formatDistance(where.distance)} {where.compass} ({Math.round(where.bearing)}°) · height{' '}
