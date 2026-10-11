@@ -59,7 +59,7 @@ export function AppShell() {
         ref={header}
         className="border-line bg-panel/95 sticky top-0 z-40 border-b backdrop-blur"
       >
-        <div className="mx-auto flex max-w-7xl flex-col gap-y-1.5 px-4 py-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:py-3">
+        <div className="mx-auto flex max-w-7xl flex-col gap-y-0.5 px-4 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:py-1.5">
           <NavLink
             to="/"
             className="text-ink flex items-center gap-2 font-semibold no-underline hover:no-underline"
@@ -88,7 +88,7 @@ export function AppShell() {
                     end={item.end}
                     className={({ isActive }) =>
                       cx(
-                        'block rounded px-2.5 py-1.5 text-sm font-medium whitespace-nowrap sm:px-3 no-underline hover:no-underline',
+                        'flex min-h-11 items-center rounded px-2.5 text-sm font-medium whitespace-nowrap sm:px-3 no-underline hover:no-underline',
                         isActive || (item.to === '/tier' && pathname.startsWith('/tier'))
                           ? 'bg-panel-3 text-ink'
                           : 'text-ink-muted hover:text-ink',

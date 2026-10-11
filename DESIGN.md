@@ -168,7 +168,7 @@ Cool, blue-tinted graphite neutrals with a single warm amber signal, plus a smal
 
 ### Primary
 
-- **FICSIT Amber** (accent): the signal colour. Primary buttons, the selected tier-tab border, the focus ring, progress fill, the active edge on the current-tier row and the hero panel's tint. On the flow diagram it also strokes conveyor belts.
+- **FICSIT Amber** (accent): the signal colour, for what to act on now: the NEXT tag and strip, the current step's border, the selected tier-tab border, the focus ring and the hero panel's tint. Progress fills are not amber (they use Dimmed Readout, turning Go Green at 100%). On the flow diagram it also strokes conveyor belts.
 - **Lit Amber** (accent-strong): amber at text-safe lightness. Use it for links, the selected tier label, accent badges and the amount in item chips (`120/min`, `4×`).
 - **Amber Ink** (accent-ink): near-black warm brown for text that sits on FICSIT Amber.
 
@@ -319,7 +319,7 @@ Item, building and resource icons ship as 64 px WebP in `public/icons/` (see `do
 
 ### Tier tabs (signature)
 
-Ten tabs, each a small instrument card: "Tier n" in bold (Lit Amber when selected), the tier title in Dimmed Readout and "n% done" in tabular Stencil Grey at 12px. The player's current tier reads "You · n% done". A 2px progress line runs along the bottom edge in amber, turning Go Green at 100%. The selected tab gets an amber border on Selected Console. Each tab is also a route.
+Ten tabs, each a small instrument card: "Tier n" in bold (Lit Amber when selected), the tier title in Dimmed Readout and "n% done" in tabular Stencil Grey at 12px. The player's current tier reads "You · n% done". A 2px progress line runs along the bottom edge in Dimmed Readout, turning Go Green at 100%. The selected tab gets an amber border on Selected Console. Each tab is also a route.
 
 ### NEXT strip (signature)
 

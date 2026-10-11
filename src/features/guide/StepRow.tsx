@@ -110,7 +110,7 @@ export function StepRow({ step, index, state, phase }: StepRowProps) {
       </h3>
 
       <div id={panelId} hidden={!open} className="px-3 pb-5 sm:px-4 md:pl-[3.75rem]">
-        <p className="text-ink-muted mb-3">{step.summary}</p>
+        <p className="text-ink-muted mb-3 max-w-prose">{step.summary}</p>
         <div className="grid gap-x-8 gap-y-4 lg:grid-cols-[minmax(0,1fr)_20rem]">
           <div>
             <ul className="divide-line divide-y">
@@ -137,7 +137,7 @@ export function StepRow({ step, index, state, phase }: StepRowProps) {
               </button>
             )}
             {step.body?.map((p) => (
-              <p key={p} className="text-ink-muted mt-3 text-sm leading-relaxed">
+              <p key={p} className="text-ink-muted mt-3 max-w-prose text-sm leading-relaxed">
                 {p}
               </p>
             ))}
