@@ -236,6 +236,15 @@ Commits follow `{gitmoji} {scope}: {description}` at each phase boundary. Mergin
   - A content test fails if any item or building lacks an icon.
   - At runtime the app serves only its own files and never hotlinks the wiki, which keeps O5.
   - Fallback: extract icons from a local game install with FModel if the wiki's 1.2 coverage turns out to be wrong.
+- **Tier guide redesign: Work Order Queue** (Linear I-80; brief in Obsidian `1-Projects/Satisfactory/2026-10-11-tier-guide-redesign-brief.md`; sketches in `.impeccable/mocks/decision/`). A pinned NEXT strip and a numbered step queue on the tier page, a NEXT hero on the dashboard, and a standalone `/glance` page for the second monitor. It answers the 24/40 critique; the target is ≥ 32/40. Build order, one Linear issue each:
+  1. I-81 Icon pipeline (the item above).
+  2. I-82 Link every milestone to a step task, add skipped-step state and migrate progress.
+  3. I-83 NEXT strip and Work Order Queue on the tier page.
+  4. I-84 Dashboard: NEXT hero, run queue and tier-complete advance offer.
+  5. I-85 `/glance` page (big switch, cross-window sync, keep-awake).
+  6. I-86 Keyboard shortcuts (`n`, `j`/`k`, `g`, `?`).
+  7. I-87 Finish: Impeccable finish review, DESIGN.md update and critique re-run.
+- **Decide on WCAG 2.2 AA** as the accessibility standard (Linear I-88). Until then, §10 stays at 2.1 AA.
 
 ## 15. Delivery log (v1, 2026-10-10)
 
