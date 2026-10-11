@@ -323,7 +323,7 @@ Ten tabs, each a small instrument card: "Tier n" in bold (Lit Amber when selecte
 
 ### NEXT strip (signature)
 
-The answer to "what do I do now?", pinned inside the sticky header on tier pages. A FICSIT Amber "NEXT" tag, a switch that ticks the next task, the task in semibold (18px from 640px), "Step nn · title" as a link to the step, and the step's lead layout figures (the lead figure in Lit Amber). It always follows the player's current tier; on another tier's page it starts "You're on Tier n ·". When a tick advances it, the new line holds an amber-tinted Raised Console fill until the player next moves, types or touches. An optional step offers "Skip step". A finished tier offers "Move to Tier n+1" and never advances by itself. On phones the figures hide behind a "Figures" button.
+The answer to "what do I do now?", pinned inside the sticky header on tier pages. A FICSIT Amber "NEXT" tag, a switch that ticks the next task, the task in semibold (18px from 640px), "Step nn · title" as a link to the step, and the step's lead layout figures (the lead figure in Lit Amber). It always follows the player's current tier; on another tier's page it starts "You're on Tier n ·". When a tick advances it, the new line holds an amber-tinted Raised Console fill until the player next moves, types or touches. A tick shows "Ticked: task · Undo" under the strip while the new line is fresh (a polite live region announces it and the new NEXT; the hero and glance show the same receipt). An optional step offers "Skip step". A finished tier offers "Move to Tier n+1" and never advances by itself. On phones the figures hide behind a "Figures" button.
 
 ### Work order queue (signature)
 
@@ -331,7 +331,7 @@ The tier's steps as one numbered list of APG accordion rows (an `h3` holding the
 
 - **Done:** borderless, title in Stencil Grey, status "Done" in Go Green with a check glyph. Collapsed.
 - **Skipped:** like done, with "– Skipped". Only `optional` steps can be skipped.
-- **Current:** the only amber-bordered row (accent mixed 45% into Bezel Line, no side stripe), a larger title, a "NEXT" tag and open by default. The body pairs task switches with an aside of figures, Space Elevator delivery, embedded milestones and sites; layouts, research, explore targets and tips follow.
+- **Current:** the only amber-bordered row (accent mixed 45% into Bezel Line, no side stripe), a larger title, a "NEXT" tag and open by default. The body pairs task switches with an aside of factory layout cards (which carry the figures, so they appear once), Space Elevator delivery, embedded milestones and sites; research, explore targets and tips follow.
 - **Later:** a Console Graphite card in Dimmed Readout with "done / total".
 
 Milestone cards inside a step are display only: their tick is the step's linked "Submit" task. Unlocks list five names then "+n more". "Hide completed" (persisted) removes done and skipped rows and says how many are hidden.

@@ -8,3 +8,5 @@ package-lock.json
 .impeccable/config.json
 .impeccable/hook.cache.json
 docs/research
+.impeccable/live
+.impeccable/critique

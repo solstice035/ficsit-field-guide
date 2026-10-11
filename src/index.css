@@ -115,7 +115,6 @@
   /* NEXT strip line that just changed: holds amber until the player has seen it. */
   .next-fresh {
     background: color-mix(in srgb, var(--color-accent) 16%, var(--color-panel-2));
-    transition: background-color 600ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 

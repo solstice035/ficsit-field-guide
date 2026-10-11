@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { Switch } from '../../components/Switch.tsx';
 import { cx } from '../../components/cx.ts';
 import { TierComplete } from '../guide/NextStrip.tsx';
+import { TickReceipt } from '../guide/TickReceipt.tsx';
 import { StepFigures } from '../guide/StepFigures.tsx';
 import { stepLayout } from '../guide/stepMeta.ts';
 import { useNextTask } from '../guide/useNextTask.ts';
@@ -19,7 +20,7 @@ const WAKE_NOTE = {
  * room. Opened in its own window; ticks sync with the main window.
  */
 export function GlancePage() {
-  const { tier, next, after, fresh, tick, skip, advanceTier } = useNextTask();
+  const { tier, next, after, fresh, lastTicked, tick, undo, skip, advanceTier } = useNextTask();
   const [keepAwake, setKeepAwake] = useState(false);
   const wake = useWakeLock(keepAwake);
   const layout = next ? stepLayout(next.step) : undefined;
@@ -58,7 +59,11 @@ export function GlancePage() {
       >
         <section
           aria-label="Next task"
-          className={cx('rounded-xl p-6 sm:p-10', fresh ? 'next-fresh' : 'bg-panel')}
+          className={cx(
+            'rounded-xl p-6 sm:p-10',
+            'transition-colors duration-500',
+            fresh ? 'next-fresh' : 'bg-panel',
+          )}
         >
           <span className="bg-accent text-accent-ink rounded px-3 py-1 text-sm font-bold">
             NEXT
@@ -109,6 +114,12 @@ export function GlancePage() {
             </div>
           )}
         </section>
+        <TickReceipt
+          lastTicked={lastTicked}
+          nextLabel={next?.task.label}
+          onUndo={undo}
+          className="mt-4 px-6 sm:px-10 [&_p]:text-lg"
+        />
       </main>
     </div>
   );

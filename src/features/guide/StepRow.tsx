@@ -12,9 +12,8 @@ import { MilestoneCard } from './MilestoneCard.tsx';
 import { PhaseDetails } from './PhaseDetails.tsx';
 import { ResearchList } from './ResearchList.tsx';
 import { SiteChips } from './SiteChips.tsx';
-import { StepFigures } from './StepFigures.tsx';
 import { useProgressFlags } from './progress.ts';
-import { KIND_LABEL, stepAnchor, stepLayout, stepSiteName } from './stepMeta.ts';
+import { KIND_LABEL, stepAnchor, stepSiteName } from './stepMeta.ts';
 
 function SubHeading({ children }: { children: string }) {
   return <h4 className="text-ink-faint mt-5 mb-2 text-xs font-semibold first:mt-0">{children}</h4>;
@@ -45,7 +44,6 @@ export function StepRow({ step, index, state, phase }: StepRowProps) {
   const { done, total } = stepProgress(step, flags);
   const current = state === 'current';
   const site = stepSiteName(step);
-  const layout = stepLayout(step);
   const elevator = step.kind === 'space-elevator';
 
   return (
@@ -154,12 +152,19 @@ export function StepRow({ step, index, state, phase }: StepRowProps) {
           </div>
 
           <div>
-            {layout && (
+            {step.layoutIds?.length ? (
               <>
-                <SubHeading>Figures</SubHeading>
-                <StepFigures layout={layout} className="text-sm" />
+                <SubHeading>
+                  {step.layoutIds.length > 1 ? 'Factory layouts' : 'Factory layout'}
+                </SubHeading>
+                <div className="space-y-2">
+                  {step.layoutIds.map((id) => {
+                    const l = LAYOUT_BY_ID.get(id);
+                    return l ? <LayoutSummaryCard key={id} layout={l} /> : null;
+                  })}
+                </div>
               </>
-            )}
+            ) : null}
             {elevator && phase !== undefined && (
               <>
                 <SubHeading>Deliver</SubHeading>
@@ -184,18 +189,6 @@ export function StepRow({ step, index, state, phase }: StepRowProps) {
             ) : null}
           </div>
         </div>
-
-        {step.layoutIds?.length ? (
-          <>
-            <SubHeading>Factory layouts</SubHeading>
-            <div className="grid gap-2 md:grid-cols-2">
-              {step.layoutIds.map((id) => {
-                const l = LAYOUT_BY_ID.get(id);
-                return l ? <LayoutSummaryCard key={id} layout={l} /> : null;
-              })}
-            </div>
-          </>
-        ) : null}
         {step.researchIds?.length ? (
           <>
             <SubHeading>MAM research</SubHeading>
