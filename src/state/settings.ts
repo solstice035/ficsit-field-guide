@@ -6,7 +6,9 @@ import {
   type BaseLocation,
   parseBase,
   parsePurityOverrides,
+  parseBool,
   parseTier,
+  isRecord,
   safeMerge,
 } from './schema.ts';
 import { STORAGE_KEYS, persistStorage } from './storage.ts';
@@ -19,9 +21,12 @@ export interface SettingsState {
   currentTier: number;
   /** Per-node purity overrides for non-default Game Modes. */
   purityOverrides: Record<string, Purity>;
+  /** Tier page: collapse finished and skipped steps out of the queue. */
+  hideCompleted: boolean;
   setBase: (base: BaseLocation) => void;
   setCurrentTier: (tier: number) => void;
   setPurityOverride: (nodeId: string, purity: Purity | undefined) => void;
+  setHideCompleted: (hide: boolean) => void;
   reset: () => void;
 }
 
@@ -29,17 +34,25 @@ const DEFAULTS = {
   base: { ...DEFAULT_BASE },
   currentTier: 0,
   purityOverrides: {},
+  hideCompleted: false,
 };
 
-type SettingsData = Pick<SettingsState, 'base' | 'currentTier' | 'purityOverrides'>;
+type SettingsData = Pick<
+  SettingsState,
+  'base' | 'currentTier' | 'purityOverrides' | 'hideCompleted'
+>;
 
-/** Validates persisted settings; base and tier are required, overrides default to none. */
+/** Validates persisted settings; base and tier are required, the rest default. */
 export function parseSettings(raw: Record<string, unknown>): SettingsData {
   return {
     base: parseBase(raw.base),
     currentTier: parseTier(raw.currentTier),
     purityOverrides:
       raw.purityOverrides === undefined ? {} : parsePurityOverrides(raw.purityOverrides),
+    hideCompleted:
+      raw.hideCompleted === undefined
+        ? false
+        : parseBool(raw.hideCompleted, 'hide-completed setting'),
   };
 }
 
@@ -56,12 +69,15 @@ export const useSettings = create<SettingsState>()(
           else delete next[nodeId];
           return { purityOverrides: next };
         }),
+      setHideCompleted: (hideCompleted) => set({ hideCompleted }),
       reset: () => set({ ...DEFAULTS, base: { ...DEFAULT_BASE } }),
     }),
     {
       name: STORAGE_KEYS.settings,
-      version: 1,
+      // v2 adds `hideCompleted`; `parseSettings` defaults it, so v1 data passes through.
+      version: 2,
       storage: persistStorage,
+      migrate: (persisted) => (isRecord(persisted) ? persisted : {}) as unknown as SettingsState,
       merge: safeMerge<SettingsState>(parseSettings),
     },
   ),
