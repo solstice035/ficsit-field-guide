@@ -1,0 +1,1152 @@
+{
+  "BP_EqDescZipLine_C": {
+    "name": "Zipline",
+    "source": "Satisfactory Wiki",
+    "page": "File:Zipline.png"
+  },
+  "BP_EquipmentDescriptorCandyCane_C": {
+    "name": "Candy Cane Basher",
+    "source": "Satisfactory Wiki",
+    "page": "File:Candy Cane Basher.png"
+  },
+  "BP_EquipmentDescriptorGasmask_C": {
+    "name": "Gas Mask",
+    "source": "Satisfactory Wiki",
+    "page": "File:Gas Mask.png"
+  },
+  "BP_EquipmentDescriptorHazmatSuit_C": {
+    "name": "Hazmat Suit",
+    "source": "Satisfactory Wiki",
+    "page": "File:Hazmat Suit.png"
+  },
+  "BP_EquipmentDescriptorHoverPack_C": {
+    "name": "Hoverpack",
+    "source": "Satisfactory Wiki",
+    "page": "File:Hoverpack.png"
+  },
+  "BP_EquipmentDescriptorJetPack_C": {
+    "name": "Jetpack",
+    "source": "Satisfactory Wiki",
+    "page": "File:Jetpack.png"
+  },
+  "BP_EquipmentDescriptorJumpingStilts_C": {
+    "name": "Blade Runners",
+    "source": "Satisfactory Wiki",
+    "page": "File:Blade Runners.png"
+  },
+  "BP_EquipmentDescriptorNobeliskDetonator_C": {
+    "name": "Nobelisk Detonator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Nobelisk Detonator.png"
+  },
+  "BP_EquipmentDescriptorObjectScanner_C": {
+    "name": "Object Scanner",
+    "source": "Satisfactory Wiki",
+    "page": "File:Object Scanner.png"
+  },
+  "BP_EquipmentDescriptorRifle_C": {
+    "name": "Rifle",
+    "source": "Satisfactory Wiki",
+    "page": "File:Rifle.png"
+  },
+  "BP_EquipmentDescriptorShockShank_C": {
+    "name": "Xeno-Zapper",
+    "source": "Satisfactory Wiki",
+    "page": "File:Xeno-Zapper.png"
+  },
+  "BP_EquipmentDescriptorStunSpear_C": {
+    "name": "Xeno-Basher",
+    "source": "Satisfactory Wiki",
+    "page": "File:Xeno-Basher.png"
+  },
+  "BP_ItemDescriptorPortableMiner_C": {
+    "name": "Portable Miner",
+    "source": "Satisfactory Wiki",
+    "page": "File:Portable Miner.png"
+  },
+  "Build_AssemblerMk1_C": {
+    "name": "Assembler",
+    "source": "Satisfactory Wiki",
+    "page": "File:Assembler.png"
+  },
+  "Build_Blender_C": {
+    "name": "Blender",
+    "source": "Satisfactory Wiki",
+    "page": "File:Blender.png"
+  },
+  "Build_ConstructorMk1_C": {
+    "name": "Constructor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Constructor.png"
+  },
+  "Build_Converter_C": {
+    "name": "Converter",
+    "source": "SatisfactoryTools",
+    "page": "www/assets/images/items/desc-converter-c_256.png"
+  },
+  "Build_ConveyorBeltMk1_C": {
+    "name": "Conveyor Belt Mk.1",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Belt Mk.1.png"
+  },
+  "Build_ConveyorBeltMk2_C": {
+    "name": "Conveyor Belt Mk.2",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Belt Mk.2.png"
+  },
+  "Build_ConveyorBeltMk3_C": {
+    "name": "Conveyor Belt Mk.3",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Belt Mk.3.png"
+  },
+  "Build_ConveyorBeltMk4_C": {
+    "name": "Conveyor Belt Mk.4",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Belt Mk.4.png"
+  },
+  "Build_ConveyorBeltMk5_C": {
+    "name": "Conveyor Belt Mk.5",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Belt Mk.5.png"
+  },
+  "Build_ConveyorBeltMk6_C": {
+    "name": "Conveyor Belt Mk.6",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Belt Mk.6.png"
+  },
+  "Build_ConveyorLiftMk1_C": {
+    "name": "Conveyor Lift Mk.1",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Lift Mk.1.png"
+  },
+  "Build_ConveyorLiftMk2_C": {
+    "name": "Conveyor Lift Mk.2",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Lift Mk.2.png"
+  },
+  "Build_ConveyorLiftMk3_C": {
+    "name": "Conveyor Lift Mk.3",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Lift Mk.3.png"
+  },
+  "Build_ConveyorLiftMk4_C": {
+    "name": "Conveyor Lift Mk.4",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Lift Mk.4.png"
+  },
+  "Build_ConveyorLiftMk5_C": {
+    "name": "Conveyor Lift Mk.5",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Lift Mk.5.png"
+  },
+  "Build_ConveyorLiftMk6_C": {
+    "name": "Conveyor Lift Mk.6",
+    "source": "Satisfactory Wiki",
+    "page": "File:Conveyor Lift Mk.6.png"
+  },
+  "Build_FoundryMk1_C": {
+    "name": "Foundry",
+    "source": "Satisfactory Wiki",
+    "page": "File:Foundry.png"
+  },
+  "Build_FrackingExtractor_C": {
+    "name": "Resource Well Extractor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Resource Well Extractor.png"
+  },
+  "Build_FrackingSmasher_C": {
+    "name": "Resource Well Pressurizer",
+    "source": "Satisfactory Wiki",
+    "page": "File:Resource Well Pressurizer.png"
+  },
+  "Build_GeneratorBiomass_Automated_C": {
+    "name": "Biomass Burner",
+    "source": "Satisfactory Wiki",
+    "page": "File:Biomass Burner.png"
+  },
+  "Build_GeneratorCoal_C": {
+    "name": "Coal-Powered Generator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Coal-Powered Generator.png"
+  },
+  "Build_GeneratorFuel_C": {
+    "name": "Fuel-Powered Generator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Fuel-Powered Generator.png"
+  },
+  "Build_GeneratorGeoThermal_C": {
+    "name": "Geothermal Generator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Geothermal Generator.png"
+  },
+  "Build_GeneratorNuclear_C": {
+    "name": "Nuclear Power Plant",
+    "source": "Satisfactory Wiki",
+    "page": "File:Nuclear Power Plant.png"
+  },
+  "Build_HadronCollider_C": {
+    "name": "Particle Accelerator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Particle Accelerator.png"
+  },
+  "Build_ManufacturerMk1_C": {
+    "name": "Manufacturer",
+    "source": "Satisfactory Wiki",
+    "page": "File:Manufacturer.png"
+  },
+  "Build_MinerMk1_C": {
+    "name": "Miner Mk.1",
+    "source": "Satisfactory Wiki",
+    "page": "File:Miner Mk.1.png"
+  },
+  "Build_MinerMk2_C": {
+    "name": "Miner Mk.2",
+    "source": "Satisfactory Wiki",
+    "page": "File:Miner Mk.2.png"
+  },
+  "Build_MinerMk3_C": {
+    "name": "Miner Mk.3",
+    "source": "Satisfactory Wiki",
+    "page": "File:Miner Mk.3.png"
+  },
+  "Build_OilPump_C": {
+    "name": "Oil Extractor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Oil Extractor.png"
+  },
+  "Build_OilRefinery_C": {
+    "name": "Refinery",
+    "source": "Satisfactory Wiki",
+    "page": "File:Refinery.png"
+  },
+  "Build_Packager_C": {
+    "name": "Packager",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packager.png"
+  },
+  "Build_PipelineMK2_C": {
+    "name": "Pipeline Mk.2",
+    "source": "Satisfactory Wiki",
+    "page": "File:Pipeline Mk.2.png"
+  },
+  "Build_Pipeline_C": {
+    "name": "Pipeline Mk.1",
+    "source": "Satisfactory Wiki",
+    "page": "File:Pipeline Mk.1.png"
+  },
+  "Build_QuantumEncoder_C": {
+    "name": "Quantum Encoder",
+    "source": "SatisfactoryTools",
+    "page": "www/assets/images/items/desc-quantumencoder-c_256.png"
+  },
+  "Build_SmelterMk1_C": {
+    "name": "Smelter",
+    "source": "Satisfactory Wiki",
+    "page": "File:Smelter.png"
+  },
+  "Build_WaterPump_C": {
+    "name": "Water Extractor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Water Extractor.png"
+  },
+  "Desc_AlienDNACapsule_C": {
+    "name": "Alien DNA Capsule",
+    "source": "Satisfactory Wiki",
+    "page": "File:Alien DNA Capsule.png"
+  },
+  "Desc_AlienPowerFuel_C": {
+    "name": "Alien Power Matrix",
+    "source": "Satisfactory Wiki",
+    "page": "File:Alien Power Matrix.png"
+  },
+  "Desc_AlienProtein_C": {
+    "name": "Alien Protein",
+    "source": "Satisfactory Wiki",
+    "page": "File:Alien Protein.png"
+  },
+  "Desc_AluminaSolution_C": {
+    "name": "Alumina Solution",
+    "source": "Satisfactory Wiki",
+    "page": "File:Alumina Solution.png"
+  },
+  "Desc_AluminumCasing_C": {
+    "name": "Aluminum Casing",
+    "source": "Satisfactory Wiki",
+    "page": "File:Aluminum Casing.png"
+  },
+  "Desc_AluminumIngot_C": {
+    "name": "Aluminum Ingot",
+    "source": "Satisfactory Wiki",
+    "page": "File:Aluminum Ingot.png"
+  },
+  "Desc_AluminumPlateReinforced_C": {
+    "name": "Heat Sink",
+    "source": "Satisfactory Wiki",
+    "page": "File:Heat Sink.png"
+  },
+  "Desc_AluminumPlate_C": {
+    "name": "Alclad Aluminum Sheet",
+    "source": "Satisfactory Wiki",
+    "page": "File:Alclad Aluminum Sheet.png"
+  },
+  "Desc_AluminumScrap_C": {
+    "name": "Aluminum Scrap",
+    "source": "Satisfactory Wiki",
+    "page": "File:Aluminum Scrap.png"
+  },
+  "Desc_Battery_C": {
+    "name": "Battery",
+    "source": "Satisfactory Wiki",
+    "page": "File:Battery.png"
+  },
+  "Desc_Berry_C": {
+    "name": "Paleberry",
+    "source": "Satisfactory Wiki",
+    "page": "File:Paleberry.png"
+  },
+  "Desc_Biofuel_C": {
+    "name": "Solid Biofuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Solid Biofuel.png"
+  },
+  "Desc_Cable_C": {
+    "name": "Cable",
+    "source": "Satisfactory Wiki",
+    "page": "File:Cable.png"
+  },
+  "Desc_CandyCane_C": {
+    "name": "Candy Cane",
+    "source": "Satisfactory Wiki",
+    "page": "File:Candy Cane.png"
+  },
+  "Desc_CartridgeChaos_C": {
+    "name": "Turbo Rifle Ammo",
+    "source": "Satisfactory Wiki",
+    "page": "File:Turbo Rifle Ammo.png"
+  },
+  "Desc_CartridgeSmartProjectile_C": {
+    "name": "Homing Rifle Ammo",
+    "source": "Satisfactory Wiki",
+    "page": "File:Homing Rifle Ammo.png"
+  },
+  "Desc_CartridgeStandard_C": {
+    "name": "Rifle Ammo",
+    "source": "Satisfactory Wiki",
+    "page": "File:Rifle Ammo.png"
+  },
+  "Desc_Cement_C": {
+    "name": "Concrete",
+    "source": "Satisfactory Wiki",
+    "page": "File:Concrete.png"
+  },
+  "Desc_Chainsaw_C": {
+    "name": "Chainsaw",
+    "source": "Satisfactory Wiki",
+    "page": "File:Chainsaw.png"
+  },
+  "Desc_CircuitBoardHighSpeed_C": {
+    "name": "AI Limiter",
+    "source": "Satisfactory Wiki",
+    "page": "File:AI Limiter.png"
+  },
+  "Desc_CircuitBoard_C": {
+    "name": "Circuit Board",
+    "source": "Satisfactory Wiki",
+    "page": "File:Circuit Board.png"
+  },
+  "Desc_Coal_C": {
+    "name": "Coal",
+    "source": "Satisfactory Wiki",
+    "page": "File:Coal.png"
+  },
+  "Desc_CompactedCoal_C": {
+    "name": "Compacted Coal",
+    "source": "Satisfactory Wiki",
+    "page": "File:Compacted Coal.png"
+  },
+  "Desc_ComputerSuper_C": {
+    "name": "Supercomputer",
+    "source": "Satisfactory Wiki",
+    "page": "File:Supercomputer.png"
+  },
+  "Desc_Computer_C": {
+    "name": "Computer",
+    "source": "Satisfactory Wiki",
+    "page": "File:Computer.png"
+  },
+  "Desc_CoolingSystem_C": {
+    "name": "Cooling System",
+    "source": "Satisfactory Wiki",
+    "page": "File:Cooling System.png"
+  },
+  "Desc_CopperDust_C": {
+    "name": "Copper Powder",
+    "source": "Satisfactory Wiki",
+    "page": "File:Copper Powder.png"
+  },
+  "Desc_CopperIngot_C": {
+    "name": "Copper Ingot",
+    "source": "Satisfactory Wiki",
+    "page": "File:Copper Ingot.png"
+  },
+  "Desc_CopperSheet_C": {
+    "name": "Copper Sheet",
+    "source": "Satisfactory Wiki",
+    "page": "File:Copper Sheet.png"
+  },
+  "Desc_CrystalOscillator_C": {
+    "name": "Crystal Oscillator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Crystal Oscillator.png"
+  },
+  "Desc_CrystalShard_C": {
+    "name": "Power Shard",
+    "source": "Satisfactory Wiki",
+    "page": "File:Power Shard.png"
+  },
+  "Desc_Crystal_C": {
+    "name": "Blue Power Slug",
+    "source": "Satisfactory Wiki",
+    "page": "File:Blue Power Slug.png"
+  },
+  "Desc_Crystal_mk2_C": {
+    "name": "Yellow Power Slug",
+    "source": "Satisfactory Wiki",
+    "page": "File:Yellow Power Slug.png"
+  },
+  "Desc_Crystal_mk3_C": {
+    "name": "Purple Power Slug",
+    "source": "Satisfactory Wiki",
+    "page": "File:Purple Power Slug.png"
+  },
+  "Desc_DarkEnergy_C": {
+    "name": "Dark Matter Residue",
+    "source": "Satisfactory Wiki",
+    "page": "File:Dark Matter Residue.png"
+  },
+  "Desc_DarkMatter_C": {
+    "name": "Dark Matter Crystal",
+    "source": "Satisfactory Wiki",
+    "page": "File:Dark Matter Crystal.png"
+  },
+  "Desc_Diamond_C": {
+    "name": "Diamonds",
+    "source": "Satisfactory Wiki",
+    "page": "File:Diamonds.png"
+  },
+  "Desc_DissolvedSilica_C": {
+    "name": "Dissolved Silica",
+    "source": "Satisfactory Wiki",
+    "page": "File:Dissolved Silica.png"
+  },
+  "Desc_ElectromagneticControlRod_C": {
+    "name": "Electromagnetic Control Rod",
+    "source": "Satisfactory Wiki",
+    "page": "File:Electromagnetic Control Rod.png"
+  },
+  "Desc_Fabric_C": {
+    "name": "Fabric",
+    "source": "Satisfactory Wiki",
+    "page": "File:Fabric.png"
+  },
+  "Desc_FicsiteIngot_C": {
+    "name": "Ficsite Ingot",
+    "source": "Satisfactory Wiki",
+    "page": "File:Ficsite Ingot.png"
+  },
+  "Desc_FicsiteMesh_C": {
+    "name": "Ficsite Trigon",
+    "source": "Satisfactory Wiki",
+    "page": "File:Ficsite Trigon.png"
+  },
+  "Desc_FicsoniumFuelRod_C": {
+    "name": "Ficsonium Fuel Rod",
+    "source": "Satisfactory Wiki",
+    "page": "File:Ficsonium Fuel Rod.png"
+  },
+  "Desc_Ficsonium_C": {
+    "name": "Ficsonium",
+    "source": "Satisfactory Wiki",
+    "page": "File:Ficsonium.png"
+  },
+  "Desc_Filter_C": {
+    "name": "Gas Filter",
+    "source": "Satisfactory Wiki",
+    "page": "File:Gas Filter.png"
+  },
+  "Desc_Fireworks_Projectile_01_C": {
+    "name": "Sweet Fireworks",
+    "source": "Satisfactory Wiki",
+    "page": "File:Sweet Fireworks.png"
+  },
+  "Desc_Fireworks_Projectile_02_C": {
+    "name": "Fancy Fireworks",
+    "source": "Satisfactory Wiki",
+    "page": "File:Fancy Fireworks.png"
+  },
+  "Desc_Fireworks_Projectile_03_C": {
+    "name": "Sparkly Fireworks",
+    "source": "Satisfactory Wiki",
+    "page": "File:Sparkly Fireworks.png"
+  },
+  "Desc_FluidCanister_C": {
+    "name": "Empty Canister",
+    "source": "Satisfactory Wiki",
+    "page": "File:Empty Canister.png"
+  },
+  "Desc_Fuel_C": {
+    "name": "Packaged Fuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Fuel.png"
+  },
+  "Desc_GasTank_C": {
+    "name": "Empty Fluid Tank",
+    "source": "Satisfactory Wiki",
+    "page": "File:Empty Fluid Tank.png"
+  },
+  "Desc_GenericBiomass_C": {
+    "name": "Biomass",
+    "source": "Satisfactory Wiki",
+    "page": "File:Biomass.png"
+  },
+  "Desc_Gift_C": {
+    "name": "FICSMAS Gift",
+    "source": "Satisfactory Wiki",
+    "page": "File:FICSMAS Gift.png"
+  },
+  "Desc_GoldIngot_C": {
+    "name": "Caterium Ingot",
+    "source": "Satisfactory Wiki",
+    "page": "File:Caterium Ingot.png"
+  },
+  "Desc_GolfCartGold_C": {
+    "name": "Golden Factory Cart™",
+    "source": "Satisfactory Wiki",
+    "page": "File:Golden Factory Cart.png"
+  },
+  "Desc_GolfCart_C": {
+    "name": "Factory Cart™",
+    "source": "Satisfactory Wiki",
+    "page": "File:Factory Cart.png"
+  },
+  "Desc_GunpowderMK2_C": {
+    "name": "Smokeless Powder",
+    "source": "Satisfactory Wiki",
+    "page": "File:Smokeless Powder.png"
+  },
+  "Desc_Gunpowder_C": {
+    "name": "Black Powder",
+    "source": "Satisfactory Wiki",
+    "page": "File:Black Powder.png"
+  },
+  "Desc_HardDrive_C": {
+    "name": "Hard Drive",
+    "source": "Satisfactory Wiki",
+    "page": "File:Hard Drive.png"
+  },
+  "Desc_HatcherParts_C": {
+    "name": "Hatcher Remains",
+    "source": "Satisfactory Wiki",
+    "page": "File:Hatcher Remains.png"
+  },
+  "Desc_HazmatFilter_C": {
+    "name": "Iodine-Infused Filter",
+    "source": "Satisfactory Wiki",
+    "page": "File:Iodine-Infused Filter.png"
+  },
+  "Desc_HeavyOilResidue_C": {
+    "name": "Heavy Oil Residue",
+    "source": "Satisfactory Wiki",
+    "page": "File:Heavy Oil Residue.png"
+  },
+  "Desc_HighSpeedConnector_C": {
+    "name": "High-Speed Connector",
+    "source": "Satisfactory Wiki",
+    "page": "File:High-Speed Connector.png"
+  },
+  "Desc_HighSpeedWire_C": {
+    "name": "Quickwire",
+    "source": "Satisfactory Wiki",
+    "page": "File:Quickwire.png"
+  },
+  "Desc_HogParts_C": {
+    "name": "Hog Remains",
+    "source": "Satisfactory Wiki",
+    "page": "File:Hog Remains.png"
+  },
+  "Desc_IonizedFuel_C": {
+    "name": "Ionized Fuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Ionized Fuel.png"
+  },
+  "Desc_IronIngot_C": {
+    "name": "Iron Ingot",
+    "source": "Satisfactory Wiki",
+    "page": "File:Iron Ingot.png"
+  },
+  "Desc_IronPlateReinforced_C": {
+    "name": "Reinforced Iron Plate",
+    "source": "Satisfactory Wiki",
+    "page": "File:Reinforced Iron Plate.png"
+  },
+  "Desc_IronPlate_C": {
+    "name": "Iron Plate",
+    "source": "Satisfactory Wiki",
+    "page": "File:Iron Plate.png"
+  },
+  "Desc_IronRod_C": {
+    "name": "Iron Rod",
+    "source": "Satisfactory Wiki",
+    "page": "File:Iron Rod.png"
+  },
+  "Desc_IronScrew_C": {
+    "name": "Screws",
+    "source": "Satisfactory Wiki",
+    "page": "File:Screws.png"
+  },
+  "Desc_Leaves_C": {
+    "name": "Leaves",
+    "source": "Satisfactory Wiki",
+    "page": "File:Leaves.png"
+  },
+  "Desc_LiquidBiofuel_C": {
+    "name": "Liquid Biofuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Liquid Biofuel.png"
+  },
+  "Desc_LiquidFuel_C": {
+    "name": "Fuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Fuel.png"
+  },
+  "Desc_LiquidOil_C": {
+    "name": "Crude Oil",
+    "source": "Satisfactory Wiki",
+    "page": "File:Crude Oil.png"
+  },
+  "Desc_LiquidTurboFuel_C": {
+    "name": "Turbofuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Turbofuel.png"
+  },
+  "Desc_Medkit_C": {
+    "name": "Medicinal Inhaler",
+    "source": "Satisfactory Wiki",
+    "page": "File:Medicinal Inhaler.png"
+  },
+  "Desc_ModularFrameFused_C": {
+    "name": "Fused Modular Frame",
+    "source": "Satisfactory Wiki",
+    "page": "File:Fused Modular Frame.png"
+  },
+  "Desc_ModularFrameHeavy_C": {
+    "name": "Heavy Modular Frame",
+    "source": "Satisfactory Wiki",
+    "page": "File:Heavy Modular Frame.png"
+  },
+  "Desc_ModularFrameLightweight_C": {
+    "name": "Radio Control Unit",
+    "source": "Satisfactory Wiki",
+    "page": "File:Radio Control Unit.png"
+  },
+  "Desc_ModularFrame_C": {
+    "name": "Modular Frame",
+    "source": "Satisfactory Wiki",
+    "page": "File:Modular Frame.png"
+  },
+  "Desc_MotorLightweight_C": {
+    "name": "Turbo Motor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Turbo Motor.png"
+  },
+  "Desc_Motor_C": {
+    "name": "Motor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Motor.png"
+  },
+  "Desc_Mycelia_C": {
+    "name": "Mycelia",
+    "source": "Satisfactory Wiki",
+    "page": "File:Mycelia.png"
+  },
+  "Desc_NitricAcid_C": {
+    "name": "Nitric Acid",
+    "source": "Satisfactory Wiki",
+    "page": "File:Nitric Acid.png"
+  },
+  "Desc_NitrogenGas_C": {
+    "name": "Nitrogen Gas",
+    "source": "Satisfactory Wiki",
+    "page": "File:Nitrogen Gas.png"
+  },
+  "Desc_NobeliskCluster_C": {
+    "name": "Cluster Nobelisk",
+    "source": "Satisfactory Wiki",
+    "page": "File:Cluster Nobelisk.png"
+  },
+  "Desc_NobeliskExplosive_C": {
+    "name": "Nobelisk",
+    "source": "Satisfactory Wiki",
+    "page": "File:Nobelisk.png"
+  },
+  "Desc_NobeliskGas_C": {
+    "name": "Gas Nobelisk",
+    "source": "Satisfactory Wiki",
+    "page": "File:Gas Nobelisk.png"
+  },
+  "Desc_NobeliskNuke_C": {
+    "name": "Nuke Nobelisk",
+    "source": "Satisfactory Wiki",
+    "page": "File:Nuke Nobelisk.png"
+  },
+  "Desc_NobeliskShockwave_C": {
+    "name": "Pulse Nobelisk",
+    "source": "Satisfactory Wiki",
+    "page": "File:Pulse Nobelisk.png"
+  },
+  "Desc_NonFissibleUranium_C": {
+    "name": "Non-Fissile Uranium",
+    "source": "Satisfactory Wiki",
+    "page": "File:Non-Fissile Uranium.png"
+  },
+  "Desc_NuclearFuelRod_C": {
+    "name": "Uranium Fuel Rod",
+    "source": "Satisfactory Wiki",
+    "page": "File:Uranium Fuel Rod.png"
+  },
+  "Desc_NuclearWaste_C": {
+    "name": "Uranium Waste",
+    "source": "Satisfactory Wiki",
+    "page": "File:Uranium Waste.png"
+  },
+  "Desc_Nut_C": {
+    "name": "Beryl Nut",
+    "source": "Satisfactory Wiki",
+    "page": "File:Beryl Nut.png"
+  },
+  "Desc_OreBauxite_C": {
+    "name": "Bauxite",
+    "source": "Satisfactory Wiki",
+    "page": "File:Bauxite.png"
+  },
+  "Desc_OreCopper_C": {
+    "name": "Copper Ore",
+    "source": "Satisfactory Wiki",
+    "page": "File:Copper Ore.png"
+  },
+  "Desc_OreGold_C": {
+    "name": "Caterium Ore",
+    "source": "Satisfactory Wiki",
+    "page": "File:Caterium Ore.png"
+  },
+  "Desc_OreIron_C": {
+    "name": "Iron Ore",
+    "source": "Satisfactory Wiki",
+    "page": "File:Iron Ore.png"
+  },
+  "Desc_OreUranium_C": {
+    "name": "Uranium",
+    "source": "Satisfactory Wiki",
+    "page": "File:Uranium.png"
+  },
+  "Desc_PackagedAlumina_C": {
+    "name": "Packaged Alumina Solution",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Alumina Solution.png"
+  },
+  "Desc_PackagedBiofuel_C": {
+    "name": "Packaged Liquid Biofuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Liquid Biofuel.png"
+  },
+  "Desc_PackagedIonizedFuel_C": {
+    "name": "Packaged Ionized Fuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Ionized Fuel.png"
+  },
+  "Desc_PackagedNitricAcid_C": {
+    "name": "Packaged Nitric Acid",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Nitric Acid.png"
+  },
+  "Desc_PackagedNitrogenGas_C": {
+    "name": "Packaged Nitrogen Gas",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Nitrogen Gas.png"
+  },
+  "Desc_PackagedOilResidue_C": {
+    "name": "Packaged Heavy Oil Residue",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Heavy Oil Residue.png"
+  },
+  "Desc_PackagedOil_C": {
+    "name": "Packaged Oil",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Oil.png"
+  },
+  "Desc_PackagedRocketFuel_C": {
+    "name": "Packaged Rocket Fuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Rocket Fuel.png"
+  },
+  "Desc_PackagedSulfuricAcid_C": {
+    "name": "Packaged Sulfuric Acid",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Sulfuric Acid.png"
+  },
+  "Desc_PackagedWater_C": {
+    "name": "Packaged Water",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Water.png"
+  },
+  "Desc_Parachute_C": {
+    "name": "Parachute",
+    "source": "Satisfactory Wiki",
+    "page": "File:Parachute.png"
+  },
+  "Desc_PetroleumCoke_C": {
+    "name": "Petroleum Coke",
+    "source": "Satisfactory Wiki",
+    "page": "File:Petroleum Coke.png"
+  },
+  "Desc_Plastic_C": {
+    "name": "Plastic",
+    "source": "Satisfactory Wiki",
+    "page": "File:Plastic.png"
+  },
+  "Desc_PlutoniumCell_C": {
+    "name": "Encased Plutonium Cell",
+    "source": "Satisfactory Wiki",
+    "page": "File:Encased Plutonium Cell.png"
+  },
+  "Desc_PlutoniumFuelRod_C": {
+    "name": "Plutonium Fuel Rod",
+    "source": "Satisfactory Wiki",
+    "page": "File:Plutonium Fuel Rod.png"
+  },
+  "Desc_PlutoniumPellet_C": {
+    "name": "Plutonium Pellet",
+    "source": "Satisfactory Wiki",
+    "page": "File:Plutonium Pellet.png"
+  },
+  "Desc_PlutoniumWaste_C": {
+    "name": "Plutonium Waste",
+    "source": "Satisfactory Wiki",
+    "page": "File:Plutonium Waste.png"
+  },
+  "Desc_PolymerResin_C": {
+    "name": "Polymer Resin",
+    "source": "Satisfactory Wiki",
+    "page": "File:Polymer Resin.png"
+  },
+  "Desc_PressureConversionCube_C": {
+    "name": "Pressure Conversion Cube",
+    "source": "Satisfactory Wiki",
+    "page": "File:Pressure Conversion Cube.png"
+  },
+  "Desc_QuantumEnergy_C": {
+    "name": "Excited Photonic Matter",
+    "source": "Satisfactory Wiki",
+    "page": "File:Excited Photonic Matter.png"
+  },
+  "Desc_QuantumOscillator_C": {
+    "name": "Superposition Oscillator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Superposition Oscillator.png"
+  },
+  "Desc_QuartzCrystal_C": {
+    "name": "Quartz Crystal",
+    "source": "Satisfactory Wiki",
+    "page": "File:Quartz Crystal.png"
+  },
+  "Desc_RawQuartz_C": {
+    "name": "Raw Quartz",
+    "source": "Satisfactory Wiki",
+    "page": "File:Raw Quartz.png"
+  },
+  "Desc_RebarGunProjectile_C": {
+    "name": "Rebar Gun",
+    "source": "Satisfactory Wiki",
+    "page": "File:Rebar Gun.png"
+  },
+  "Desc_Rebar_Explosive_C": {
+    "name": "Explosive Rebar",
+    "source": "Satisfactory Wiki",
+    "page": "File:Explosive Rebar.png"
+  },
+  "Desc_Rebar_Spreadshot_C": {
+    "name": "Shatter Rebar",
+    "source": "Satisfactory Wiki",
+    "page": "File:Shatter Rebar.png"
+  },
+  "Desc_Rebar_Stunshot_C": {
+    "name": "Stun Rebar",
+    "source": "Satisfactory Wiki",
+    "page": "File:Stun Rebar.png"
+  },
+  "Desc_ResourceSinkCoupon_C": {
+    "name": "FICSIT Coupon",
+    "source": "Satisfactory Wiki",
+    "page": "File:FICSIT Coupon.png"
+  },
+  "Desc_RocketFuel_C": {
+    "name": "Rocket Fuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Rocket Fuel.png"
+  },
+  "Desc_Rotor_C": {
+    "name": "Rotor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Rotor.png"
+  },
+  "Desc_Rubber_C": {
+    "name": "Rubber",
+    "source": "Satisfactory Wiki",
+    "page": "File:Rubber.png"
+  },
+  "Desc_SAMFluctuator_C": {
+    "name": "SAM Fluctuator",
+    "source": "SatisfactoryTools",
+    "page": "www/assets/images/items/desc-samfluctuator-c_256.png"
+  },
+  "Desc_SAMIngot_C": {
+    "name": "Reanimated SAM",
+    "source": "Satisfactory Wiki",
+    "page": "File:Reanimated SAM.png"
+  },
+  "Desc_SAM_C": {
+    "name": "SAM",
+    "source": "Satisfactory Wiki",
+    "page": "File:SAM.png"
+  },
+  "Desc_Shroom_C": {
+    "name": "Bacon Agaric",
+    "source": "Satisfactory Wiki",
+    "page": "File:Bacon Agaric.png"
+  },
+  "Desc_Silica_C": {
+    "name": "Silica",
+    "source": "Satisfactory Wiki",
+    "page": "File:Silica.png"
+  },
+  "Desc_SingularityCell_C": {
+    "name": "Singularity Cell",
+    "source": "Satisfactory Wiki",
+    "page": "File:Singularity Cell.png"
+  },
+  "Desc_Snow_C": {
+    "name": "FICSMAS Actual Snow",
+    "source": "Satisfactory Wiki",
+    "page": "File:Actual Snow.png"
+  },
+  "Desc_SnowballProjectile_C": {
+    "name": "Snowball",
+    "source": "Satisfactory Wiki",
+    "page": "File:Snowball.png"
+  },
+  "Desc_SpaceElevatorPart_10_C": {
+    "name": "Biochemical Sculptor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Biochemical Sculptor.png"
+  },
+  "Desc_SpaceElevatorPart_11_C": {
+    "name": "Ballistic Warp Drive",
+    "source": "Satisfactory Wiki",
+    "page": "File:Ballistic Warp Drive.png"
+  },
+  "Desc_SpaceElevatorPart_12_C": {
+    "name": "AI Expansion Server",
+    "source": "Satisfactory Wiki",
+    "page": "File:AI Expansion Server.png"
+  },
+  "Desc_SpaceElevatorPart_1_C": {
+    "name": "Smart Plating",
+    "source": "Satisfactory Wiki",
+    "page": "File:Smart Plating.png"
+  },
+  "Desc_SpaceElevatorPart_2_C": {
+    "name": "Versatile Framework",
+    "source": "Satisfactory Wiki",
+    "page": "File:Versatile Framework.png"
+  },
+  "Desc_SpaceElevatorPart_3_C": {
+    "name": "Automated Wiring",
+    "source": "Satisfactory Wiki",
+    "page": "File:Automated Wiring.png"
+  },
+  "Desc_SpaceElevatorPart_4_C": {
+    "name": "Modular Engine",
+    "source": "Satisfactory Wiki",
+    "page": "File:Modular Engine.png"
+  },
+  "Desc_SpaceElevatorPart_5_C": {
+    "name": "Adaptive Control Unit",
+    "source": "Satisfactory Wiki",
+    "page": "File:Adaptive Control Unit.png"
+  },
+  "Desc_SpaceElevatorPart_6_C": {
+    "name": "Magnetic Field Generator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Magnetic Field Generator.png"
+  },
+  "Desc_SpaceElevatorPart_7_C": {
+    "name": "Assembly Director System",
+    "source": "Satisfactory Wiki",
+    "page": "File:Assembly Director System.png"
+  },
+  "Desc_SpaceElevatorPart_8_C": {
+    "name": "Thermal Propulsion Rocket",
+    "source": "Satisfactory Wiki",
+    "page": "File:Thermal Propulsion Rocket.png"
+  },
+  "Desc_SpaceElevatorPart_9_C": {
+    "name": "Nuclear Pasta",
+    "source": "Satisfactory Wiki",
+    "page": "File:Nuclear Pasta.png"
+  },
+  "Desc_SpikedRebar_C": {
+    "name": "Iron Rebar",
+    "source": "Satisfactory Wiki",
+    "page": "File:Iron Rebar.png"
+  },
+  "Desc_SpitterParts_C": {
+    "name": "Spitter Remains",
+    "source": "Satisfactory Wiki",
+    "page": "File:Spitter Remains.png"
+  },
+  "Desc_Stator_C": {
+    "name": "Stator",
+    "source": "Satisfactory Wiki",
+    "page": "File:Stator.png"
+  },
+  "Desc_SteelIngot_C": {
+    "name": "Steel Ingot",
+    "source": "Satisfactory Wiki",
+    "page": "File:Steel Ingot.png"
+  },
+  "Desc_SteelPipe_C": {
+    "name": "Steel Pipe",
+    "source": "Satisfactory Wiki",
+    "page": "File:Steel Pipe.png"
+  },
+  "Desc_SteelPlateReinforced_C": {
+    "name": "Encased Industrial Beam",
+    "source": "Satisfactory Wiki",
+    "page": "File:Encased Industrial Beam.png"
+  },
+  "Desc_SteelPlate_C": {
+    "name": "Steel Beam",
+    "source": "Satisfactory Wiki",
+    "page": "File:Steel Beam.png"
+  },
+  "Desc_StingerParts_C": {
+    "name": "Stinger Remains",
+    "source": "Satisfactory Wiki",
+    "page": "File:Stinger Remains.png"
+  },
+  "Desc_Stone_C": {
+    "name": "Limestone",
+    "source": "Satisfactory Wiki",
+    "page": "File:Limestone.png"
+  },
+  "Desc_Sulfur_C": {
+    "name": "Sulfur",
+    "source": "Satisfactory Wiki",
+    "page": "File:Sulfur.png"
+  },
+  "Desc_SulfuricAcid_C": {
+    "name": "Sulfuric Acid",
+    "source": "Satisfactory Wiki",
+    "page": "File:Sulfuric Acid.png"
+  },
+  "Desc_TemporalProcessor_C": {
+    "name": "Neural-Quantum Processor",
+    "source": "Satisfactory Wiki",
+    "page": "File:Neural-Quantum Processor.png"
+  },
+  "Desc_TimeCrystal_C": {
+    "name": "Time Crystal",
+    "source": "Satisfactory Wiki",
+    "page": "File:Time Crystal.png"
+  },
+  "Desc_TurboFuel_C": {
+    "name": "Packaged Turbofuel",
+    "source": "Satisfactory Wiki",
+    "page": "File:Packaged Turbofuel.png"
+  },
+  "Desc_UraniumCell_C": {
+    "name": "Encased Uranium Cell",
+    "source": "Satisfactory Wiki",
+    "page": "File:Encased Uranium Cell.png"
+  },
+  "Desc_WAT1_C": {
+    "name": "Somersloop",
+    "source": "Satisfactory Wiki",
+    "page": "File:Somersloop.png"
+  },
+  "Desc_WAT2_C": {
+    "name": "Mercer Sphere",
+    "source": "Satisfactory Wiki",
+    "page": "File:Mercer Sphere.png"
+  },
+  "Desc_Water_C": {
+    "name": "Water",
+    "source": "Satisfactory Wiki",
+    "page": "File:Water.png"
+  },
+  "Desc_Wire_C": {
+    "name": "Wire",
+    "source": "Satisfactory Wiki",
+    "page": "File:Wire.png"
+  },
+  "Desc_Wood_C": {
+    "name": "Wood",
+    "source": "Satisfactory Wiki",
+    "page": "File:Wood.png"
+  },
+  "Desc_XmasBall1_C": {
+    "name": "Red FICSMAS Ornament",
+    "source": "Satisfactory Wiki",
+    "page": "File:Red FICSMAS Ornament.png"
+  },
+  "Desc_XmasBall2_C": {
+    "name": "Blue FICSMAS Ornament",
+    "source": "Satisfactory Wiki",
+    "page": "File:Blue FICSMAS Ornament.png"
+  },
+  "Desc_XmasBall3_C": {
+    "name": "Copper FICSMAS Ornament",
+    "source": "Satisfactory Wiki",
+    "page": "File:Copper FICSMAS Ornament.png"
+  },
+  "Desc_XmasBall4_C": {
+    "name": "Iron FICSMAS Ornament",
+    "source": "Satisfactory Wiki",
+    "page": "File:Iron FICSMAS Ornament.png"
+  },
+  "Desc_XmasBallCluster_C": {
+    "name": "FICSMAS Ornament Bundle",
+    "source": "Satisfactory Wiki",
+    "page": "File:FICSMAS Ornament Bundle.png"
+  },
+  "Desc_XmasBow_C": {
+    "name": "FICSMAS Bow",
+    "source": "Satisfactory Wiki",
+    "page": "File:FICSMAS Bow.png"
+  },
+  "Desc_XmasBranch_C": {
+    "name": "FICSMAS Tree Branch",
+    "source": "Satisfactory Wiki",
+    "page": "File:FICSMAS Tree Branch.png"
+  },
+  "Desc_XmasStar_C": {
+    "name": "FICSMAS Wonder Star",
+    "source": "Satisfactory Wiki",
+    "page": "File:FICSMAS Wonder Star.png"
+  },
+  "Desc_XmasWreath_C": {
+    "name": "FICSMAS Wreath",
+    "source": "Satisfactory Wiki",
+    "page": "File:FICSMAS Wreath.png"
+  }
+}
