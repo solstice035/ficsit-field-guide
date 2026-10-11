@@ -25,6 +25,9 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     css: false,
     restoreMocks: true,
+    // Full-page axe scans in jsdom take 1–2 s locally and several times that on
+    // 2-vCPU CI runners with coverage on; the 5 s default made them flaky.
+    testTimeout: 20_000,
     coverage: {
       provider: 'v8',
       include: ['src/**/*.{ts,tsx}'],
