@@ -6,20 +6,21 @@ import { ProgressBar } from '../../components/ProgressBar.tsx';
 import { SPACE_ELEVATOR_PHASES, TIERS } from '../../content/index.ts';
 import { COLLECTIBLES } from '../../data/gameData.ts';
 import { useExplore } from '../../state/explore.ts';
+import { isStepOpen } from '../../lib/progress/progress.ts';
 import { useProgress } from '../../state/progress.ts';
 import { useSettings } from '../../state/settings.ts';
 import { COLLECTIBLE_META } from '../explore/nearby.ts';
-import { useAllTierProgress } from '../guide/progress.ts';
+import { useAllTierProgress, useProgressFlags } from '../guide/progress.ts';
 
 export function DashboardPage() {
   const currentTier = useSettings((s) => s.currentTier);
-  const tasks = useProgress((s) => s.tasks);
+  const flags = useProgressFlags();
   const phases = useProgress((s) => s.phases);
   const collected = useExplore((s) => s.collected);
   const progress = useAllTierProgress();
 
   const tier = TIERS[currentTier] ?? TIERS[0]!;
-  const openSteps = tier.steps.filter((s) => s.tasks.some((t) => !tasks[t.id]));
+  const openSteps = tier.steps.filter((s) => isStepOpen(s, flags));
   const nextStep = openSteps[0];
   const laterSteps = openSteps.slice(1, 4);
   const totals = progress.reduce(

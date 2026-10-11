@@ -26,6 +26,67 @@ describe('stores', () => {
     expect(useProgress.getState().phases).toEqual({ '1': true });
   });
 
+  it('stores a linked task and its milestone as one tick', () => {
+    useProgress.getState().toggleTask('t1-bb-submit');
+    expect(useProgress.getState().milestones).toEqual({ 'Schematic_1-1_C': true });
+    expect(useProgress.getState().tasks).toEqual({});
+    useProgress.getState().toggleMilestone('Schematic_1-1_C');
+    expect(useProgress.getState().milestones).toEqual({});
+  });
+
+  it('skips and unskips only optional steps', () => {
+    useProgress.getState().toggleSkipped('t2-jump-pads');
+    expect(useProgress.getState().skipped).toEqual({ 't2-jump-pads': true });
+    useProgress.getState().toggleSkipped('t2-jump-pads');
+    expect(useProgress.getState().skipped).toEqual({});
+    useProgress.getState().toggleSkipped('t2-part-assembly');
+    expect(useProgress.getState().skipped).toEqual({});
+  });
+
+  it('migrates version 1 saved progress without losing ticks', async () => {
+    localStorage.setItem(
+      'ffg.progress',
+      JSON.stringify({
+        state: {
+          tasks: { 't1-bb-submit': true, 't1-iron-storage': true },
+          milestones: { 'Schematic_1-2_C': true },
+          research: {},
+          phases: { '1': true },
+        },
+        version: 1,
+      }),
+    );
+    await useProgress.persist.rehydrate();
+    const s = useProgress.getState();
+    expect(s.tasks).toEqual({ 't1-iron-storage': true });
+    expect(s.milestones).toEqual({ 'Schematic_1-1_C': true, 'Schematic_1-2_C': true });
+    expect(s.phases).toEqual({ '1': true });
+    expect(s.skipped).toEqual({});
+    localStorage.removeItem('ffg.progress');
+  });
+
+  it('restores a version 1 backup, merging linked ticks', () => {
+    restoreBackup({
+      app: 'ficsit-field-guide',
+      version: 1,
+      exportedAt: '2026-10-10T00:00:00.000Z',
+      progress: {
+        tasks: { 't0-hub1-submit': true, 't0-land-hub': true },
+        milestones: {},
+        research: {},
+        phases: {},
+      },
+      settings: { base: { x: 0, y: 0, z: 0 }, currentTier: 0 },
+      layouts: {},
+      explore: {},
+    });
+    expect(useProgress.getState().tasks).toEqual({ 't0-land-hub': true });
+    expect(useProgress.getState().milestones).toEqual({ Schematic_Tutorial1_C: true });
+    const again = JSON.parse(JSON.stringify(createBackup()));
+    expect(again.version).toBe(2);
+    expect(again.progress.skipped).toEqual({});
+  });
+
   it('clamps the current tier and manages purity overrides', () => {
     useSettings.getState().setCurrentTier(12);
     expect(useSettings.getState().currentTier).toBe(9);

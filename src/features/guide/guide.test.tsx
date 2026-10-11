@@ -44,6 +44,37 @@ describe('tier guide', () => {
     expect(useProgress.getState().milestones['Schematic_Tutorial1_C']).toBe(true);
   });
 
+  it('ticks a milestone and its Submit task together, counting it once', async () => {
+    const { user } = renderRoute('/tier/1');
+    const toggle = await screen.findByRole('button', { name: /Base Building/ });
+    await user.click(toggle);
+    const task = screen.getByRole('checkbox', { name: 'Submit Base Building' });
+    await user.click(task);
+    expect(useProgress.getState().milestones['Schematic_1-1_C']).toBe(true);
+    expect(useProgress.getState().tasks['t1-bb-submit']).toBeUndefined();
+
+    const milestones = screen.getByRole('region', { name: /Milestones|HUB/ });
+    const card = within(milestones).getByRole('checkbox', { name: 'Base Building' });
+    expect(card).toBeChecked();
+    await user.click(card);
+    expect(task).not.toBeChecked();
+  });
+
+  it('skips an optional step and drops it from tier progress', async () => {
+    const { user } = renderRoute('/tier/2');
+    const bar = await screen.findByRole('progressbar', { name: /Tier 2/ });
+    const total = () => Number(/of (\d+)/.exec(bar.getAttribute('aria-valuetext') ?? '')?.[1]);
+    const totalBefore = total();
+    await user.click(screen.getByRole('button', { name: /Jump Pads \(optional\)/ }));
+    await user.click(screen.getByRole('button', { name: 'Skip this optional step' }));
+    expect(screen.getByRole('button', { name: 'Unskip this step' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(screen.getByText('Skipped')).toBeInTheDocument();
+    expect(total()).toBe(totalBefore - 1);
+  });
+
   it('expands a step to reveal its layouts and checklist', async () => {
     const { user } = renderRoute('/tier/2');
     const toggle = await screen.findByRole('button', {

@@ -4,14 +4,14 @@ import { Panel } from '../../components/Panel.tsx';
 import { ProgressBar } from '../../components/ProgressBar.tsx';
 import { TIER_BY_NUMBER } from '../../content/index.ts';
 import { MILESTONES_BY_TIER } from '../../data/gameData.ts';
-import { useProgress } from '../../state/progress.ts';
+import { isStepOpen } from '../../lib/progress/progress.ts';
 import { useSettings } from '../../state/settings.ts';
 import { MilestoneCard } from './MilestoneCard.tsx';
 import { PhaseCard } from './PhaseCard.tsx';
 import { StepCard } from './StepCard.tsx';
 import { TierTabs } from './TierTabs.tsx';
 import { TIER_PANEL_ID, tierTabId } from './tierTabIds.ts';
-import { useTierProgress } from './progress.ts';
+import { useProgressFlags, useTierProgress } from './progress.ts';
 
 export function TierPage() {
   const { tier: param } = useParams();
@@ -19,13 +19,13 @@ export function TierPage() {
   const tier = TIER_BY_NUMBER.get(tierNumber);
   const currentTier = useSettings((s) => s.currentTier);
   const setCurrentTier = useSettings((s) => s.setCurrentTier);
-  const tasks = useProgress((s) => s.tasks);
+  const flags = useProgressFlags();
   const progress = useTierProgress(tier ?? TIER_BY_NUMBER.get(0)!);
 
   if (!tier) return <Navigate to="/tier/0" replace />;
 
   const milestones = MILESTONES_BY_TIER.get(tier.tier) ?? [];
-  const firstOpen = tier.steps.findIndex((s) => s.tasks.some((t) => !tasks[t.id]));
+  const firstOpen = tier.steps.findIndex((s) => isStepOpen(s, flags));
 
   return (
     <div className="space-y-6">

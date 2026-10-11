@@ -1,33 +1,25 @@
-import { TIERS, taskIdsOf } from '../../content/index.ts';
+import { TIERS } from '../../content/index.ts';
 import type { TierGuide } from '../../content/types.ts';
-import { MILESTONES_BY_TIER } from '../../data/gameData.ts';
+import { type Count, type ProgressFlags, tierProgress } from '../../lib/progress/progress.ts';
 import { useProgress } from '../../state/progress.ts';
 
-export interface TierProgress {
-  done: number;
-  total: number;
-}
+export type TierProgress = Count;
 
-type Flags = Record<string, true>;
-
-/** Tasks + milestones completed in a tier. */
-export function tierProgress(tier: TierGuide, tasks: Flags, milestones: Flags): TierProgress {
-  const taskIds = taskIdsOf(tier);
-  const milestoneIds = (MILESTONES_BY_TIER.get(tier.tier) ?? []).map((m) => m.id);
-  const done =
-    taskIds.filter((id) => tasks[id]).length + milestoneIds.filter((id) => milestones[id]).length;
-  return { done, total: taskIds.length + milestoneIds.length };
-}
-
-export function useTierProgress(tier: TierGuide): TierProgress {
+/** The flags progress maths needs, from the store. */
+export function useProgressFlags(): ProgressFlags {
   const tasks = useProgress((s) => s.tasks);
   const milestones = useProgress((s) => s.milestones);
-  return tierProgress(tier, tasks, milestones);
+  const skipped = useProgress((s) => s.skipped);
+  return { tasks, milestones, skipped };
+}
+
+/** Tasks done in a tier; each milestone counts once, through its "Submit" task. */
+export function useTierProgress(tier: TierGuide): TierProgress {
+  return tierProgress(tier, useProgressFlags());
 }
 
 /** Progress for every tier (stable order 0–9). */
 export function useAllTierProgress(): TierProgress[] {
-  const tasks = useProgress((s) => s.tasks);
-  const milestones = useProgress((s) => s.milestones);
-  return TIERS.map((t) => tierProgress(t, tasks, milestones));
+  const flags = useProgressFlags();
+  return TIERS.map((t) => tierProgress(t, flags));
 }
