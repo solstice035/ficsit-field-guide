@@ -346,6 +346,10 @@ Milestone cards inside a step are display only: their tick is the step's linked 
 
 `/glance` is its own window for a second monitor, with no app chrome. A thin top line shows the tier, a "Keep screen awake" switch (Screen Wake Lock; when the browser can't, a quiet note instead) and "Open the guide". Below it, the NEXT panel sits centred: the step number in Lit Amber and the title at 48px (30px on phones), the task beside an 80px switch at 36px, "After that:" at 24px, then the figures. It reads from about a metre away. Ticks sync with every other open window through `storage` events. "Glance ↗" opens it from the NEXT strip (from 1024px) and the dashboard hero.
 
+### Keyboard shortcuts
+
+`n` ticks the NEXT task, `j`/`k` move focus between step rows (starting at the current one), `g` opens glance, `?` opens the shortcut sheet. They pause while typing in a field and while Ctrl, Alt or Cmd is held. Every shortcut has a visible control that announces it with `aria-keyshortcuts` and a tooltip: the NEXT switches (`n`), the Glance link (`g`) and the "Keyboard shortcuts" button in the footer and on glance (`?`). The sheet is a native modal `<dialog>` on Console Graphite with a 12px radius, a dimmed backdrop, keys in Selected Console `<kbd>` caps and a Close button; Esc closes it.
+
 ## Do's and Don'ts
 
 ### Do:

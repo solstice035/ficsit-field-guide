@@ -6,6 +6,8 @@ export function GlanceLink({ className }: { className?: string }) {
     <a
       href={`${import.meta.env.BASE_URL}glance`}
       target="ficsit-glance"
+      aria-keyshortcuts="g"
+      title="Open glance (g)"
       className={cx(
         'border-line-strong text-ink hover:border-ink-faint inline-flex min-h-11 items-center gap-1 rounded border px-3 text-sm no-underline hover:no-underline',
         className,

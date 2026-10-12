@@ -9,6 +9,8 @@ export interface SwitchProps {
   strikeWhenChecked?: boolean;
   /** md 44 px target; lg 56 px (dashboard hero); xl 80 px (glance, read from a metre away). */
   size?: 'md' | 'lg' | 'xl';
+  /** A keyboard shortcut for this switch, announced via `aria-keyshortcuts` and the tooltip. */
+  keyShortcut?: string;
   className?: string;
 }
 
@@ -23,6 +25,7 @@ export function Switch({
   label,
   strikeWhenChecked = false,
   size = 'md',
+  keyShortcut,
   className,
 }: SwitchProps) {
   return (
@@ -30,6 +33,8 @@ export function Switch({
       type="button"
       role="switch"
       aria-checked={checked}
+      aria-keyshortcuts={keyShortcut}
+      title={keyShortcut ? `Shortcut: ${keyShortcut}` : undefined}
       onClick={() => onChange(!checked)}
       className={cx(
         'group flex min-h-11 items-center gap-3 rounded text-left',

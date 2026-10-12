@@ -6,6 +6,7 @@ import { TierComplete } from '../guide/NextStrip.tsx';
 import { StepFigures } from '../guide/StepFigures.tsx';
 import { stepLayout } from '../guide/stepMeta.ts';
 import { useNextTask } from '../guide/useNextTask.ts';
+import { KeyboardShortcuts } from '../shortcuts/KeyboardShortcuts.tsx';
 import { useWakeLock } from './useWakeLock.ts';
 
 const WAKE_NOTE = {
@@ -47,6 +48,7 @@ export function GlancePage() {
           <Link to={`/tier/${tier.tier}`} className="inline-flex min-h-11 items-center">
             Open the guide
           </Link>
+          <KeyboardShortcuts />
         </span>
       </header>
 
@@ -72,6 +74,7 @@ export function GlancePage() {
               <Switch
                 checked={false}
                 onChange={tick}
+                keyShortcut="n"
                 size="xl"
                 label={
                   <span className="text-2xl leading-snug font-semibold sm:text-4xl">
