@@ -36,20 +36,22 @@ No backend, API keys or runtime network calls. Progress is saved in your browser
 
 ## Scripts
 
-| Command               | Purpose                                                                               |
-| --------------------- | ------------------------------------------------------------------------------------- |
-| `npm run dev`         | Start the dev server                                                                  |
-| `npm run build`       | Type-check and build to `dist/`                                                       |
-| `npm run preview`     | Serve the production build locally                                                    |
-| `npm test`            | Run unit, component and a11y tests (Vitest)                                           |
-| `npm run test:watch`  | Run tests in watch mode                                                               |
-| `npm run coverage`    | Run tests with coverage                                                               |
-| `npm run lint`        | ESLint                                                                                |
-| `npm run typecheck`   | `tsc` project build, no emit                                                          |
-| `npm run format`      | Prettier write                                                                        |
-| `npm run data:fetch`  | Download raw game data sources to `data/raw/`                                         |
-| `npm run data:build`  | Regenerate `src/data/generated/*.json` (`-- --docs <path>` to use your own game Docs) |
-| `npm run data:verify` | Cross-check recipes against SatisfactoryTools                                         |
+| Command                    | Purpose                                                                               |
+| -------------------------- | ------------------------------------------------------------------------------------- |
+| `npm run dev`              | Start the dev server                                                                  |
+| `npm run build`            | Type-check and build to `dist/`                                                       |
+| `npm run preview`          | Serve the production build locally                                                    |
+| `npm test`                 | Run unit, component and a11y tests (Vitest)                                           |
+| `npm run test:watch`       | Run tests in watch mode                                                               |
+| `npm run coverage`         | Run tests with coverage                                                               |
+| `npm run lint`             | ESLint                                                                                |
+| `npm run typecheck`        | `tsc` project build, no emit                                                          |
+| `npm run format`           | Prettier write                                                                        |
+| `npm run data:fetch`       | Download raw game data sources to `data/raw/`                                         |
+| `npm run data:build`       | Regenerate `src/data/generated/*.json` (`-- --docs <path>` to use your own game Docs) |
+| `npm run data:verify`      | Cross-check recipes against SatisfactoryTools                                         |
+| `npm run data:fetch-icons` | Download item and building icons to `data/raw/icons/` (wiki, paced)                   |
+| `npm run data:build-icons` | Write 64 px WebP icons to `public/icons/`                                             |
 
 ## Project structure
 

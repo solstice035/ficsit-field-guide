@@ -1,3 +1,5 @@
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { itemTier, recipeTier } from '../data/availability.ts';
 import {
@@ -229,5 +231,17 @@ describe('facts quoted in guide text', () => {
     expect(count('mercerSphere')).toBe(298);
     expect(count('somersloop')).toBe(106);
     expect(count('hardDrive')).toBe(118);
+  });
+});
+
+describe('game icons', () => {
+  // jsdom rewrites import.meta.url, so resolve from the repo root vitest runs in.
+  const iconDir = resolve('public/icons');
+
+  it('has a local icon for every item and building', () => {
+    const missing = [...ITEM_BY_ID.keys(), ...BUILDING_BY_ID.keys()].filter(
+      (id) => !existsSync(resolve(iconDir, `${id}.webp`)),
+    );
+    expect(missing, 'run npm run data:fetch-icons && npm run data:build-icons').toEqual([]);
   });
 });

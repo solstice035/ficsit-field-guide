@@ -42,7 +42,11 @@ Copyright (c) 2025 Satisfactory Node Heatmap contributors
 
 ## Cross-check only (not shipped)
 
-**greeny/SatisfactoryTools** `data/data1.0.json` is downloaded by `npm run data:fetch` and used only by `npm run data:verify` to cross-check recipes. Code is MIT (© 2019 greeny); its bundled icons are Coffee Stain property and are not used.
+**greeny/SatisfactoryTools** `data/data1.0.json` is downloaded by `npm run data:fetch` and used only by `npm run data:verify` to cross-check recipes. Code is MIT (© 2019 greeny).
+
+## Game icons (shipped)
+
+`public/icons/*.webp` are 64 px conversions of Coffee Stain's item and building icons, © Coffee Stain Studios, used only to identify game items and always shown beside the item's name. Most were downloaded from the community **Satisfactory Wiki** (satisfactory.wiki.gg). Three the wiki lacks (SAM Fluctuator, Converter, Quantum Encoder) come from **greeny/SatisfactoryTools**' bundled copies of the same game artwork. `src/data/generated/icons.json` records the source of each one.
 
 ## Facts
 

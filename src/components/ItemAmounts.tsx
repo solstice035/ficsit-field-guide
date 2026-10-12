@@ -3,6 +3,7 @@ import { itemName } from '../data/gameData.ts';
 import type { ItemAmount } from '../data/types.ts';
 import { formatNumber, formatRate } from '../lib/plan/format.ts';
 import { TierBadge } from './Badge.tsx';
+import { GameIcon } from './GameIcon.tsx';
 import { cx } from './cx.ts';
 
 export interface ItemAmountsProps {
@@ -30,6 +31,7 @@ export function ItemAmounts({ items, rates, currentTier, className }: ItemAmount
             <span className="num text-accent-strong font-semibold">
               {rates ? formatRate(amount, item) : `${formatNumber(amount)}×`}
             </span>
+            <GameIcon id={item} />
             <span>{itemName(item)}</span>
             {locked && <TierBadge tier={tier} />}
           </li>

@@ -3,6 +3,7 @@
  * `npm run data:fetch && npm run data:build && npm run data:verify`.
  */
 import { fileURLToPath } from 'node:url';
+import type { IconSource } from './lib/icons.ts';
 
 export const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 export const RAW_DIR = fileURLToPath(new URL('../../data/raw/', import.meta.url));
@@ -24,6 +25,27 @@ export interface Source {
   name: string;
   licence: string;
 }
+
+/** Raw icon downloads (git-ignored) and the committed 64 px WebP set served by the app. */
+export const RAW_ICON_DIR = fileURLToPath(new URL('../../data/raw/icons/', import.meta.url));
+export const ICON_DIR = fileURLToPath(new URL('../../public/icons/', import.meta.url));
+
+export const WIKI_API = 'https://satisfactory.wiki.gg/api.php';
+export const USER_AGENT =
+  'FICSITFieldGuide/0.1 (+https://github.com/solstice035/ficsit-field-guide; icon pipeline)';
+export const TOOLS_ICON_BASE = `https://raw.githubusercontent.com/greeny/SatisfactoryTools/${TOOLS_SHA}/www/assets/images/items/`;
+
+/**
+ * Icons the wiki's exact-name rule misses. The wiki redirects these three to
+ * its "Unknown" placeholder or a screenshot (checked 2026-10-11), so they come
+ * from SatisfactoryTools at the pinned commit instead. The ™ names (Factory
+ * Cart™) need no entry: the wiki redirects them to the right icon.
+ */
+export const ICON_OVERRIDES = {
+  Desc_SAMFluctuator_C: { kind: 'satisfactory-tools', path: 'desc-samfluctuator-c_256.png' },
+  Build_Converter_C: { kind: 'satisfactory-tools', path: 'desc-converter-c_256.png' },
+  Build_QuantumEncoder_C: { kind: 'satisfactory-tools', path: 'desc-quantumencoder-c_256.png' },
+} as const satisfies Record<string, IconSource>;
 
 export const SOURCES = {
   docs: {
