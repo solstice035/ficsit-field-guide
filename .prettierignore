@@ -3,3 +3,7 @@ coverage
 data/raw
 src/data/generated
 package-lock.json
+.impeccable/mocks
+.impeccable/questions
+.impeccable/config.json
+.impeccable/hook.cache.json

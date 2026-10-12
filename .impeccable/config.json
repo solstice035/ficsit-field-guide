@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/work-order.html"
+        ],
+        "createdAt": "2026-10-11T10:47:08.396Z",
+        "reason": "Claude triage: throwaway decision sketch, drawn as a skeleton on the decision page and never shipped; the build brief sets 44px targets and padding rules"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/work-order.html"
+        ],
+        "createdAt": "2026-10-11T10:47:08.417Z",
+        "reason": "Claude triage: throwaway decision sketch, drawn as a skeleton on the decision page and never shipped; the build brief sets 44px targets and padding rules"
+      }
+    ]
+  }
+}

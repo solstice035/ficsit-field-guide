@@ -26,7 +26,7 @@
 3. **Game mode:** default settings (no cost multipliers, default node purity). Per-node purity overrides cover randomised-purity saves. Game Mode cost multipliers are not modelled yet (backlog).
 4. **Single player, single save.** Progress is stored in `localStorage` and can be exported or imported as JSON.
 5. **"Spheres and SAM things"** means Mercer Spheres, Somersloops and SAM ore. Hard Drives and Power Slugs are included as well because they drive the same exploration loop.
-6. **No copyrighted game artwork is bundled.** The map is a vector plot of game coordinates. You can drop your own map image into `public/map/` to use as a backdrop.
+6. **Game icons are allowed; other artwork is not bundled.** Revised 2026-10-11: item, building and resource icons may be bundled (the copyright risk is accepted), always shown beside their text names. The map is still a vector plot of game coordinates, and you can drop your own map image into `public/map/` to use as a backdrop.
 7. **Tooling:** npm (ships with Node). Node ≥ 22.22 because jsdom 30 and React Router require it.
 
 ## 3. Data sources and licensing
@@ -232,6 +232,21 @@ Linear (project _FICSIT Field Guide_) is the source of truth for the backlog. Se
 - Game Mode cost multipliers (1.2) applied to milestones, Space Elevator and recipes.
 - Power requirements for crash sites that have no item cost (not in the source data).
 - Alternate-recipe tracking ("I have unlocked these Hard Drive alternates") so recipe pickers only offer what you own.
+- Game icons for items, buildings and resources, always beside their names (see DESIGN.md, "Game icons"). **Source: the Satisfactory Wiki** ([Category:Icons](https://satisfactory.wiki.gg/wiki/Category:Icons)). Every item (189/193 matched by exact name) and building (35/37) has an icon there; the few misses differ only in the name (™ suffix) or category. Plan:
+  - `data:fetch` downloads each icon once through the MediaWiki API into `data/raw/icons/` (git-ignored), using a named user agent and paced requests.
+  - `data:build` maps icons to items and buildings by display name, with a small override list, and writes 64 px WebP files that are committed.
+  - A content test fails if any item or building lacks an icon.
+  - At runtime the app serves only its own files and never hotlinks the wiki, which keeps O5.
+  - Fallback: extract icons from a local game install with FModel if the wiki's 1.2 coverage turns out to be wrong.
+- **Tier guide redesign: Work Order Queue** (Linear I-80; brief in Obsidian `1-Projects/Satisfactory/2026-10-11-tier-guide-redesign-brief.md`; sketches in `.impeccable/mocks/decision/`). A pinned NEXT strip and a numbered step queue on the tier page, a NEXT hero on the dashboard, and a standalone `/glance` page for the second monitor. It answers the 24/40 critique; the target is ≥ 32/40. Build order, one Linear issue each:
+  1. I-81 Icon pipeline (the item above).
+  2. I-82 Link every milestone to a step task, add skipped-step state and migrate progress.
+  3. I-83 NEXT strip and Work Order Queue on the tier page.
+  4. I-84 Dashboard: NEXT hero, run queue and tier-complete advance offer.
+  5. I-85 `/glance` page (big switch, cross-window sync, keep-awake).
+  6. I-86 Keyboard shortcuts (`n`, `j`/`k`, `g`, `?`).
+  7. I-87 Finish: Impeccable finish review, DESIGN.md update and critique re-run.
+- **Decide on WCAG 2.2 AA** as the accessibility standard (Linear I-88). Until then, §10 stays at 2.1 AA.
 
 ## 15. Delivery log (v1, 2026-10-10)
 

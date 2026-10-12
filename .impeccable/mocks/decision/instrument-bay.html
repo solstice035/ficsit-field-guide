@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><title>Instrument Bay · Tier 2</title>
+<style>
+:root{--bg:#111317;--p:#1a1d23;--p2:#22262e;--p3:#2b3039;--l:#3a414d;--ls:#4d5563;--ink:#eceef2;--mu:#b3bac6;--fa:#8f98a6;--a:#fa9549;--as:#ffb878;--ai:#1a1206;--ok:#5ee08f;--info:#7cc4ff;--warn:#ffd166}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink);font:400 14px/1.43 system-ui,-apple-system,"Segoe UI",sans-serif}
+.num{font-variant-numeric:tabular-nums}
+header{height:56px;display:flex;align-items:center;gap:28px;padding:0 32px;background:var(--p);border-bottom:1px solid var(--l)}
+.logo{display:flex;gap:8px;align-items:center;font-weight:600}.logo b{width:28px;height:28px;display:grid;place-items:center;background:var(--a);color:var(--ai);border-radius:4px;font-weight:900}
+nav{display:flex;gap:4px}nav a{padding:8px 12px;border-radius:4px;color:var(--mu);font-weight:500}nav a.on{background:var(--p3);color:var(--ink)}
+.glance{margin-left:auto;border:1px solid var(--ls);border-radius:4px;padding:8px 14px;color:var(--ink)}
+main{padding:20px 32px;display:grid;gap:16px}
+.tiers{display:flex;gap:6px;align-items:center;color:var(--fa);font-size:12px}
+.tiers span{padding:4px 10px;border:1px solid var(--l);border-radius:6px}
+.tiers .on{border-color:var(--a);color:var(--as);font-weight:700;background:var(--p3)}
+.tiers .done{color:var(--ok);border-color:#2f5b40}
+.title{display:flex;align-items:baseline;gap:14px}.title h1{font-size:30px;font-weight:600;letter-spacing:-.02em}.title p{color:var(--mu)}
+.next{border:1px solid color-mix(in srgb,var(--a) 45%,var(--l));border-radius:12px;padding:22px 26px;display:grid;grid-template-columns:1fr 360px;gap:28px;background:linear-gradient(135deg,color-mix(in srgb,var(--a) 10%,var(--p)),var(--p) 60%)}
+.k{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--fa)}
+.next h2{font-size:26px;font-weight:600;margin:6px 0 14px}
+.task{display:flex;align-items:center;gap:16px;background:var(--p2);border:1px solid var(--ls);border-radius:8px;padding:14px 16px;min-height:60px;font-size:17px}
+.sw{width:52px;height:30px;border-radius:15px;background:var(--p3);border:1px solid var(--ls);position:relative;flex:none}.sw::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:var(--mu)}
+.then{margin-top:10px;color:var(--fa);font-size:13px}
+.figs{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:start}
+.fig{background:var(--p2);border-radius:8px;padding:12px 14px}.fig b{display:block;font-size:26px;font-weight:700;color:var(--as)}.fig span{color:var(--mu);font-size:12px}
+.bay{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px}
+.card{background:var(--p);border:1px solid var(--l);border-radius:8px;padding:16px 18px}
+.card h3{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--fa);margin-bottom:12px;display:flex;justify-content:space-between}
+.q li{list-style:none;display:grid;grid-template-columns:28px 1fr auto;gap:8px;padding:7px 0;border-bottom:1px solid var(--l);color:var(--mu)}
+.q .d{color:var(--fa);text-decoration:line-through}.q .c{color:var(--ink);font-weight:600}.q .c i{color:var(--as);font-style:normal}
+.bar{height:6px;background:var(--p3);border-radius:3px;margin:6px 0 12px;overflow:hidden}.bar i{display:block;height:100%;background:var(--a)}
+.row{display:flex;justify-content:space-between}
+.gauge{font-size:36px;font-weight:700}.gauge small{font-size:15px;color:var(--fa);font-weight:400}
+.site{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--l)}.site em{font-style:normal;color:var(--ok);font-size:12px}
+</style></head><body>
+<header><div class="logo"><b>F</b>FICSIT Field Guide</div>
+<nav><a class="on">Tier guide</a><a>Dashboard</a><a>Layouts</a><a>Explore</a><a>Calculator</a><a>Settings</a></nav>
+<a class="glance">Open glance view ↗</a></header>
+<main>
+<div class="tiers"><span class="done">T0 ✓</span><span class="done">T1 ✓</span><span class="on">T2 Part Assembly</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>T8</span><span>T9</span></div>
+<div class="title"><h1>Part Assembly</h1><p>Assemblers, Mk.2 belts and Space Elevator Phase 1 · <span class="num">9 of 24</span> done</p></div>
+<section class="next">
+<div><p class="k">Next up · Step 03 of 10 · Space Elevator</p>
+<h2>Space Elevator Phase 1: 50 Smart Plating</h2>
+<div class="task"><span class="sw"></span>Build the Smart Plating line</div>
+<p class="then">Then: Deliver 50 Smart Plating to the Space Elevator</p></div>
+<div class="figs num"><div class="fig"><b>2/min</b><span>Smart Plating</span></div><div class="fig"><b>1</b><span>Assembler</span></div><div class="fig"><b>15 MW</b><span>Power</span></div><div class="fig"><b>25 min</b><span>to 50 plates</span></div></div>
+</section>
+<div class="bay">
+<section class="card"><h3>Step queue <span class="num">2 / 10 done</span></h3><ul class="q num">
+<li class="d"><span>01</span>Logistics Mk.2: double your pure nodes<span>✓</span></li>
+<li class="d"><span>02</span>Part Assembly: Assemblers<span>✓</span></li>
+<li class="c"><span>03</span>Space Elevator Phase 1<i>NEXT</i></li>
+<li><span>04</span>Modular Frames<span>Build</span></li>
+<li><span>05</span>Obstacle Clearing<span>Milestone</span></li>
+<li><span>06</span>Resource Sink Bonus Program<span>Milestone</span></li></ul></section>
+<section class="card"><h3>Milestones <span class="num">2 / 5</span></h3>
+<div class="row"><span>Logistics Mk.2</span><span class="num" style="color:var(--ok)">✓ Delivered</span></div><div class="bar"><i style="width:100%;background:var(--ok)"></i></div>
+<div class="row"><span>Obstacle Clearing</span><span class="num">280 / 500 Rotor</span></div><div class="bar"><i style="width:56%"></i></div>
+<div class="row"><span>Resource Sink</span><span class="num">0 / 400 Wire</span></div><div class="bar"><i style="width:0"></i></div>
+<h3 style="margin-top:14px">Space Elevator · Phase 1</h3><p class="gauge num">0<small> / 50 Smart Plating</small></p></section>
+<section class="card"><h3>Nearest sites <span>from base</span></h3>
+<div class="site"><span>HUB / Starter</span><span class="num">0 m · <em>Iron ×3 Pure</em></span></div>
+<div class="site"><span>Caterium Ridge</span><span class="num">490 m N · <em>Pure</em></span></div>
+<div class="site"><span>West Coast</span><span class="num">980 m W · Copper ×3</span></div>
+<div class="site"><span>Quartz Cave</span><span class="num">1.1 km N · <em>Pure ×2</em></span></div></section>
+</div></main></body></html>

@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-11T09:39:09+00:00",
+  "title": "Design System: FICSIT Field Guide",
+  "extensions": {
+    "colorMeta": {
+      "bg": {
+        "role": "neutral",
+        "displayName": "Night Shift Graphite",
+        "canonical": "#111317",
+        "oklch": "oklch(18.6% 0.009 264.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.009 264.3)",
+          "oklch(26.4% 0.009 264.3)",
+          "oklch(37.9% 0.009 264.3)",
+          "oklch(49.3% 0.009 264.3)",
+          "oklch(60.7% 0.009 264.3)",
+          "oklch(72.1% 0.009 264.3)",
+          "oklch(83.6% 0.009 264.3)",
+          "oklch(95.0% 0.009 264.3)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Console Graphite",
+        "canonical": "#1a1d23",
+        "oklch": "oklch(23.0% 0.012 264.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 264.3)",
+          "oklch(26.4% 0.012 264.3)",
+          "oklch(37.9% 0.012 264.3)",
+          "oklch(49.3% 0.012 264.3)",
+          "oklch(60.7% 0.012 264.3)",
+          "oklch(72.1% 0.012 264.3)",
+          "oklch(83.6% 0.012 264.3)",
+          "oklch(95.0% 0.012 264.3)"
+        ]
+      },
+      "panel-2": {
+        "role": "neutral",
+        "displayName": "Raised Console",
+        "canonical": "#22262e",
+        "oklch": "oklch(26.8% 0.016 264.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.016 264.3)",
+          "oklch(26.4% 0.016 264.3)",
+          "oklch(37.9% 0.016 264.3)",
+          "oklch(49.3% 0.016 264.3)",
+          "oklch(60.7% 0.016 264.3)",
+          "oklch(72.1% 0.016 264.3)",
+          "oklch(83.6% 0.016 264.3)",
+          "oklch(95.0% 0.016 264.3)"
+        ]
+      },
+      "panel-3": {
+        "role": "neutral",
+        "displayName": "Selected Console",
+        "canonical": "#2b3039",
+        "oklch": "oklch(30.8% 0.018 262.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.018 262.2)",
+          "oklch(26.4% 0.018 262.2)",
+          "oklch(37.9% 0.018 262.2)",
+          "oklch(49.3% 0.018 262.2)",
+          "oklch(60.7% 0.018 262.2)",
+          "oklch(72.1% 0.018 262.2)",
+          "oklch(83.6% 0.018 262.2)",
+          "oklch(95.0% 0.018 262.2)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Bezel Line",
+        "canonical": "#3a414d",
+        "oklch": "oklch(37.4% 0.023 261.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.023 261.2)",
+          "oklch(26.4% 0.023 261.2)",
+          "oklch(37.9% 0.023 261.2)",
+          "oklch(49.3% 0.023 261.2)",
+          "oklch(60.7% 0.023 261.2)",
+          "oklch(72.1% 0.023 261.2)",
+          "oklch(83.6% 0.023 261.2)",
+          "oklch(95.0% 0.023 261.2)"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Bezel",
+        "canonical": "#4d5563",
+        "oklch": "oklch(44.8% 0.025 261.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.025 261.7)",
+          "oklch(26.4% 0.025 261.7)",
+          "oklch(37.9% 0.025 261.7)",
+          "oklch(49.3% 0.025 261.7)",
+          "oklch(60.7% 0.025 261.7)",
+          "oklch(72.1% 0.025 261.7)",
+          "oklch(83.6% 0.025 261.7)",
+          "oklch(95.0% 0.025 261.7)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Readout White",
+        "canonical": "#eceef2",
+        "oklch": "oklch(94.9% 0.006 264.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 264.5)",
+          "oklch(26.4% 0.006 264.5)",
+          "oklch(37.9% 0.006 264.5)",
+          "oklch(49.3% 0.006 264.5)",
+          "oklch(60.7% 0.006 264.5)",
+          "oklch(72.1% 0.006 264.5)",
+          "oklch(83.6% 0.006 264.5)",
+          "oklch(95.0% 0.006 264.5)"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Dimmed Readout",
+        "canonical": "#b3bac6",
+        "oklch": "oklch(78.7% 0.019 261.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.019 261.3)",
+          "oklch(26.4% 0.019 261.3)",
+          "oklch(37.9% 0.019 261.3)",
+          "oklch(49.3% 0.019 261.3)",
+          "oklch(60.7% 0.019 261.3)",
+          "oklch(72.1% 0.019 261.3)",
+          "oklch(83.6% 0.019 261.3)",
+          "oklch(95.0% 0.019 261.3)"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Stencil Grey",
+        "canonical": "#8f98a6",
+        "oklch": "oklch(67.7% 0.023 259.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.023 259.2)",
+          "oklch(26.4% 0.023 259.2)",
+          "oklch(37.9% 0.023 259.2)",
+          "oklch(49.3% 0.023 259.2)",
+          "oklch(60.7% 0.023 259.2)",
+          "oklch(72.1% 0.023 259.2)",
+          "oklch(83.6% 0.023 259.2)",
+          "oklch(95.0% 0.023 259.2)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "FICSIT Amber",
+        "canonical": "#fa9549",
+        "oklch": "oklch(76.3% 0.151 54.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.151 54.8)",
+          "oklch(26.4% 0.151 54.8)",
+          "oklch(37.9% 0.151 54.8)",
+          "oklch(49.3% 0.151 54.8)",
+          "oklch(60.7% 0.151 54.8)",
+          "oklch(72.1% 0.151 54.8)",
+          "oklch(83.6% 0.151 54.8)",
+          "oklch(95.0% 0.151 54.8)"
+        ]
+      },
+      "accent-strong": {
+        "role": "primary",
+        "displayName": "Lit Amber",
+        "canonical": "#ffb878",
+        "oklch": "oklch(83.6% 0.115 62.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.115 62.2)",
+          "oklch(26.4% 0.115 62.2)",
+          "oklch(37.9% 0.115 62.2)",
+          "oklch(49.3% 0.115 62.2)",
+          "oklch(60.7% 0.115 62.2)",
+          "oklch(72.1% 0.115 62.2)",
+          "oklch(83.6% 0.115 62.2)",
+          "oklch(95.0% 0.115 62.2)"
+        ]
+      },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "Amber Ink",
+        "canonical": "#1a1206",
+        "oklch": "oklch(18.9% 0.026 77.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.026 77.5)",
+          "oklch(26.4% 0.026 77.5)",
+          "oklch(37.9% 0.026 77.5)",
+          "oklch(49.3% 0.026 77.5)",
+          "oklch(60.7% 0.026 77.5)",
+          "oklch(72.1% 0.026 77.5)",
+          "oklch(83.6% 0.026 77.5)",
+          "oklch(95.0% 0.026 77.5)"
+        ]
+      },
+      "info": {
+        "role": "secondary",
+        "displayName": "Coolant Blue",
+        "canonical": "#7cc4ff",
+        "oklch": "oklch(79.6% 0.111 244.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.111 244.6)",
+          "oklch(26.4% 0.111 244.6)",
+          "oklch(37.9% 0.111 244.6)",
+          "oklch(49.3% 0.111 244.6)",
+          "oklch(60.7% 0.111 244.6)",
+          "oklch(72.1% 0.111 244.6)",
+          "oklch(83.6% 0.111 244.6)",
+          "oklch(95.0% 0.111 244.6)"
+        ]
+      },
+      "ok": {
+        "role": "status",
+        "displayName": "Go Green",
+        "canonical": "#5ee08f",
+        "oklch": "oklch(81.4% 0.163 153.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.163 153.3)",
+          "oklch(26.4% 0.163 153.3)",
+          "oklch(37.9% 0.163 153.3)",
+          "oklch(49.3% 0.163 153.3)",
+          "oklch(60.7% 0.163 153.3)",
+          "oklch(72.1% 0.163 153.3)",
+          "oklch(83.6% 0.163 153.3)",
+          "oklch(95.0% 0.163 153.3)"
+        ]
+      },
+      "warn": {
+        "role": "status",
+        "displayName": "Caution Yellow",
+        "canonical": "#ffd166",
+        "oklch": "oklch(88.0% 0.135 86.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.135 86.1)",
+          "oklch(26.4% 0.135 86.1)",
+          "oklch(37.9% 0.135 86.1)",
+          "oklch(49.3% 0.135 86.1)",
+          "oklch(60.7% 0.135 86.1)",
+          "oklch(72.1% 0.135 86.1)",
+          "oklch(83.6% 0.135 86.1)",
+          "oklch(95.0% 0.135 86.1)"
+        ]
+      },
+      "danger": {
+        "role": "status",
+        "displayName": "Fault Red",
+        "canonical": "#ff8a8a",
+        "oklch": "oklch(76.1% 0.142 20.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.142 20.9)",
+          "oklch(26.4% 0.142 20.9)",
+          "oklch(37.9% 0.142 20.9)",
+          "oklch(49.3% 0.142 20.9)",
+          "oklch(60.7% 0.142 20.9)",
+          "oklch(72.1% 0.142 20.9)",
+          "oklch(83.6% 0.142 20.9)",
+          "oklch(95.0% 0.142 20.9)"
+        ]
+      },
+      "purity-impure": {
+        "role": "status",
+        "displayName": "Impure",
+        "canonical": "#ff8a8a",
+        "oklch": "oklch(76.1% 0.142 20.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.142 20.9)",
+          "oklch(26.4% 0.142 20.9)",
+          "oklch(37.9% 0.142 20.9)",
+          "oklch(49.3% 0.142 20.9)",
+          "oklch(60.7% 0.142 20.9)",
+          "oklch(72.1% 0.142 20.9)",
+          "oklch(83.6% 0.142 20.9)",
+          "oklch(95.0% 0.142 20.9)"
+        ],
+        "aliasOf": "danger"
+      },
+      "purity-normal": {
+        "role": "status",
+        "displayName": "Normal",
+        "canonical": "#ffd166",
+        "oklch": "oklch(88.0% 0.135 86.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.135 86.1)",
+          "oklch(26.4% 0.135 86.1)",
+          "oklch(37.9% 0.135 86.1)",
+          "oklch(49.3% 0.135 86.1)",
+          "oklch(60.7% 0.135 86.1)",
+          "oklch(72.1% 0.135 86.1)",
+          "oklch(83.6% 0.135 86.1)",
+          "oklch(95.0% 0.135 86.1)"
+        ],
+        "aliasOf": "warn"
+      },
+      "purity-pure": {
+        "role": "status",
+        "displayName": "Pure",
+        "canonical": "#5ee08f",
+        "oklch": "oklch(81.4% 0.163 153.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.163 153.3)",
+          "oklch(26.4% 0.163 153.3)",
+          "oklch(37.9% 0.163 153.3)",
+          "oklch(49.3% 0.163 153.3)",
+          "oklch(60.7% 0.163 153.3)",
+          "oklch(72.1% 0.163 153.3)",
+          "oklch(83.6% 0.163 153.3)",
+          "oklch(95.0% 0.163 153.3)"
+        ],
+        "aliasOf": "ok"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Dashboard hero headline only; 1.875rem below 640px."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Page h1; 1.5rem below 640px."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Section h2 over a bezel rule."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Working size for prose, tables, controls and nav."
+      },
+      "label": {
+        "displayName": "Label / Eyebrow",
+        "purpose": "Uppercase eyebrows over headings and step sub-sections."
+      },
+      "readout": {
+        "displayName": "Readout",
+        "purpose": "Headline numbers on the Dashboard; tabular."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Declared but rarely used; IDs and code-like values."
+      }
+    },
+    "shadows": [
+      {
+        "name": "current-row-indicator",
+        "value": "inset 3px 0 0 var(--color-accent)",
+        "purpose": "Amber bar marking the current tier row on the Dashboard. An indicator, not elevation."
+      }
+    ],
+    "motion": [
+      {
+        "name": "state-transition",
+        "value": "Tailwind default (150ms, cubic-bezier(0.4, 0, 0.2, 1))",
+        "purpose": "Disclosure chevron rotation and hover colour shifts."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "All animations and transitions collapse under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ],
+    "dataVizSeries": {
+      "somersloop": "#ff5fa2",
+      "hard-drive": "#ff9b42",
+      "power-slug-blue": "#5aa9ff",
+      "power-slug-yellow": "#ffd84d",
+      "power-slug-purple": "#c084fc"
+    }
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one committing action in a context. FICSIT Amber fill.",
+      "html": "<button class=\"ds-btn-primary\">Apply layout</button>",
+      "css": ".ds-btn-primary { font: 600 0.875rem/1.25rem var(--font-sans); border-radius: 4px; padding: 6px 12px; cursor: pointer; transition: border-color .15s, background .15s; background: var(--color-accent, #fa9549); color: var(--color-accent-ink, #1a1206); border: 1px solid transparent; } .ds-btn-primary:hover { background: var(--color-accent-strong, #ffb878); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } .ds-btn-primary:active { transform: translateY(1px); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Default button: bezel outline that turns amber on hover.",
+      "html": "<button class=\"ds-btn-secondary\">×2 rate</button>",
+      "css": ".ds-btn-secondary { font: 600 0.875rem/1.25rem var(--font-sans); border-radius: 4px; padding: 6px 12px; cursor: pointer; transition: border-color .15s, background .15s; font-weight: 400; background: transparent; color: var(--color-ink, #eceef2); border: 1px solid var(--color-line-strong, #4d5563); } .ds-btn-secondary:hover { border-color: var(--color-accent, #fa9549); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }"
+    },
+    {
+      "name": "Number Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Labelled numeric input with tabular figures and a unit suffix.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field-label\">Target rate</span><span class=\"ds-field-row\"><input class=\"ds-input\" type=\"number\" value=\"120\"><span class=\"ds-field-suffix\">/min</span></span></label>",
+      "css": ".ds-field { display: block; max-width: 12rem; } .ds-field-label { display: block; margin-bottom: 4px; font: 500 0.75rem/1rem var(--font-sans); color: var(--color-ink-muted, #b3bac6); } .ds-field-row { display: flex; align-items: center; gap: 6px; } .ds-input { width: 100%; background: var(--color-panel-2, #22262e); color: var(--color-ink, #eceef2); border: 1px solid var(--color-line-strong, #4d5563); border-radius: 4px; padding: 6px 8px; font: 400 0.875rem/1.25rem var(--font-sans); font-variant-numeric: tabular-nums; } .ds-input:focus { border-color: var(--color-accent, #fa9549); } .ds-input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } .ds-field-suffix { font-size: 0.75rem; color: var(--color-ink-faint, #8f98a6); }"
+    },
+    {
+      "name": "Segmented Control",
+      "kind": "custom",
+      "refersTo": "segmented-option-selected",
+      "description": "Radio group in a trough; selected option filled amber.",
+      "html": "<div class=\"ds-seg\" role=\"radiogroup\" aria-label=\"Belt\"><span class=\"ds-seg-opt\">Mk1</span><span class=\"ds-seg-opt ds-seg-on\" aria-checked=\"true\">Mk2</span><span class=\"ds-seg-opt\">Mk3</span></div>",
+      "css": ".ds-seg { display: inline-flex; padding: 2px; background: var(--color-panel-2, #22262e); border: 1px solid var(--color-line-strong, #4d5563); border-radius: 4px; } .ds-seg-opt { padding: 4px 8px; border-radius: 4px; font: 500 0.75rem/1rem var(--font-sans); color: var(--color-ink-muted, #b3bac6); cursor: pointer; font-variant-numeric: tabular-nums; } .ds-seg-opt:hover { color: var(--color-ink, #eceef2); } .ds-seg-on { background: var(--color-accent, #fa9549); color: var(--color-accent-ink, #1a1206); }"
+    },
+    {
+      "name": "Badges",
+      "kind": "chip",
+      "refersTo": "badge",
+      "description": "Outlined status labels; purity pairs a dot with the word.",
+      "html": "<span class=\"ds-badges\"><span class=\"ds-badge ds-b-accent\">Build</span><span class=\"ds-badge ds-b-info\">MAM</span><span class=\"ds-badge ds-b-ok\"><span class=\"ds-dot\" style=\"background:var(--color-purity-pure,#5ee08f)\"></span>Pure</span><span class=\"ds-badge ds-b-warn\"><span class=\"ds-dot\" style=\"background:var(--color-purity-normal,#ffd166)\"></span>Normal</span><span class=\"ds-badge\">3/5 tasks</span></span>",
+      "css": ".ds-badges { display: inline-flex; gap: 6px; flex-wrap: wrap; } .ds-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px; border: 1px solid var(--color-line-strong, #4d5563); border-radius: 4px; color: var(--color-ink-muted, #b3bac6); font: 500 0.75rem/1 var(--font-sans); white-space: nowrap; } .ds-b-accent { border-color: color-mix(in srgb, var(--color-accent, #fa9549) 60%, transparent); color: var(--color-accent-strong, #ffb878); } .ds-b-info { border-color: color-mix(in srgb, var(--color-info, #7cc4ff) 50%, transparent); color: var(--color-info, #7cc4ff); } .ds-b-ok { border-color: color-mix(in srgb, var(--color-ok, #5ee08f) 50%, transparent); color: var(--color-ok, #5ee08f); } .ds-b-warn { border-color: color-mix(in srgb, var(--color-warn, #ffd166) 50%, transparent); color: var(--color-warn, #ffd166); } .ds-dot { width: 8px; height: 8px; border-radius: 9999px; }"
+    },
+    {
+      "name": "Item Chip",
+      "kind": "chip",
+      "refersTo": "item-chip",
+      "description": "Amount × item, amount in tabular Lit Amber.",
+      "html": "<span class=\"ds-chip\"><span class=\"ds-chip-amt\">120/min</span><span>Iron Plate</span></span>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 8px; background: var(--color-panel-2, #22262e); border: 1px solid var(--color-line, #3a414d); border-radius: 4px; font: 400 0.875rem/1.25rem var(--font-sans); color: var(--color-ink, #eceef2); } .ds-chip-amt { color: var(--color-accent-strong, #ffb878); font-weight: 600; font-variant-numeric: tabular-nums; }"
+    },
+    {
+      "name": "Primary Nav",
+      "kind": "nav",
+      "refersTo": "nav-link",
+      "description": "Header links; active sits on Selected Console.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-link\" href=\"#\">Dashboard</a><a class=\"ds-nav-link ds-nav-on\" aria-current=\"page\" href=\"#\">Tier guide</a><a class=\"ds-nav-link\" href=\"#\">Layouts</a><a class=\"ds-nav-link\" href=\"#\">Explore</a></nav>",
+      "css": ".ds-nav { display: flex; gap: 4px; padding: 8px; background: var(--color-panel, #1a1d23); border-bottom: 1px solid var(--color-line, #3a414d); } .ds-nav-link { padding: 6px 12px; border-radius: 4px; font: 500 0.875rem/1.25rem var(--font-sans); color: var(--color-ink-muted, #b3bac6); text-decoration: none; white-space: nowrap; } .ds-nav-link:hover { color: var(--color-ink, #eceef2); } .ds-nav-link:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } .ds-nav-on { background: var(--color-panel-3, #2b3039); color: var(--color-ink, #eceef2); }"
+    },
+    {
+      "name": "Tier Tab",
+      "kind": "custom",
+      "refersTo": "tier-tab",
+      "description": "Signature: instrument card per tier with a progress line on its bottom edge.",
+      "html": "<div class=\"ds-tiers\" role=\"tablist\"><button class=\"ds-tier\" role=\"tab\" aria-selected=\"false\"><b>Tier 1</b><span>Base Building</span><small>100% done</small><i style=\"width:100%\" class=\"ds-tier-done\"></i></button><button class=\"ds-tier ds-tier-on\" role=\"tab\" aria-selected=\"true\"><b>Tier 2</b><span>Part Assembly</span><small>40% done</small><i style=\"width:40%\"></i></button><button class=\"ds-tier\" role=\"tab\" aria-selected=\"false\"><b>Tier 3</b><span>Coal &amp; Steel</span><small>0% done</small><i style=\"width:0\"></i></button></div>",
+      "css": ".ds-tiers { display: flex; gap: 6px; } .ds-tier { position: relative; overflow: hidden; width: 8rem; padding: 8px; text-align: left; background: var(--color-panel, #1a1d23); border: 1px solid var(--color-line, #3a414d); border-radius: 6px; cursor: pointer; font-family: var(--font-sans); } .ds-tier:hover { border-color: var(--color-line-strong, #4d5563); } .ds-tier:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; } .ds-tier b { display: block; font-size: 0.875rem; color: var(--color-ink, #eceef2); } .ds-tier span { display: block; font-size: 0.75rem; color: var(--color-ink-muted, #b3bac6); } .ds-tier small { display: block; font-size: 11px; color: var(--color-ink-faint, #8f98a6); font-variant-numeric: tabular-nums; } .ds-tier i { position: absolute; left: 0; bottom: 0; height: 2px; background: var(--color-accent, #fa9549); } .ds-tier i.ds-tier-done { background: var(--color-ok, #5ee08f); } .ds-tier-on { background: var(--color-panel-3, #2b3039); border-color: var(--color-accent, #fa9549); } .ds-tier-on b { color: var(--color-accent-strong, #ffb878); }"
+    },
+    {
+      "name": "Hero Panel",
+      "kind": "card",
+      "refersTo": "panel-hero",
+      "description": "At most one per page: the next thing to do, amber-tinted.",
+      "html": "<section class=\"ds-hero\"><p class=\"ds-eyebrow\">Next step · Tier 2</p><h2 class=\"ds-hero-title\">Build the Reinforced Plate line</h2><p class=\"ds-hero-body\">Two Assemblers on the pure iron cluster, fed by the Screw Line.</p><button class=\"ds-btn-primary\">Open step</button></section>",
+      "css": ".ds-hero { padding: 28px; border-radius: 12px; border: 1px solid color-mix(in srgb, var(--color-accent, #fa9549) 35%, var(--color-line, #3a414d)); background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent, #fa9549) 9%, var(--color-panel, #1a1d23)) 0%, var(--color-panel, #1a1d23) 55%); font-family: var(--font-sans); } .ds-eyebrow { margin: 0; font: 600 0.75rem/1rem var(--font-sans); letter-spacing: 0.025em; text-transform: uppercase; color: var(--color-ink-faint, #8f98a6); } .ds-hero-title { margin: 4px 0 8px; font: 600 1.5rem/2rem var(--font-sans); letter-spacing: -0.025em; color: var(--color-ink, #eceef2); } .ds-hero-body { margin: 0 0 16px; font-size: 0.875rem; color: var(--color-ink-muted, #b3bac6); } .ds-btn-primary { font: 600 0.875rem/1.25rem var(--font-sans); border-radius: 4px; padding: 6px 12px; cursor: pointer; transition: border-color .15s, background .15s; background: var(--color-accent, #fa9549); color: var(--color-accent-ink, #1a1206); border: 1px solid transparent; } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night-Shift Control Panel",
+    "overview": "This is a dark industrial readout, built to sit on a second monitor beside a running game in a dim room. The player looks at it in glances of a second or two, so the screen stays calm: graphite surfaces, quiet blue-grey text and tabular numbers. The one thing that needs doing next lights up in FICSIT Amber. Nothing else competes for that glow.\n\nIt is dense but not cramped. Machine counts, rates, clocks and power are the content, so they get the weight, the accent tint and tabular figures, while prose sits a step back in dimmed ink. Depth comes from tone and bezel lines, never from drop shadows, so the panel reads as one flat instrument face with recessed and raised zones.\n\nControls should feel like physical switches on that panel: tactile and sturdy, with clear pressed and selected states and hit areas that also work on a phone propped beside the keyboard.",
+    "keyCharacteristics": [
+      "Dark only (`color-scheme: dark`); there is no light theme.",
+      "One amber accent, reserved for the next action, the selected state and key numbers.",
+      "Flat surfaces stepped by tone (bg → panel → panel-2 → panel-3) and separated by bezel lines.",
+      "Tabular numerals on every figure that can change.",
+      "Status is never carried by colour alone: purity, task state and step kind always pair colour with text.",
+      "Game item, building and resource icons speed up recognition but always sit beside the text name. The rest of the identity comes from type, colour tokens and text glyphs."
+    ],
+    "rules": [
+      {
+        "name": "The One Glow Rule",
+        "body": "FICSIT Amber marks what to act on or what is selected. If two unrelated things on a screen glow amber, one of them is wrong.",
+        "section": "colors"
+      },
+      {
+        "name": "The Fluids Are Blue Rule",
+        "body": "Coolant Blue means fluid or pipe, and amber means solid or belt, in every diagram and table that shows logistics.",
+        "section": "colors"
+      },
+      {
+        "name": "The Text-Grade Amber Rule",
+        "body": "Amber text always uses Lit Amber (accent-strong). Base FICSIT Amber is for fills, borders and strokes.",
+        "section": "colors"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Any number that can change (rates, counts, percentages, step numbers, input values) uses tabular figures (`.num`, `font-variant-numeric: tabular-nums`) so columns and live recalculations don't jitter.",
+        "section": "typography"
+      },
+      {
+        "name": "The Readout Outranks Prose Rule",
+        "body": "A number is set heavier or brighter than the sentence around it. Prose sits in Dimmed Readout and never in Readout White when a figure shares its line.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Column Rule",
+        "body": "Pages are one column of sections. Multi-column grids (md:2, lg:3 cards; md:10 tier tabs) only appear inside a section and fall back to one column on phones.",
+        "section": "layout"
+      },
+      {
+        "name": "The No Drop Shadow Rule",
+        "body": "Surfaces never float. If something needs more presence, step its tone up one level or give it a stronger bezel; don't add a shadow.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Single Hero Rule",
+        "body": "The hero panel (amber-tinted gradient, amber-mixed border, 12px radius) appears at most once per page and holds the one thing to act on next.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do take every colour from the `@theme` tokens in `src/index.css`. SVG diagrams currently hard-code the same hex values. When you touch them, switch to `var(--color-*)` rather than adding new literals.",
+      "Do pair every status colour with text or a glyph (purity word plus dot, \"3/5 tasks\", \"✓\", \"⚠\").",
+      "Do set changing figures in tabular numerals and give them more weight or brightness than the surrounding prose.",
+      "Do step surfaces by tone (panel → panel-2 → panel-3) to show nesting or selection.",
+      "Do keep a visible 2px FICSIT Amber focus ring on every interactive element.",
+      "Do make touch targets at least 44px on phone layouts, in line with the tactile direction.",
+      "Do honour `prefers-reduced-motion`; motion is limited to short transitions such as the chevron rotation."
+    ],
+    "donts": [
+      "Don't add drop shadows, glows or floating cards.",
+      "Don't use FICSIT Amber for decoration, secondary emphasis or a second competing call to action on the same screen.",
+      "Don't use base FICSIT Amber (#fa9549) for small text; use Lit Amber.",
+      "Don't show a game icon without its text name, and don't bundle FICSIT logos or map renders.",
+      "Don't introduce a light theme or a second typeface without revisiting this document.",
+      "Don't reuse the map's collectible series colours in UI chrome."
+    ]
+  }
+}
