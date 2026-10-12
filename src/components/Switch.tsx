@@ -7,7 +7,8 @@ export interface SwitchProps {
   label: ReactNode;
   /** Strike the label through when on (for to-do items, not settings). */
   strikeWhenChecked?: boolean;
-  size?: 'md' | 'lg';
+  /** md 44 px target; lg 56 px (dashboard hero); xl 80 px (glance, read from a metre away). */
+  size?: 'md' | 'lg' | 'xl';
   className?: string;
 }
 
@@ -33,6 +34,7 @@ export function Switch({
       className={cx(
         'group flex min-h-11 items-center gap-3 rounded text-left',
         size === 'lg' && 'min-h-14 gap-4',
+        size === 'xl' && 'min-h-20 gap-6',
         className,
       )}
     >
@@ -40,7 +42,7 @@ export function Switch({
         aria-hidden="true"
         className={cx(
           'relative shrink-0 rounded-full border transition-colors',
-          size === 'lg' ? 'h-8 w-14' : 'h-6 w-11',
+          { md: 'h-6 w-11', lg: 'h-8 w-14', xl: 'h-12 w-20' }[size],
           checked
             ? 'border-ok/70 bg-[color-mix(in_srgb,var(--color-ok)_30%,var(--color-panel-3))]'
             : 'border-line-strong bg-panel-3 group-hover:border-ink-faint',
@@ -49,9 +51,9 @@ export function Switch({
         <span
           className={cx(
             'absolute top-1/2 -translate-y-1/2 rounded-full transition-[left]',
-            size === 'lg' ? 'size-6' : 'size-[18px]',
+            { md: 'size-[18px]', lg: 'size-6', xl: 'size-10' }[size],
             checked
-              ? cx('bg-ok', size === 'lg' ? 'left-[26px]' : 'left-[21px]')
+              ? cx('bg-ok', { md: 'left-[21px]', lg: 'left-[26px]', xl: 'left-[34px]' }[size])
               : 'bg-ink-muted left-[3px]',
           )}
         />
