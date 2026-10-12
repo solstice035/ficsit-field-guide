@@ -193,7 +193,7 @@ export function Segmented<T extends string | number>({
                 htmlFor={id}
                 title={o.title}
                 className={cx(
-                  'num block cursor-pointer rounded px-2 py-1 text-xs font-medium peer-focus-visible:outline-2 peer-focus-visible:outline-accent',
+                  'num block min-w-6 cursor-pointer rounded px-2 py-1 text-center text-xs font-medium peer-focus-visible:outline-2 peer-focus-visible:outline-accent',
                   selected ? 'bg-accent text-accent-ink' : 'text-ink-muted hover:text-ink',
                   o.disabled && 'cursor-not-allowed opacity-50',
                 )}

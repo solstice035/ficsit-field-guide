@@ -153,6 +153,28 @@ describe('tier guide', () => {
     expect(screen.getByText('Your current tier')).toBeInTheDocument();
   });
 
+  it('marks finishing the current tier with a moment that offers the next tier', async () => {
+    useSettings.getState().setCurrentTier(1);
+    for (const step of TIER_BY_NUMBER.get(1)!.steps) {
+      for (const task of step.tasks) useProgress.getState().toggleTask(task.id);
+    }
+    const { user, container } = renderRoute('/tier/1');
+    const moment = await screen.findByRole('region', { name: 'Tier 1 complete' });
+    expect(within(moment).getByText(/steps done/)).toBeInTheDocument();
+    await expectNoA11yViolations(container);
+    await user.click(within(moment).getByRole('button', { name: 'Move to Tier 2' }));
+    expect(useSettings.getState().currentTier).toBe(2);
+  });
+
+  it('shows no moment for a finished tier that is not the current one', async () => {
+    for (const step of TIER_BY_NUMBER.get(1)!.steps) {
+      for (const task of step.tasks) useProgress.getState().toggleTask(task.id);
+    }
+    renderRoute('/tier/1');
+    await screen.findByRole('heading', { level: 1 });
+    expect(screen.queryByRole('region', { name: 'Tier 1 complete' })).toBeNull();
+  });
+
   it('has no a11y violations', async () => {
     const { container } = renderRoute('/tier/3');
     await screen.findByRole('heading', { level: 1, name: 'Coal Power & Steel' });

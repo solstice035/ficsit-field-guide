@@ -392,14 +392,14 @@ function NearestTable({
                     aria-label={`Collected ${COLLECTIBLE_META[type].label} ${i + 1}`}
                     checked={!!collected[item.id]}
                     onChange={() => onToggle(item.id)}
-                    className="accent-accent size-4"
+                    className="accent-accent size-6"
                   />
                 </td>
                 <td>
                   <button
                     type="button"
                     onClick={() => onLocate(item.id, item.x, item.y)}
-                    className="text-accent-strong text-sm hover:underline"
+                    className="text-accent-strong min-h-6 py-0.5 text-sm hover:underline"
                   >
                     Locate
                     <span className="sr-only">{` ${COLLECTIBLE_META[type].label} ${i + 1}`}</span>

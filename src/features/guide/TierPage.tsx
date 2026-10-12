@@ -8,9 +8,11 @@ import { TIER_BY_NUMBER } from '../../content/index.ts';
 import { stepStates } from '../../lib/progress/progress.ts';
 import { useSettings } from '../../state/settings.ts';
 import { StepRow } from './StepRow.tsx';
+import { TierCompleteMoment } from './TierCompleteMoment.tsx';
 import { TierTabs } from './TierTabs.tsx';
 import { TIER_PANEL_ID, tierTabId } from './tierTabIds.ts';
 import { useProgressFlags, useTierProgress } from './progress.ts';
+import { useFreshUntilSeen } from './useNextTask.ts';
 import { stepAnchor } from './stepMeta.ts';
 
 export function TierPage() {
@@ -23,6 +25,9 @@ export function TierPage() {
   const setHideCompleted = useSettings((s) => s.setHideCompleted);
   const flags = useProgressFlags();
   const progress = useTierProgress(tier ?? TIER_BY_NUMBER.get(0)!);
+  // Same rule as the NEXT line: complete once no step is left open (skipped counts).
+  const complete = !!tier && stepStates(tier, flags).every((s) => s === 'done' || s === 'skipped');
+  const momentFresh = useFreshUntilSeen(complete ? `complete-${param}` : `open-${param}`);
 
   // Router links to `#step-…` don't scroll by themselves.
   useEffect(() => {
@@ -117,6 +122,16 @@ export function TierPage() {
             </div>
           </Disclosure>
         </header>
+
+        {complete && currentTier === tier.tier && (
+          <TierCompleteMoment
+            tier={tier}
+            onAdvance={() => setCurrentTier(tier.tier + 1)}
+            fresh={momentFresh}
+            region
+            className="panel-hero p-5 sm:p-7"
+          />
+        )}
 
         <section aria-labelledby="queue-heading">
           <h2 id="queue-heading" className="sr-only">

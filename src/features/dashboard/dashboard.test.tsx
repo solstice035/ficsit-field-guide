@@ -30,7 +30,12 @@ describe('dashboard', () => {
     finishTier(0);
     const { user } = renderRoute('/');
     const hero = await screen.findByRole('region', { name: 'Next task' });
-    expect(within(hero).getByText('Tier 0 complete.')).toBeInTheDocument();
+    expect(within(hero).getByRole('heading', { name: 'Tier 0 complete' })).toBeInTheDocument();
+    expect(
+      within(hero)
+        .getByText(/Up next/)
+        .closest('p'),
+    ).toHaveTextContent(`Up next: Tier 1 · ${TIER_BY_NUMBER.get(1)!.title}`);
     expect(useSettings.getState().currentTier).toBe(0);
     await user.click(within(hero).getByRole('button', { name: 'Move to Tier 1' }));
     expect(useSettings.getState().currentTier).toBe(1);

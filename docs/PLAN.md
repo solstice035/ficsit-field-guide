@@ -178,7 +178,7 @@ Caveats are surfaced in the UI. Patch 1.2.1.0 restored one missing Rocky Desert 
 
 - Routes: `/` Dashboard · `/tier/:n` Guide (tabs 0 to 9) · `/layouts/:id` Configurator · `/explore` · `/calculator` · `/settings`.
 - Tier tabs follow the WAI-ARIA tabs pattern (arrow keys, Home and End) and each is also a route, so it can be deep-linked.
-- WCAG 2.1 AA: contrast ≥ 4.5:1, visible focus, labelled controls and no colour-only status (purity uses both colour and text).
+- WCAG 2.2 AA (I-88, adopted 2026-10-12): contrast ≥ 4.5:1, visible focus never obscured by the sticky header or the phone NEXT bar, targets ≥ 24 px, a button alternative to every drag (map pan), labelled controls and no colour-only status (purity uses both colour and text). axe runs the `wcag22aa` rules.
 - Responsive down to 360 px. The map and floor plan scroll inside their own containers, never the page.
 
 ## 11. Testing strategy
@@ -241,8 +241,9 @@ Linear (project _FICSIT Field Guide_) is the source of truth for the backlog. Se
   5. I-85 `/glance` page (big switch, cross-window sync, keep-awake).
   6. I-86 Keyboard shortcuts (`n`, `j`/`k`, `g`, `?`).
   7. I-87 Finish: Impeccable finish review, DESIGN.md update and critique re-run.
-  - **Built 2026-10-11 (overnight), on stacked local branches** `feature/i-81-icon-pipeline` → `i-82-milestone-links` → `i-83-next-strip-queue` → `i-84-dashboard` → `i-85-glance` → `i-86-keyboard-shortcuts` → `i-87-finish`, all on top of `feature/design-context`. Critique re-run: **28/40** before the final fix batch (target ≥ 32 not yet confirmed). Open: load Inter, amber body links, a tier-complete moment, phone strip placement.
-- **Decide on WCAG 2.2 AA** as the accessibility standard (Linear I-88). Until then, §10 stays at 2.1 AA.
+  - **Built 2026-10-11 (overnight), on stacked local branches** `feature/i-81-icon-pipeline` → `i-82-milestone-links` → `i-83-next-strip-queue` → `i-84-dashboard` → `i-85-glance` → `i-86-keyboard-shortcuts` → `i-87-finish`, all on top of `feature/design-context`. Critique re-run: **28/40** before the final fix batch (target ≥ 32 not yet confirmed). Its open questions (Inter, amber body links, a tier-complete moment, phone strip placement) were decided and built on 2026-10-12; see below.
+- **WCAG 2.2 AA adopted** (I-88, 2026-10-12); see §10.
+  - **Follow-ups built 2026-10-12** (I-105, `feature/i-105-redesign-followups`): self-hosted Inter, neutral underlined body links, a tier-complete moment, and the NEXT strip as a bottom thumb bar on phones. Stacked PRs #14–#20 opened for I-81 → I-87.
 
 ## 15. Delivery log (v1, 2026-10-10)
 

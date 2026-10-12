@@ -11,7 +11,7 @@ export interface CheckboxProps {
   className?: string;
 }
 
-/** Native checkbox with a large hit area and visible focus. */
+/** Native checkbox with a 24 px target (WCAG 2.2 2.5.8) and visible focus. */
 export function Checkbox({
   checked,
   onChange,
@@ -28,14 +28,14 @@ export function Checkbox({
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="accent-accent mt-0.5 size-4 shrink-0 cursor-pointer"
+        className="accent-accent size-6 shrink-0 cursor-pointer"
         aria-describedby={description ? `${id}-desc` : undefined}
       />
       <div className="min-w-0">
         <label
           htmlFor={id}
           className={cx(
-            'cursor-pointer',
+            'inline-block min-h-6 cursor-pointer py-0.5',
             strikeWhenChecked && checked && 'text-ink-muted decoration-ink-faint line-through',
           )}
         >

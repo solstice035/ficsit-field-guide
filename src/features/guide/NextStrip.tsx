@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
 import { Switch } from '../../components/Switch.tsx';
 import { cx } from '../../components/cx.ts';
@@ -24,11 +24,30 @@ export function NextStrip({ viewingTier }: NextStripProps) {
   const [figuresOpen, setFiguresOpen] = useState(false);
   const elsewhere = viewingTier !== undefined && viewingTier !== tier.tier;
   const layout = next ? stepLayout(next.step) : undefined;
+  const strip = useRef<HTMLElement>(null);
+
+  // Expose the strip's height so phone pages can clear the bottom bar.
+  useEffect(() => {
+    const el = strip.current;
+    const root = document.documentElement;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(() =>
+      root.style.setProperty('--next-h', `${el.offsetHeight}px`),
+    );
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+      root.style.removeProperty('--next-h');
+    };
+  }, []);
 
   return (
     <section
+      ref={strip}
       aria-label="Next task"
       className={cx(
+        // Phones: a bottom thumb bar. From sm it sits in the sticky header.
+        'fixed inset-x-0 bottom-0 z-40 pb-[env(safe-area-inset-bottom)] sm:static sm:pb-0',
         'border-t border-[color-mix(in_srgb,var(--color-accent)_50%,var(--color-line))] transition-colors duration-500',
         fresh ? 'next-fresh' : 'bg-panel-2',
       )}
@@ -93,7 +112,12 @@ export function NextStrip({ viewingTier }: NextStripProps) {
             )}
           </>
         ) : (
-          <TierComplete tier={tier.tier} onAdvance={advanceTier} />
+          <TierComplete
+            tier={tier.tier}
+            onAdvance={advanceTier}
+            // On its own tier page the complete moment below makes the offer.
+            offer={viewingTier !== tier.tier}
+          />
         )}
         <GlanceLink className="hidden shrink-0 lg:inline-flex" />
       </div>
@@ -109,7 +133,16 @@ export function NextStrip({ viewingTier }: NextStripProps) {
 }
 
 /** The end-of-tier offer: never advances by itself. */
-export function TierComplete({ tier, onAdvance }: { tier: number; onAdvance: () => void }) {
+export function TierComplete({
+  tier,
+  onAdvance,
+  offer = true,
+}: {
+  tier: number;
+  onAdvance: () => void;
+  /** False when another surface on screen already offers the move. */
+  offer?: boolean;
+}) {
   if (tier >= TIERS.length - 1)
     return (
       <p className="min-h-11 py-2 font-semibold">Run complete. Project Assembly is launched.</p>
@@ -117,13 +150,15 @@ export function TierComplete({ tier, onAdvance }: { tier: number; onAdvance: () 
   return (
     <p className="flex min-h-11 flex-wrap items-center gap-3">
       <span className="font-semibold">Tier {tier} complete.</span>
-      <button
-        type="button"
-        onClick={onAdvance}
-        className="border-accent text-accent-strong hover:bg-panel-3 min-h-11 rounded border px-3 text-sm font-semibold"
-      >
-        Move to Tier {tier + 1}
-      </button>
+      {offer && (
+        <button
+          type="button"
+          onClick={onAdvance}
+          className="border-accent text-accent-strong hover:bg-panel-3 min-h-11 rounded border px-3 text-sm font-semibold"
+        >
+          Move to Tier {tier + 1}
+        </button>
+      )}
     </p>
   );
 }
