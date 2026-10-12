@@ -4,7 +4,10 @@ import { parseProgress, useProgress } from './progress.ts';
 import { StateError, isRecord } from './schema.ts';
 import { parseSettings, useSettings } from './settings.ts';
 
-/** v2: progress gains `skipped`; linked task ticks live on milestones. v1 still restores. */
+/**
+ * v2: progress gains `skipped` and linked task ticks live on milestones and
+ * phases; settings gain `hideCompleted`. v1 backups still restore.
+ */
 export const BACKUP_VERSION = 2;
 
 export interface Backup {
@@ -17,7 +20,7 @@ export interface Backup {
   >;
   settings: Pick<
     ReturnType<typeof useSettings.getState>,
-    'base' | 'currentTier' | 'purityOverrides'
+    'base' | 'currentTier' | 'purityOverrides' | 'hideCompleted'
   >;
   layouts: Pick<ReturnType<typeof useLayouts.getState>, 'configs' | 'calculator'>;
   explore: Pick<ReturnType<typeof useExplore.getState>, 'collected' | 'filters'>;
@@ -40,7 +43,12 @@ export function createBackup(now = new Date()): Backup {
       phases: p.phases,
       skipped: p.skipped,
     },
-    settings: { base: s.base, currentTier: s.currentTier, purityOverrides: s.purityOverrides },
+    settings: {
+      base: s.base,
+      currentTier: s.currentTier,
+      purityOverrides: s.purityOverrides,
+      hideCompleted: s.hideCompleted,
+    },
     layouts: { configs: l.configs, calculator: l.calculator },
     explore: { collected: e.collected, filters: e.filters },
   };

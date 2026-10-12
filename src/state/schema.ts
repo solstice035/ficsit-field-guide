@@ -94,6 +94,10 @@ function mapValues<T>(
 const purity = (v: unknown, what: string): Purity =>
   PURITIES.includes(v as Purity) ? (v as Purity) : fail(what);
 
+export function parseBool(v: unknown, what: string): boolean {
+  return bool(v, what);
+}
+
 export function parseFlags(v: unknown, what: string): Flags {
   return mapValues(v, what, (value) => (value === true ? true : fail(what)));
 }

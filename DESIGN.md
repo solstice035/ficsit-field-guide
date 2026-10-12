@@ -18,6 +18,7 @@ colors:
   ok: '#5ee08f'
   warn: '#ffd166'
   danger: '#ff8a8a'
+  elevator: '#b9a2ff'
   purity-impure: '#ff8a8a'
   purity-normal: '#ffd166'
   purity-pure: '#5ee08f'
@@ -179,7 +180,11 @@ Cool, blue-tinted graphite neutrals with a single warm amber signal, plus a smal
 
 - **Go Green** (ok): completion. Use it for 100% progress, tasks done, pure nodes and extraction nodes in the flow diagram.
 - **Caution Yellow** (warn): attention. Use it for the storage warning, power-step badges and normal-purity nodes.
-- **Fault Red** (danger): errors and impurity. Use it for invalid input borders, impure nodes and the destructive-reset hover. Space Elevator step badges also use this tone, which is a reuse of the hue rather than an error meaning.
+- **Fault Red** (danger): errors and impurity. Use it for invalid input borders, impure nodes and the destructive-reset hover.
+
+### Identity
+
+- **Elevator Violet** (elevator): the Space Elevator's own colour, with no status meaning. Use it for Space Elevator step kinds, phase details and (later) the delivery gauge. It holds ≥ 4.5:1 on bg and panel. It replaced the old reuse of Fault Red, which read as an error.
 - **Purity tokens** (purity-impure / purity-normal / purity-pure) alias Fault Red, Caution Yellow and Go Green so purity can be retuned separately from status.
 
 ### Neutral
@@ -304,7 +309,8 @@ Item, building and resource icons ship as 64 px WebP in `public/icons/` (see `do
 - **Focus:** the border turns FICSIT Amber and the global focus ring is drawn.
 - **Error:** the border turns Fault Red with `aria-invalid`. The number field restores the last valid value on blur.
 - **Segmented control:** native radios inside a Raised Console trough. The selected option is filled FICSIT Amber with Amber Ink text.
-- **Checkbox:** native, tinted with `accent-color`, 16px. Completed to-dos strike through in Dimmed Readout.
+- **Checkbox:** native, tinted with `accent-color`, 16px. Used for settings-style choices outside the tier guide.
+- **Switch:** `role="switch"` button, at least 44px tall (56px in the large variant). The track is Selected Console with a Dimmed Readout thumb on the left; on, the thumb moves right and turns Go Green on a green-tinted track. To-do switches strike their label through when on, so state never rests on colour alone. Tier-guide tasks and "Hide completed" use it.
 
 ### Navigation
 
@@ -313,11 +319,22 @@ Item, building and resource icons ship as 64 px WebP in `public/icons/` (see `do
 
 ### Tier tabs (signature)
 
-Ten tabs, each a small instrument card: "Tier n" in bold (Lit Amber when selected), the tier title in Dimmed Readout and "n% done" in tabular Stencil Grey. A 2px progress line runs along the bottom edge in amber, turning Go Green at 100%. The selected tab gets an amber border on Selected Console. Each tab is also a route.
+Ten tabs, each a small instrument card: "Tier n" in bold (Lit Amber when selected), the tier title in Dimmed Readout and "n% done" in tabular Stencil Grey at 12px. The player's current tier reads "You · n% done". A 2px progress line runs along the bottom edge in amber, turning Go Green at 100%. The selected tab gets an amber border on Selected Console. Each tab is also a route.
 
-### Step cards (signature)
+### NEXT strip (signature)
 
-A card-styled disclosure. The summary row shows a zero-padded step number (`01`), the title, a step-kind badge and a "done/total tasks" badge. Expanding reveals body prose, then eyebrow-labelled sub-sections (Checklist, Milestones, MAM research, Factory layouts, Sites, Nearest to your base, Tips). Completed steps drop to 80% opacity. The disclosure chevron is a text glyph (▶) that rotates 90°.
+The answer to "what do I do now?", pinned inside the sticky header on tier pages. A FICSIT Amber "NEXT" tag, a switch that ticks the next task, the task in semibold (18px from 640px), "Step nn · title" as a link to the step, and the step's lead layout figures (the lead figure in Lit Amber). It always follows the player's current tier; on another tier's page it starts "You're on Tier n ·". When a tick advances it, the new line holds an amber-tinted Raised Console fill until the player next moves, types or touches. An optional step offers "Skip step". A finished tier offers "Move to Tier n+1" and never advances by itself. On phones the figures hide behind a "Figures" button.
+
+### Work order queue (signature)
+
+The tier's steps as one numbered list of APG accordion rows (an `h3` holding the button). Each row keeps the same column rhythm from 768px: zero-padded number, title, kind (a 16px line glyph plus a label in Stencil Grey, Elevator Violet for Space Elevator), site, then status. Below 768px the kind and site drop to a second line.
+
+- **Done:** borderless, title in Stencil Grey, status "Done" in Go Green with a check glyph. Collapsed.
+- **Skipped:** like done, with "– Skipped". Only `optional` steps can be skipped.
+- **Current:** the only amber-bordered row (accent mixed 45% into Bezel Line, no side stripe), a larger title, a "NEXT" tag and open by default. The body pairs task switches with an aside of figures, Space Elevator delivery, embedded milestones and sites; layouts, research, explore targets and tips follow.
+- **Later:** a Console Graphite card in Dimmed Readout with "done / total".
+
+Milestone cards inside a step are display only: their tick is the step's linked "Submit" task. Unlocks list five names then "+n more". "Hide completed" (persisted) removes done and skipped rows and says how many are hidden.
 
 ## Do's and Don'ts
 

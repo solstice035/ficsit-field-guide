@@ -110,7 +110,7 @@ export const TIER_8: TierGuide = {
       tasks: [
         { id: 't8-p4-mfg', label: 'Magnetic Field Generator line running' },
         { id: 't8-p4-tpr', label: 'Thermal Propulsion Rocket line running' },
-        { id: 't8-p4-deliver', label: 'Deliver Phase 4' },
+        { id: 't8-p4-deliver', label: 'Deliver Phase 4', phase: 4 },
       ],
       layoutIds: ['t8-magnetic-field-generators', 't8-thermal-rockets'],
     },

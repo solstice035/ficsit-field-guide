@@ -93,7 +93,7 @@ export const TIER_6: TierGuide = {
         'Deliver 2,500 Versatile Framework, 500 Modular Engines and 100 ACUs. Unlocks Tiers 7 & 8.',
       tasks: [
         { id: 't6-p3-mall', label: 'Phase 3 Mall (or equivalent) running' },
-        { id: 't6-p3-deliver', label: 'Deliver Phase 3' },
+        { id: 't6-p3-deliver', label: 'Deliver Phase 3', phase: 3 },
       ],
       layoutIds: ['t6-phase-3-mall'],
     },

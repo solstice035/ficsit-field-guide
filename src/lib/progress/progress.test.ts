@@ -4,7 +4,9 @@ import {
   isStepOpen,
   isTaskDone,
   mergeLinkedTicks,
+  nextInTier,
   stepProgress,
+  stepStates,
   tierProgress,
   type ProgressFlags,
 } from './progress.ts';
@@ -35,6 +37,7 @@ const tier: TierGuide = {
 const flags = (p: Partial<ProgressFlags> = {}): ProgressFlags => ({
   tasks: {},
   milestones: {},
+  phases: {},
   skipped: {},
   ...p,
 });
@@ -43,6 +46,12 @@ describe('isTaskDone', () => {
   it('reads a linked task from its milestone flag', () => {
     expect(isTaskDone(submit, flags({ milestones: { M_A: true } }))).toBe(true);
     expect(isTaskDone(submit, flags({ tasks: { submit: true } }))).toBe(false);
+  });
+
+  it('reads a delivery task from its Space Elevator phase flag', () => {
+    const deliver = { id: 'deliver', label: 'Deliver Phase 1', phase: 1 };
+    expect(isTaskDone(deliver, flags({ phases: { '1': true } }))).toBe(true);
+    expect(isTaskDone(deliver, flags({ tasks: { deliver: true } }))).toBe(false);
   });
 
   it('reads an unlinked task from its own flag', () => {
@@ -85,14 +94,39 @@ describe('mergeLinkedTicks', () => {
   it('moves a ticked linked task onto its milestone', () => {
     expect(mergeLinkedTicks({ submit: true, build: true }, {}, links)).toEqual({
       tasks: { build: true },
-      milestones: { M_A: true },
+      targets: { M_A: true },
     });
   });
 
   it('keeps a milestone ticked on its own and drops a stale unticked link', () => {
     expect(mergeLinkedTicks({}, { M_A: true }, links)).toEqual({
       tasks: {},
-      milestones: { M_A: true },
+      targets: { M_A: true },
     });
+  });
+});
+
+describe('nextInTier and stepStates', () => {
+  it('points at the first open task of the first open step', () => {
+    expect(nextInTier(tier, flags())).toEqual({ step: tier.steps[0], index: 0, task: submit });
+    expect(nextInTier(tier, flags({ milestones: { M_A: true } }))?.task).toBe(build);
+  });
+
+  it('stops on an optional step until it is done or skipped', () => {
+    const p = flags({ milestones: { M_A: true }, tasks: { build: true } });
+    expect(nextInTier(tier, p)?.step.id).toBe('s2');
+    expect(nextInTier(tier, { ...p, skipped: { s2: true } })).toBeNull();
+  });
+
+  it('labels each step done, skipped, current or later', () => {
+    const three = { ...tier, steps: [...tier.steps, step('s3', [{ id: 'x', label: 'X' }])] };
+    expect(stepStates(three, flags({ skipped: { s2: true } }))).toEqual([
+      'current',
+      'skipped',
+      'later',
+    ]);
+    expect(
+      stepStates(three, flags({ milestones: { M_A: true }, tasks: { build: true, x: true } })),
+    ).toEqual(['done', 'current', 'done']);
   });
 });

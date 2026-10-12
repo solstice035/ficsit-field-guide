@@ -71,7 +71,7 @@ describe('stores', () => {
       version: 1,
       exportedAt: '2026-10-10T00:00:00.000Z',
       progress: {
-        tasks: { 't0-hub1-submit': true, 't0-land-hub': true },
+        tasks: { 't0-hub1-submit': true, 't0-land-hub': true, 't2-p1-deliver': true },
         milestones: {},
         research: {},
         phases: {},
@@ -82,6 +82,7 @@ describe('stores', () => {
     });
     expect(useProgress.getState().tasks).toEqual({ 't0-land-hub': true });
     expect(useProgress.getState().milestones).toEqual({ Schematic_Tutorial1_C: true });
+    expect(useProgress.getState().phases).toEqual({ '1': true });
     const again = JSON.parse(JSON.stringify(createBackup()));
     expect(again.version).toBe(2);
     expect(again.progress.skipped).toEqual({});

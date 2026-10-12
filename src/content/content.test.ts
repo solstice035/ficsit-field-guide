@@ -259,6 +259,23 @@ describe('milestone links', () => {
   });
 });
 
+describe('Space Elevator links', () => {
+  it("links each tier's phase to exactly one task in its Space Elevator step", () => {
+    for (const t of TIERS) {
+      const owners = t.steps.flatMap((s) =>
+        s.tasks.filter((task) => task.phase !== undefined).map((task) => ({ s, task })),
+      );
+      if (t.spaceElevatorPhase === undefined) {
+        expect(owners, `tier ${t.tier}`).toEqual([]);
+        continue;
+      }
+      expect(owners, `tier ${t.tier}`).toHaveLength(1);
+      expect(owners[0]?.task.phase).toBe(t.spaceElevatorPhase);
+      expect(owners[0]?.s.kind).toBe('space-elevator');
+    }
+  });
+});
+
 describe('game icons', () => {
   // jsdom rewrites import.meta.url, so resolve from the repo root vitest runs in.
   const iconDir = resolve('public/icons');

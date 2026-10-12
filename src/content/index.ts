@@ -41,6 +41,15 @@ export const MILESTONE_BY_TASK: ReadonlyMap<string, string> = new Map(
   ),
 );
 
+/** Task ID → the Space Elevator phase it delivers. */
+export const PHASE_BY_TASK: ReadonlyMap<string, number> = new Map(
+  TIERS.flatMap((t) =>
+    t.steps.flatMap((s) =>
+      s.tasks.flatMap((task) => (task.phase !== undefined ? [[task.id, task.phase] as const] : [])),
+    ),
+  ),
+);
+
 export function stepById(id: string): GuideStep | undefined {
   for (const tier of TIERS) {
     const step = tier.steps.find((s) => s.id === id);

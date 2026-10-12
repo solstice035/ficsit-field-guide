@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { MILESTONE_BY_TASK, stepById } from '../content/index.ts';
+import { MILESTONE_BY_TASK, PHASE_BY_TASK, stepById } from '../content/index.ts';
 import { mergeLinkedTicks } from '../lib/progress/progress.ts';
 import { type Flags, isRecord, parseFlags, safeMerge } from './schema.ts';
 import { STORAGE_KEYS, persistStorage } from './storage.ts';
 
 export interface ProgressState {
-  /** Ticks for tasks not linked to a milestone. A linked task reads its milestone. */
+  /** Ticks for unlinked tasks. A task linked to a milestone or phase reads that flag. */
   tasks: Flags;
   milestones: Flags;
   research: Flags;
@@ -14,7 +14,7 @@ export interface ProgressState {
   phases: Flags;
   /** Skipped optional steps, keyed by step ID. */
   skipped: Flags;
-  /** Ticks a task; a task linked to a milestone ticks the milestone instead. */
+  /** Ticks a task; a linked task ticks its milestone or phase instead. */
   toggleTask: (id: string) => void;
   toggleMilestone: (id: string) => void;
   toggleResearch: (id: string) => void;
@@ -40,6 +40,10 @@ export type ProgressData = Pick<
   'tasks' | 'milestones' | 'research' | 'phases' | 'skipped'
 >;
 
+const PHASE_LINKS: ReadonlyMap<string, string> = new Map(
+  [...PHASE_BY_TASK].map(([task, phase]) => [task, String(phase)]),
+);
+
 /**
  * Validates persisted progress; missing sections are empty. Ticks on linked
  * tasks (saved before version 2) move onto their milestone, so a backup of
@@ -47,15 +51,21 @@ export type ProgressData = Pick<
  */
 export function parseProgress(raw: Record<string, unknown>): ProgressData {
   const flags = (v: unknown, what: string): Flags => (v === undefined ? {} : parseFlags(v, what));
-  const merged = mergeLinkedTicks(
+  const milestones = mergeLinkedTicks(
     flags(raw.tasks, 'task list'),
     flags(raw.milestones, 'milestone list'),
     MILESTONE_BY_TASK,
   );
+  const phases = mergeLinkedTicks(
+    milestones.tasks,
+    flags(raw.phases, 'Space Elevator list'),
+    PHASE_LINKS,
+  );
   return {
-    ...merged,
+    tasks: phases.tasks,
+    milestones: milestones.targets,
     research: flags(raw.research, 'research list'),
-    phases: flags(raw.phases, 'Space Elevator list'),
+    phases: phases.targets,
     skipped: flags(raw.skipped, 'skipped step list'),
   };
 }
@@ -67,9 +77,10 @@ export const useProgress = create<ProgressState>()(
       toggleTask: (id) =>
         set((s) => {
           const milestone = MILESTONE_BY_TASK.get(id);
-          return milestone
-            ? { milestones: toggle(s.milestones, milestone) }
-            : { tasks: toggle(s.tasks, id) };
+          if (milestone) return { milestones: toggle(s.milestones, milestone) };
+          const phase = PHASE_LINKS.get(id);
+          if (phase) return { phases: toggle(s.phases, phase) };
+          return { tasks: toggle(s.tasks, id) };
         }),
       toggleMilestone: (id) => set((s) => ({ milestones: toggle(s.milestones, id) })),
       toggleResearch: (id) => set((s) => ({ research: toggle(s.research, id) })),
@@ -80,7 +91,7 @@ export const useProgress = create<ProgressState>()(
     }),
     {
       name: STORAGE_KEYS.progress,
-      // v2: linked task ticks live on the milestone; adds `skipped`.
+      // v2: linked task ticks live on the milestone or phase; adds `skipped`.
       version: 2,
       storage: persistStorage,
       // `parseProgress` (run by `merge`) does the v1 → v2 fold; leave the data as is here.

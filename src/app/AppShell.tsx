@@ -1,6 +1,7 @@
-import { useSyncExternalStore } from 'react';
+import { useEffect, useRef, useSyncExternalStore } from 'react';
 import { Link, NavLink, Outlet, ScrollRestoration, useLocation } from 'react-router';
 import { cx } from '../components/cx.ts';
+import { NextStrip } from '../features/guide/NextStrip.tsx';
 import { useSettings } from '../state/settings.ts';
 import { storageStatus } from '../state/storage.ts';
 
@@ -31,6 +32,20 @@ function StorageNotice() {
 export function AppShell() {
   const currentTier = useSettings((s) => s.currentTier);
   const { pathname } = useLocation();
+  const tierMatch = /^\/tier\/(\d+)/.exec(pathname);
+  const header = useRef<HTMLElement>(null);
+
+  // Expose the sticky header's height so anchored steps scroll clear of it.
+  useEffect(() => {
+    const el = header.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(() =>
+      document.documentElement.style.setProperty('--header-h', `${el.offsetHeight}px`),
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="flex min-h-dvh flex-col">
       <a
@@ -39,7 +54,10 @@ export function AppShell() {
       >
         Skip to content
       </a>
-      <header className="border-line bg-panel/95 sticky top-0 z-40 border-b backdrop-blur">
+      <header
+        ref={header}
+        className="border-line bg-panel/95 sticky top-0 z-40 border-b backdrop-blur"
+      >
         <div className="mx-auto flex max-w-7xl flex-col gap-y-1.5 px-4 py-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:py-3">
           <NavLink
             to="/"
@@ -83,6 +101,7 @@ export function AppShell() {
             </ul>
           </nav>
         </div>
+        {tierMatch && <NextStrip viewingTier={Number(tierMatch[1])} />}
       </header>
       <StorageNotice />
       <main

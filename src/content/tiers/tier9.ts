@@ -103,7 +103,7 @@ export const TIER_9: TierGuide = {
         { id: 't9-p5-sculptors', label: '1,000 Biochemical Sculptors' },
         { id: 't9-p5-servers', label: '256 AI Expansion Servers' },
         { id: 't9-p5-bwd', label: '200 Ballistic Warp Drives' },
-        { id: 't9-p5-launch', label: 'Launch Project Assembly' },
+        { id: 't9-p5-launch', label: 'Launch Project Assembly', phase: 5 },
       ],
       layoutIds: ['t8-nuclear-pasta'],
     },
