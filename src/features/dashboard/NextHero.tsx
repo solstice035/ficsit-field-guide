@@ -4,17 +4,28 @@ import { Switch } from '../../components/Switch.tsx';
 import { cx } from '../../components/cx.ts';
 import { GlanceLink } from '../guide/GlanceLink.tsx';
 import { TierComplete } from '../guide/NextStrip.tsx';
+import { TickReceipt } from '../guide/TickReceipt.tsx';
 import { StepFigures } from '../guide/StepFigures.tsx';
 import { KIND_LABEL, stepAnchor, stepLayout } from '../guide/stepMeta.ts';
 import { useNextTask } from '../guide/useNextTask.ts';
 
 /** The dashboard's enlarged NEXT: the step, its next task as a big switch, then what follows. */
 export function NextHero() {
-  const { tier, next, after, then, fresh, tick, skip, advanceTier } = useNextTask();
+  const { tier, next, after, then, fresh, lastTicked, tick, undo, skip, advanceTier } =
+    useNextTask();
   const layout = next ? stepLayout(next.step) : undefined;
 
   return (
-    <section aria-label="Next task" className={cx('panel-hero p-5 sm:p-7', fresh && 'next-fresh')}>
+    <section
+      aria-label="Next task"
+      className={cx('panel-hero p-5 transition-colors duration-500 sm:p-7', fresh && 'next-fresh')}
+    >
+      <TickReceipt
+        lastTicked={lastTicked}
+        nextLabel={next?.task.label}
+        onUndo={undo}
+        className="mb-3"
+      />
       <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
         <span className="bg-accent text-accent-ink rounded px-2 py-0.5 text-xs font-bold">
           NEXT
@@ -77,7 +88,12 @@ export function NextHero() {
                   <li key={s.id} className="text-ink-muted flex items-center gap-2">
                     <KindGlyph kind={s.kind} className="text-ink-faint" />
                     <span className="sr-only">{KIND_LABEL[s.kind]}: </span>
-                    {s.title}
+                    <Link
+                      to={{ pathname: `/tier/${tier.tier}`, hash: stepAnchor(s.id) }}
+                      className="text-ink-muted hover:text-ink no-underline hover:underline"
+                    >
+                      {s.title}
+                    </Link>
                   </li>
                 ))}
               </ol>

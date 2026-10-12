@@ -5,6 +5,7 @@ import { cx } from '../../components/cx.ts';
 import { TIERS } from '../../content/index.ts';
 import { GlanceLink } from './GlanceLink.tsx';
 import { StepFigures } from './StepFigures.tsx';
+import { TickReceipt } from './TickReceipt.tsx';
 import { stepAnchor, stepLayout } from './stepMeta.ts';
 import { useNextTask } from './useNextTask.ts';
 
@@ -19,7 +20,7 @@ export interface NextStripProps {
  * holds amber until seen.
  */
 export function NextStrip({ viewingTier }: NextStripProps) {
-  const { tier, next, fresh, tick, skip, advanceTier } = useNextTask();
+  const { tier, next, fresh, lastTicked, tick, undo, skip, advanceTier } = useNextTask();
   const [figuresOpen, setFiguresOpen] = useState(false);
   const elsewhere = viewingTier !== undefined && viewingTier !== tier.tier;
   const layout = next ? stepLayout(next.step) : undefined;
@@ -28,7 +29,7 @@ export function NextStrip({ viewingTier }: NextStripProps) {
     <section
       aria-label="Next task"
       className={cx(
-        'border-t border-[color-mix(in_srgb,var(--color-accent)_50%,var(--color-line))]',
+        'border-t border-[color-mix(in_srgb,var(--color-accent)_50%,var(--color-line))] transition-colors duration-500',
         fresh ? 'next-fresh' : 'bg-panel-2',
       )}
     >
@@ -47,8 +48,12 @@ export function NextStrip({ viewingTier }: NextStripProps) {
               checked={false}
               onChange={tick}
               keyShortcut="n"
-              label={<span className="font-semibold sm:text-lg">{next.task.label}</span>}
-              className="min-w-0 flex-1"
+              label={
+                <span className="line-clamp-2 font-semibold sm:line-clamp-none sm:text-lg">
+                  {next.task.label}
+                </span>
+              }
+              className="min-w-0 flex-1 basis-48"
             />
             <Link
               to={{ pathname: `/tier/${tier.tier}`, hash: stepAnchor(next.step.id) }}
@@ -92,6 +97,13 @@ export function NextStrip({ viewingTier }: NextStripProps) {
         )}
         <GlanceLink className="hidden shrink-0 lg:inline-flex" />
       </div>
+      <TickReceipt
+        lastTicked={lastTicked}
+        nextLabel={next?.task.label}
+        visible={fresh}
+        onUndo={undo}
+        className="mx-auto max-w-7xl px-4 pb-1.5"
+      />
     </section>
   );
 }

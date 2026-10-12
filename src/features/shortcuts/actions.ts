@@ -2,13 +2,14 @@ import { TIERS } from '../../content/index.ts';
 import { nextInTier } from '../../lib/progress/progress.ts';
 import { useProgress } from '../../state/progress.ts';
 import { useSettings } from '../../state/settings.ts';
+import { tickAndRemember } from '../guide/lastTick.ts';
 
 /** Ticks the NEXT task of the current tier, read straight from the stores. */
 export function tickNextTask(): void {
-  const { tasks, milestones, phases, skipped, toggleTask } = useProgress.getState();
+  const { tasks, milestones, phases, skipped } = useProgress.getState();
   const tier = TIERS[useSettings.getState().currentTier] ?? TIERS[0]!;
   const next = nextInTier(tier, { tasks, milestones, phases, skipped });
-  if (next) toggleTask(next.task.id);
+  if (next) tickAndRemember({ taskId: next.task.id, label: next.task.label });
 }
 
 /** Opens `/glance` in its named window (reused if already open). */

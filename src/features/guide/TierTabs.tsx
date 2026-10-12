@@ -68,7 +68,10 @@ export function TierTabs({ activeTier }: { activeTier: number }) {
             </span>
             <span
               aria-hidden="true"
-              className={cx('absolute bottom-0 left-0 h-0.5', pct === 100 ? 'bg-ok' : 'bg-accent')}
+              className={cx(
+                'absolute bottom-0 left-0 h-0.5',
+                pct === 100 ? 'bg-ok' : 'bg-ink-muted',
+              )}
               style={{ width: `${pct}%` }}
             />
           </button>

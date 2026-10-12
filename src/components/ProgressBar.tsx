@@ -22,7 +22,7 @@ export function ProgressBar({ value, max, label, className, showText = true }: P
         className="bg-panel-3 h-1.5 flex-1 overflow-hidden rounded-full"
       >
         <div
-          className={cx('h-full rounded-full', pct === 100 ? 'bg-ok' : 'bg-accent')}
+          className={cx('h-full rounded-full', pct === 100 ? 'bg-ok' : 'bg-ink-muted')}
           style={{ width: `${pct}%` }}
         />
       </div>

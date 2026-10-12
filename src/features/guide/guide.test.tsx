@@ -51,6 +51,22 @@ describe('tier guide', () => {
     );
   });
 
+  it('says what the NEXT switch ticked and undoes it in place', async () => {
+    const { user } = renderRoute('/tier/0');
+    const strip = await screen.findByRole('region', { name: 'Next task' });
+    await user.click(
+      within(strip).getByRole('switch', { name: 'Dismantle the drop pod (20 Iron Ore)' }),
+    );
+    const receipt = within(strip).getByRole('status');
+    expect(receipt).toHaveTextContent('Ticked: Dismantle the drop pod (20 Iron Ore)');
+    expect(receipt).toHaveTextContent('Next: Place the HUB in the HUB Basin');
+    await user.click(within(receipt).getByRole('button', { name: 'Undo' }));
+    expect(useProgress.getState().tasks['t0-land-pod']).toBeUndefined();
+    expect(
+      within(strip).getByRole('switch', { name: 'Dismantle the drop pod (20 Iron Ore)' }),
+    ).toBeInTheDocument();
+  });
+
   it('opens the current step and collapses it once done', async () => {
     renderRoute('/tier/0');
     const steps = await screen.findByRole('region', { name: 'Steps' });

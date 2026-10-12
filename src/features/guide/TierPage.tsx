@@ -71,9 +71,9 @@ export function TierPage() {
             {currentIndex >= 0 && (
               <Link
                 to={{ hash: stepAnchor(tier.steps[currentIndex]!.id) }}
-                className="inline-flex min-h-11 items-center text-sm"
+                className="text-ink-muted hover:text-ink inline-flex min-h-11 items-center text-sm"
               >
-                Skip to next step
+                Go to step {String(currentIndex + 1).padStart(2, '0')}
               </Link>
             )}
             <Switch

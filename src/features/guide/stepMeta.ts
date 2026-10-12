@@ -24,5 +24,5 @@ export function stepLayout(step: GuideStep): FactoryLayout | undefined {
   return id ? LAYOUT_BY_ID.get(id) : undefined;
 }
 
-/** DOM id of a step row, the target of "Skip to next step" links. */
+/** DOM id of a step row, the target of "Go to step nn" and NEXT links. */
 export const stepAnchor = (stepId: string): string => `step-${stepId}`;

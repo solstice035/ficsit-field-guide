@@ -1,10 +1,18 @@
 import { useEffect, useState } from 'react';
 import { TIERS } from '../../content/index.ts';
 import type { TierGuide } from '../../content/types.ts';
-import { type NextTask, nextInTier, stepStates } from '../../lib/progress/progress.ts';
+import { MILESTONE_BY_TASK, PHASE_BY_TASK } from '../../content/index.ts';
+import { type NextTask, isTaskDone, nextInTier, stepStates } from '../../lib/progress/progress.ts';
 import { useProgress } from '../../state/progress.ts';
 import { useSettings } from '../../state/settings.ts';
+import { type LastTick, tickAndRemember, undoLastTick, useLastTick } from './lastTick.ts';
 import { useProgressFlags } from './progress.ts';
+
+/** A task's link (milestone or phase), so a remembered tick reads the right flag. */
+const linkOf = (taskId: string) => ({
+  milestoneId: MILESTONE_BY_TASK.get(taskId),
+  phase: PHASE_BY_TASK.get(taskId),
+});
 
 /** Wait before a fresh line can be marked seen, so the tick itself doesn't clear it. */
 const SEEN_DELAY_MS = 1200;
@@ -42,7 +50,10 @@ export interface NextTaskState {
   then: NextTask['step'][];
   /** True while the line that just replaced a ticked task hasn't been seen. */
   fresh: boolean;
+  /** The last task ticked from a NEXT surface, while it is still ticked. */
+  lastTicked: LastTick | null;
   tick: () => void;
+  undo: () => void;
   skip: () => void;
   advanceTier: () => void;
 }
@@ -52,11 +63,15 @@ export function useNextTask(): NextTaskState {
   const currentTier = useSettings((s) => s.currentTier);
   const setCurrentTier = useSettings((s) => s.setCurrentTier);
   const flags = useProgressFlags();
-  const toggleTask = useProgress((s) => s.toggleTask);
   const toggleSkipped = useProgress((s) => s.toggleSkipped);
   const tier = TIERS[currentTier] ?? TIERS[0]!;
   const next = nextInTier(tier, flags);
   const fresh = useFreshUntilSeen(next?.task.id ?? `complete-${tier.tier}`);
+  const last = useLastTick((s) => s.last);
+  const lastTicked =
+    last && isTaskDone({ id: last.taskId, label: last.label, ...linkOf(last.taskId) }, flags)
+      ? last
+      : null;
 
   // "After" pretends the next task is done and asks again.
   const after = next
@@ -78,7 +93,9 @@ export function useNextTask(): NextTaskState {
     after,
     then,
     fresh,
-    tick: () => next && toggleTask(next.task.id),
+    lastTicked,
+    tick: () => next && tickAndRemember({ taskId: next.task.id, label: next.task.label }),
+    undo: undoLastTick,
     skip: () => next && toggleSkipped(next.step.id),
     advanceTier: () => setCurrentTier(tier.tier + 1),
   };
