@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en-GB"><head><meta charset="utf-8"><title>Work Order Queue · Tier 2</title>
+<style>
+:root{--bg:#111317;--p:#1a1d23;--p2:#22262e;--p3:#2b3039;--l:#3a414d;--ls:#4d5563;--ink:#eceef2;--mu:#b3bac6;--fa:#8f98a6;--a:#fa9549;--as:#ffb878;--ai:#1a1206;--ok:#5ee08f;--info:#7cc4ff}
+*{box-sizing:border-box;margin:0}
+body{width:1440px;height:900px;overflow:hidden;background:var(--bg);color:var(--ink);font:400 14px/1.43 system-ui,-apple-system,"Segoe UI",sans-serif}
+.num{font-variant-numeric:tabular-nums}
+header{height:56px;display:flex;align-items:center;gap:28px;padding:0 32px;background:var(--p);border-bottom:1px solid var(--l)}
+.logo{display:flex;gap:8px;align-items:center;font-weight:600}.logo b{width:28px;height:28px;display:grid;place-items:center;background:var(--a);color:var(--ai);border-radius:4px;font-weight:900}
+nav{display:flex;gap:4px}nav a{padding:8px 12px;border-radius:4px;color:var(--mu);font-weight:500}nav a.on{background:var(--p3);color:var(--ink)}
+.strip{height:72px;display:flex;align-items:center;gap:22px;padding:0 32px;background:var(--p2);border-bottom:1px solid color-mix(in srgb,var(--a) 50%,var(--l))}
+.strip .k{font-size:12px;font-weight:700;letter-spacing:.04em;color:var(--ai);background:var(--a);padding:4px 8px;border-radius:4px}
+.strip .t{font-size:19px;font-weight:600}.strip .t span{color:var(--fa);font-weight:400}
+.sw{width:52px;height:30px;border-radius:15px;background:var(--p3);border:1px solid var(--ls);position:relative;flex:none}.sw::after{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:var(--mu)}
+.strip .f{margin-left:auto;display:flex;gap:22px;color:var(--mu)}.strip .f b{color:var(--as);font-size:18px}
+.glance{border:1px solid var(--ls);border-radius:4px;padding:8px 14px}
+.wrap{width:960px;margin:0 auto;padding:22px 0}
+.tiers{display:flex;gap:6px;color:var(--fa);font-size:12px;margin-bottom:14px}.tiers span{padding:4px 10px;border:1px solid var(--l);border-radius:6px}.tiers .on{border-color:var(--a);color:var(--as);font-weight:700;background:var(--p3)}.tiers .done{color:var(--ok)}
+h1{font-size:30px;font-weight:600;letter-spacing:-.02em}.sub{color:var(--mu);display:flex;gap:16px;margin:4px 0 16px}.sub a{color:var(--as)}
+ol{list-style:none;padding:0;display:grid;gap:6px}
+.row{display:grid;grid-template-columns:44px 1fr 120px 150px 110px;align-items:center;gap:12px;min-height:44px;padding:0 16px;border-radius:6px;background:var(--p);border:1px solid var(--l)}
+.done{background:transparent;border-color:transparent;color:var(--fa)}.done .st{color:var(--ok);font-weight:600}
+.later{color:var(--mu)}.later .n{color:var(--fa)}
+.n{font-weight:600}.kind{font-size:12px;color:var(--fa)}
+.cur{border:1px solid color-mix(in srgb,var(--a) 45%,var(--l));border-radius:8px;background:var(--p);padding:16px 18px 18px}
+.cur .head{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:baseline}.cur .head .n{color:var(--as)}
+.cur h2{font-size:20px;font-weight:600}.cur .tag{font-size:12px;font-weight:700;color:var(--as);border:1px solid color-mix(in srgb,var(--a) 60%,transparent);border-radius:4px;padding:2px 8px}
+.body{margin-left:56px;display:grid;grid-template-columns:1fr 300px;gap:24px;margin-top:10px}
+.task{display:flex;align-items:center;gap:14px;min-height:48px;border-bottom:1px solid var(--l);font-size:15px}
+.task.ok{color:var(--fa);text-decoration:line-through}.task.ok .sw{background:color-mix(in srgb,var(--ok) 30%,var(--p3))}.task.ok .sw::after{left:25px;background:var(--ok)}
+.chip{display:inline-flex;gap:6px;padding:4px 8px;background:var(--p2);border:1px solid var(--l);border-radius:4px;margin:0 6px 6px 0}.chip b{color:var(--as)}
+.k2{font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--fa);margin:6px 0 8px}
+</style></head><body>
+<header><div class="logo"><b>F</b>FICSIT Field Guide</div>
+<nav><a class="on">Tier guide</a><a>Dashboard</a><a>Layouts</a><a>Explore</a><a>Calculator</a><a>Settings</a></nav></header>
+<div class="strip"><span class="k">NEXT</span><span class="sw"></span><span class="t">Build the Smart Plating line <span>· Step 03 · Space Elevator Phase 1</span></span>
+<div class="f num"><span><b>2/min</b> Smart Plating</span><span><b>1</b> Assembler</span><span><b>15 MW</b></span></div><a class="glance">Glance ↗</a></div>
+<div class="wrap">
+<div class="tiers"><span class="done">T0 ✓</span><span class="done">T1 ✓</span><span class="on">T2 Part Assembly</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>T8</span><span>T9</span></div>
+<h1>Part Assembly</h1><p class="sub"><span class="num">9 of 24 done</span><a>▸ Why this tier</a><a>Hide completed</a></p>
+<ol class="num">
+<li class="row done"><span class="n">01</span><span>Logistics Mk.2: double your pure nodes</span><span class="kind">Milestone</span><span>HUB / Starter</span><span class="st">✓ Done</span></li>
+<li class="row done"><span class="n">02</span><span>Part Assembly: Assemblers</span><span class="kind">Milestone</span><span>HUB / Starter</span><span class="st">✓ Done</span></li>
+<li class="cur"><div class="head"><span class="n">03</span><h2>Space Elevator Phase 1: 50 Smart Plating</h2><span class="tag">NEXT</span></div>
+<div class="body"><div>
+<div class="task"><span class="sw"></span>Build the Smart Plating line</div>
+<div class="task"><span class="sw"></span>Deliver 50 Smart Plating to the Space Elevator</div></div>
+<div><p class="k2">Deliver</p><span class="chip"><b>50×</b>Smart Plating</span>
+<p class="k2">Layout</p><span class="chip"><b>2/min</b>Smart Plating (Phase 1)</span>
+<p class="k2">Site</p><span>HUB / Starter · 0 m</span></div></div></li>
+<li class="row later"><span class="n">04</span><span>Modular Frames</span><span class="kind">Build</span><span>HUB / Starter</span><span>0 / 1</span></li>
+<li class="row later"><span class="n">05</span><span>Obstacle Clearing: Chainsaw and Solid Biofuel</span><span class="kind">Milestone</span><span>—</span><span>0 / 2</span></li>
+<li class="row later"><span class="n">06</span><span>Resource Sink Bonus Program</span><span class="kind">Milestone</span><span>—</span><span>0 / 2</span></li>
+<li class="row later"><span class="n">07</span><span>Jump Pads (optional)</span><span class="kind">Milestone</span><span>—</span><span>0 / 1</span></li>
+</ol></div></body></html>
