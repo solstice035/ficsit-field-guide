@@ -25,9 +25,13 @@ In `src/content/tiers/tierN.ts`:
   id: 't3-my-step',                 // unique across all tiers
   title: 'Short imperative title',
   kind: 'build',                    // handcraft | build | power | milestone | research | explore | logistics | space-elevator
+  optional: true,                   // only if the player may skip it; skipped steps leave tier progress
   summary: 'One sentence shown when collapsed.',
   body: ['Optional paragraphs.'],
-  tasks: [{ id: 't3-my-step-a', label: 'Tickable task' }],   // task IDs unique, never reuse (progress is keyed on them)
+  tasks: [
+    { id: 't3-my-step-a', label: 'Tickable task' },   // task IDs unique, never reuse (progress is keyed on them)
+    { id: 't3-my-step-submit', label: 'Submit Coal Power', milestoneId: 'Schematic_3-1_C' },
+  ],
   milestoneIds: ['Schematic_3-1_C'],   // must be a milestone of THIS tier
   researchIds: ['Research_Sulfur_0_C'],
   layoutIds: ['t3-steel'],             // layout tier ≤ step tier
@@ -39,6 +43,7 @@ In `src/content/tiers/tierN.ts`:
 Rules enforced by tests:
 
 - Every milestone of a tier must be referenced by some step in that tier.
+- Every milestone must be linked (`milestoneId`) from exactly one "Submit" task in its tier, and that step must list it in `milestoneIds`. The task and the milestone card then share one tick, stored on the milestone.
 - Step and task IDs must be unique.
 - Never rename a task ID after release, because users' ticks would be lost.
 

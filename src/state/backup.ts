@@ -4,7 +4,8 @@ import { parseProgress, useProgress } from './progress.ts';
 import { StateError, isRecord } from './schema.ts';
 import { parseSettings, useSettings } from './settings.ts';
 
-export const BACKUP_VERSION = 1;
+/** v2: progress gains `skipped`; linked task ticks live on milestones. v1 still restores. */
+export const BACKUP_VERSION = 2;
 
 export interface Backup {
   app: 'ficsit-field-guide';
@@ -12,7 +13,7 @@ export interface Backup {
   exportedAt: string;
   progress: Pick<
     ReturnType<typeof useProgress.getState>,
-    'tasks' | 'milestones' | 'research' | 'phases'
+    'tasks' | 'milestones' | 'research' | 'phases' | 'skipped'
   >;
   settings: Pick<
     ReturnType<typeof useSettings.getState>,
@@ -32,7 +33,13 @@ export function createBackup(now = new Date()): Backup {
     app: 'ficsit-field-guide',
     version: BACKUP_VERSION,
     exportedAt: now.toISOString(),
-    progress: { tasks: p.tasks, milestones: p.milestones, research: p.research, phases: p.phases },
+    progress: {
+      tasks: p.tasks,
+      milestones: p.milestones,
+      research: p.research,
+      phases: p.phases,
+      skipped: p.skipped,
+    },
     settings: { base: s.base, currentTier: s.currentTier, purityOverrides: s.purityOverrides },
     layouts: { configs: l.configs, calculator: l.calculator },
     explore: { collected: e.collected, filters: e.filters },

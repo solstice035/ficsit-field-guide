@@ -45,7 +45,11 @@ export const TIER_0: TierGuide = {
       tasks: [
         { id: 't0-hub1-mine', label: 'Hand-mine ~40 Iron Ore from a pure node' },
         { id: 't0-hub1-craft', label: 'Craft Iron Ingots, then 10 Iron Rods' },
-        { id: 't0-hub1-submit', label: 'Submit HUB Upgrade 1' },
+        {
+          id: 't0-hub1-submit',
+          label: 'Submit HUB Upgrade 1',
+          milestoneId: 'Schematic_Tutorial1_C',
+        },
       ],
       milestoneIds: ['Schematic_Tutorial1_C'],
       tips: ['Hold the craft button: crafting speeds up the longer you hold it.'],
@@ -78,7 +82,11 @@ export const TIER_0: TierGuide = {
         'Place a Smelter beside the iron nodes and connect it to the HUB with a Power Line. Hand-feed it ore for now.',
       ],
       tasks: [
-        { id: 't0-hub2-submit', label: 'Submit HUB Upgrade 2 (20 Iron Rod, 10 Iron Plate)' },
+        {
+          id: 't0-hub2-submit',
+          label: 'Submit HUB Upgrade 2 (20 Iron Rod, 10 Iron Plate)',
+          milestoneId: 'Schematic_Tutorial1_5_C',
+        },
         { id: 't0-hub2-fuel', label: 'Collect 100+ Leaves and some Wood for the burner' },
         { id: 't0-hub2-smelter', label: 'Build and power a Smelter on Iron' },
         { id: 't0-hub2-copper', label: 'Hand-mine copper and craft Wire and Cable' },
@@ -95,7 +103,11 @@ export const TIER_0: TierGuide = {
         'Start one Constructor on Concrete from the normal Limestone east of the HUB.',
       ],
       tasks: [
-        { id: 't0-hub3-submit', label: 'Submit HUB Upgrade 3 (20 Plate, 20 Rod, 20 Wire)' },
+        {
+          id: 't0-hub3-submit',
+          label: 'Submit HUB Upgrade 3 (20 Plate, 20 Rod, 20 Wire)',
+          milestoneId: 'Schematic_Tutorial2_C',
+        },
         { id: 't0-hub3-plates', label: 'Build Constructors for Plates and Rods' },
         { id: 't0-hub3-concrete', label: 'Build a Concrete Constructor' },
       ],
@@ -108,7 +120,11 @@ export const TIER_0: TierGuide = {
       summary:
         'Belts at 60 items/min. Connect smelters to constructors and constructors to storage.',
       tasks: [
-        { id: 't0-hub4-submit', label: 'Submit HUB Upgrade 4 (75 Plate, 20 Cable, 10 Concrete)' },
+        {
+          id: 't0-hub4-submit',
+          label: 'Submit HUB Upgrade 4 (75 Plate, 20 Cable, 10 Concrete)',
+          milestoneId: 'Schematic_Tutorial3_C',
+        },
         { id: 't0-hub4-belts', label: 'Belt Smelters → Constructors → storage' },
       ],
       milestoneIds: ['Schematic_Tutorial3_C'],
@@ -125,7 +141,11 @@ export const TIER_0: TierGuide = {
         'A Miner Mk.1 on a pure node makes 120 ore/min, but a Mk.1 belt only carries 60. Run starter lines at 60/min until Logistics Mk.2.',
       ],
       tasks: [
-        { id: 't0-hub5-submit', label: 'Submit HUB Upgrade 5 (75 Rod, 50 Cable, 20 Concrete)' },
+        {
+          id: 't0-hub5-submit',
+          label: 'Submit HUB Upgrade 5 (75 Rod, 50 Cable, 20 Concrete)',
+          milestoneId: 'Schematic_Tutorial4_C',
+        },
         { id: 't0-hub5-iron', label: 'Miners on two pure Iron nodes' },
         { id: 't0-hub5-copper', label: 'Miner on the pure Copper node' },
         { id: 't0-hub5-lime', label: 'Miner on a Limestone node' },
@@ -144,6 +164,7 @@ export const TIER_0: TierGuide = {
         {
           id: 't0-hub6-submit',
           label: 'Submit HUB Upgrade 6 (100 Rod, 100 Plate, 100 Wire, 50 Concrete)',
+          milestoneId: 'Schematic_Tutorial5_C',
         },
         { id: 't0-hub6-elevator', label: 'Build the Space Elevator beside the HUB' },
         { id: 't0-hub6-burners', label: 'Build 2–3 standalone Biomass Burners' },

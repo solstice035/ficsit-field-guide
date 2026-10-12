@@ -68,6 +68,11 @@ export type StepKind =
 export interface GuideTask {
   id: string;
   label: string;
+  /**
+   * The HUB milestone this task submits. Ticking the task and ticking the
+   * milestone are one event, stored once as the milestone's flag.
+   */
+  milestoneId?: string;
 }
 
 export interface ExploreTarget {
@@ -83,6 +88,8 @@ export interface GuideStep {
   id: string;
   title: string;
   kind: StepKind;
+  /** The player may skip this step; skipped steps drop out of tier progress. */
+  optional?: boolean;
   summary: string;
   body?: string[];
   tasks: GuideTask[];

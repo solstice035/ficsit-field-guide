@@ -234,6 +234,31 @@ describe('facts quoted in guide text', () => {
   });
 });
 
+describe('milestone links', () => {
+  const linked = allSteps.flatMap(({ tier, step }) =>
+    step.tasks.flatMap((task) => (task.milestoneId ? [{ tier, step, task }] : [])),
+  );
+
+  it('links every milestone to exactly one step task in its tier', () => {
+    for (const [tier, milestones] of MILESTONES_BY_TIER) {
+      for (const m of milestones) {
+        const owners = linked.filter((l) => l.task.milestoneId === m.id);
+        expect(
+          owners.map((o) => o.task.id),
+          `${m.name} (${m.id})`,
+        ).toHaveLength(1);
+        expect(owners[0]?.tier, `${m.name} owner tier`).toBe(tier);
+      }
+    }
+  });
+
+  it('only links milestones the step also shows', () => {
+    for (const { step, task } of linked) {
+      expect(step.milestoneIds ?? [], `${task.id}`).toContain(task.milestoneId);
+    }
+  });
+});
+
 describe('game icons', () => {
   // jsdom rewrites import.meta.url, so resolve from the repo root vitest runs in.
   const iconDir = resolve('public/icons');

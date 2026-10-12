@@ -43,7 +43,7 @@ export const TIER_1: TierGuide = {
         'Concrete is the limiter: every foundation costs Concrete, so build the Concrete Plant first.',
       ],
       tasks: [
-        { id: 't1-bb-submit', label: 'Submit Base Building' },
+        { id: 't1-bb-submit', label: 'Submit Base Building', milestoneId: 'Schematic_1-1_C' },
         { id: 't1-bb-pad', label: 'Lay a foundation pad for the Iron Works' },
       ],
       milestoneIds: ['Schematic_1-1_C'],
@@ -58,7 +58,7 @@ export const TIER_1: TierGuide = {
         'Manifold rule of thumb: feed the full rate in and let it back up. The machines fill over a few minutes and then run at 100%.',
       ],
       tasks: [
-        { id: 't1-log-submit', label: 'Submit Logistics' },
+        { id: 't1-log-submit', label: 'Submit Logistics', milestoneId: 'Schematic_1-2_C' },
         { id: 't1-log-manifold', label: 'Convert the smelter row to a splitter manifold' },
       ],
       milestoneIds: ['Schematic_1-2_C'],
@@ -96,7 +96,7 @@ export const TIER_1: TierGuide = {
       summary:
         'Unlocks the MAM, Object Scanner and Personal Storage Box. Research is where exploration pays off.',
       tasks: [
-        { id: 't1-fr-submit', label: 'Submit Field Research' },
+        { id: 't1-fr-submit', label: 'Submit Field Research', milestoneId: 'Schematic_1-3_C' },
         { id: 't1-fr-mam', label: 'Build the MAM next to the HUB' },
         { id: 't1-fr-scanner', label: 'Craft the Object Scanner' },
       ],

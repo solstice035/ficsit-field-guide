@@ -24,7 +24,7 @@ export const TIER_9: TierGuide = {
       summary:
         'Converters (100–400 MW) for Ficsite Ingots, Diamonds, Time Crystals and Reanimated SAM at scale.',
       tasks: [
-        { id: 't9-mc-submit', label: 'Submit Matter Conversion' },
+        { id: 't9-mc-submit', label: 'Submit Matter Conversion', milestoneId: 'Schematic_9-1_C' },
         { id: 't9-mc-sam', label: 'SAM Fluctuator line running' },
         { id: 't9-mc-ficsite', label: 'Ficsite Trigon line running' },
         { id: 't9-mc-time', label: 'Time Crystal line running' },
@@ -44,7 +44,7 @@ export const TIER_9: TierGuide = {
         'Quantum Encoders can spike to 2,000 MW. Keep big Power Storage reserves.',
       ],
       tasks: [
-        { id: 't9-qe-submit', label: 'Submit Quantum Encoding' },
+        { id: 't9-qe-submit', label: 'Submit Quantum Encoding', milestoneId: 'Schematic_9-2_C' },
         { id: 't9-qe-servers', label: 'AI Expansion Server line running' },
       ],
       milestoneIds: ['Schematic_9-2_C'],
@@ -57,7 +57,11 @@ export const TIER_9: TierGuide = {
       summary:
         'Main and Satellite Portals, Singularity Cells and Ballistic Warp Drives. Costs 1,000 SAM Fluctuators.',
       tasks: [
-        { id: 't9-ser-submit', label: 'Submit Spatial Energy Regulation' },
+        {
+          id: 't9-ser-submit',
+          label: 'Submit Spatial Energy Regulation',
+          milestoneId: 'Schematic_9-4_C',
+        },
         { id: 't9-ser-bwd', label: 'Ballistic Warp Drive line running' },
         { id: 't9-ser-portal', label: 'Portal between the HUB and your furthest site' },
       ],
@@ -79,8 +83,12 @@ export const TIER_9: TierGuide = {
       summary:
         'Mk.6 belts (1,200/min) and Ficsonium, which finally lets you dispose of Plutonium Waste.',
       tasks: [
-        { id: 't9-pe-submit', label: 'Submit Peak Efficiency' },
-        { id: 't9-bp3-submit', label: 'Submit FICSIT Blueprints Mk.3' },
+        { id: 't9-pe-submit', label: 'Submit Peak Efficiency', milestoneId: 'Schematic_9-5_C' },
+        {
+          id: 't9-bp3-submit',
+          label: 'Submit FICSIT Blueprints Mk.3',
+          milestoneId: 'Schematic_9-3_C',
+        },
       ],
       milestoneIds: ['Schematic_9-5_C', 'Schematic_9-3_C'],
     },

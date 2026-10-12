@@ -62,7 +62,7 @@ This drives the "available from Tier N" badges and the "crash site openable at T
 
 ## State and persistence
 
-Four persisted stores (`ffg.progress`, `ffg.settings`, `ffg.layouts`, `ffg.explore`) sit on `localStorage`, with an in-memory fallback. Each has a `version`, so add a `migrate` step when you change a shape. Backups are validated before anything is applied. Layout build-list ticks are stored as tasks with the key `layout:<id>:<step>`.
+Four persisted stores (`ffg.progress`, `ffg.settings`, `ffg.layouts`, `ffg.explore`) sit on `localStorage`, with an in-memory fallback. Each has a `version`, so add a `migrate` step when you change a shape. Backups are validated before anything is applied. Layout build-list ticks are stored as tasks with the key `layout:<id>:<step>`. A guide task linked to a milestone has no flag of its own: `toggleTask` flips the milestone, and progress maths (`src/lib/progress/`) reads it from there. Progress v2 (backup v2) folds old linked task ticks into their milestones and adds `skipped` for optional steps; v1 backups still restore.
 
 ## Accessibility
 

@@ -27,7 +27,7 @@ export const TIER_8: TierGuide = {
         'Waste cannot be sunk or destroyed until Ficsonium (Tier 9). Store it in a dedicated, isolated building.',
       ],
       tasks: [
-        { id: 't8-nuc-submit', label: 'Submit Nuclear Power' },
+        { id: 't8-nuc-submit', label: 'Submit Nuclear Power', milestoneId: 'Schematic_8-1_C' },
         { id: 't8-nuc-fuel', label: 'Fuel rod line running' },
         { id: 't8-nuc-reactor', label: 'First reactor online with waste storage' },
       ],
@@ -42,7 +42,11 @@ export const TIER_8: TierGuide = {
       summary:
         'Pressurizer + Extractors on the Southern Nitrogen Well. Heat Sinks, Cooling Systems and Fused Modular Frames.',
       tasks: [
-        { id: 't8-aap-submit', label: 'Submit Advanced Aluminum Production' },
+        {
+          id: 't8-aap-submit',
+          label: 'Submit Advanced Aluminum Production',
+          milestoneId: 'Schematic_8-2_C',
+        },
         { id: 't8-aap-well', label: 'Pressurizer and satellites running' },
         { id: 't8-aap-cooling', label: 'Cooling System line running' },
         { id: 't8-aap-fmf', label: 'Fused Modular Frame line running' },
@@ -58,7 +62,11 @@ export const TIER_8: TierGuide = {
       summary:
         'Turbo Motors, Thermal Propulsion Rockets and Miner Mk.3 (480 ore/min on a pure node).',
       tasks: [
-        { id: 't8-lep-submit', label: 'Submit Leading-Edge Production' },
+        {
+          id: 't8-lep-submit',
+          label: 'Submit Leading-Edge Production',
+          milestoneId: 'Schematic_8-4_C',
+        },
         { id: 't8-lep-turbo', label: 'Turbo Motor line running' },
         { id: 't8-lep-mk3', label: 'Retrofit pure nodes with Miner Mk.3' },
       ],
@@ -72,7 +80,7 @@ export const TIER_8: TierGuide = {
       summary:
         'Particle Accelerators, Copper Powder and Pressure Conversion Cubes. Nuclear Pasta is very copper-hungry.',
       tasks: [
-        { id: 't8-pe-submit', label: 'Submit Particle Enrichment' },
+        { id: 't8-pe-submit', label: 'Submit Particle Enrichment', milestoneId: 'Schematic_8-5_C' },
         { id: 't8-pe-pasta', label: 'Nuclear Pasta line running' },
       ],
       milestoneIds: ['Schematic_8-5_C'],
@@ -85,7 +93,13 @@ export const TIER_8: TierGuide = {
       kind: 'logistics',
       summary:
         'Drones move low-volume, high-value parts (Supercomputers, Turbo Motors) between distant sites.',
-      tasks: [{ id: 't8-ae-submit', label: 'Submit Aeronautical Engineering' }],
+      tasks: [
+        {
+          id: 't8-ae-submit',
+          label: 'Submit Aeronautical Engineering',
+          milestoneId: 'Schematic_7-4_C',
+        },
+      ],
       milestoneIds: ['Schematic_7-4_C'],
     },
     {

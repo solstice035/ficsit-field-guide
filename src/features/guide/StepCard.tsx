@@ -4,10 +4,12 @@ import { cx } from '../../components/cx.ts';
 import { Disclosure } from '../../components/Disclosure.tsx';
 import { LAYOUT_BY_ID } from '../../content/index.ts';
 import type { GuideStep, StepKind } from '../../content/types.ts';
+import { isStepSkipped, isTaskDone, stepProgress } from '../../lib/progress/progress.ts';
 import { useProgress } from '../../state/progress.ts';
 import { LayoutSummaryCard } from '../layouts/LayoutSummaryCard.tsx';
 import { ExploreTargets } from './ExploreTargets.tsx';
 import { MilestoneCard } from './MilestoneCard.tsx';
+import { useProgressFlags } from './progress.ts';
 import { ResearchList } from './ResearchList.tsx';
 import { SiteChips } from './SiteChips.tsx';
 
@@ -38,14 +40,16 @@ export interface StepCardProps {
 
 /** One ordered guide step: summary, details, checklist and linked layouts, research and sites. */
 export function StepCard({ step, index, defaultOpen }: StepCardProps) {
-  const tasks = useProgress((s) => s.tasks);
+  const flags = useProgressFlags();
   const toggleTask = useProgress((s) => s.toggleTask);
-  const done = step.tasks.filter((t) => tasks[t.id]).length;
-  const complete = done === step.tasks.length && step.tasks.length > 0;
+  const toggleSkipped = useProgress((s) => s.toggleSkipped);
+  const { done, total } = stepProgress(step, flags);
+  const skipped = isStepSkipped(step, flags);
+  const complete = done === total && total > 0;
   const kind = KIND[step.kind];
 
   return (
-    <li className={cx('panel overflow-hidden', complete && 'opacity-80')}>
+    <li className={cx('panel overflow-hidden', (complete || skipped) && 'opacity-80')}>
       <Disclosure
         defaultOpen={defaultOpen}
         buttonClassName="hover:bg-panel-2 p-4"
@@ -55,13 +59,17 @@ export function StepCard({ step, index, defaultOpen }: StepCardProps) {
               <span className="text-ink-faint num text-sm font-semibold">
                 {String(index + 1).padStart(2, '0')}
               </span>
-              <span className={cx('font-semibold', complete && 'text-ink-muted')}>
+              <span className={cx('font-semibold', (complete || skipped) && 'text-ink-muted')}>
                 {step.title}
               </span>
               <Badge tone={kind.tone}>{kind.label}</Badge>
-              <Badge tone={complete ? 'ok' : 'neutral'}>
-                {done}/{step.tasks.length} tasks
-              </Badge>
+              {skipped ? (
+                <Badge>Skipped</Badge>
+              ) : (
+                <Badge tone={complete ? 'ok' : 'neutral'}>
+                  {done}/{total} tasks
+                </Badge>
+              )}
             </span>
             <span className="text-ink-muted text-sm">{step.summary}</span>
           </span>
@@ -79,7 +87,7 @@ export function StepCard({ step, index, defaultOpen }: StepCardProps) {
             {step.tasks.map((task) => (
               <li key={task.id}>
                 <Checkbox
-                  checked={!!tasks[task.id]}
+                  checked={isTaskDone(task, flags)}
                   onChange={() => toggleTask(task.id)}
                   strikeWhenChecked
                   label={task.label}
@@ -87,6 +95,17 @@ export function StepCard({ step, index, defaultOpen }: StepCardProps) {
               </li>
             ))}
           </ul>
+
+          {step.optional && (
+            <button
+              type="button"
+              aria-pressed={skipped}
+              onClick={() => toggleSkipped(step.id)}
+              className="border-line-strong text-ink-muted hover:text-ink mt-3 rounded border px-2 py-1 text-sm"
+            >
+              {skipped ? 'Unskip this step' : 'Skip this optional step'}
+            </button>
+          )}
 
           {step.milestoneIds?.length ? (
             <>
