@@ -1,39 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router';
 import { Switch } from '../../components/Switch.tsx';
 import { cx } from '../../components/cx.ts';
 import { TIERS } from '../../content/index.ts';
-import { nextInTier } from '../../lib/progress/progress.ts';
-import { useProgress } from '../../state/progress.ts';
-import { useSettings } from '../../state/settings.ts';
 import { StepFigures } from './StepFigures.tsx';
-import { useProgressFlags } from './progress.ts';
 import { stepAnchor, stepLayout } from './stepMeta.ts';
-
-/** Wait before a fresh line can be marked seen, so the tick itself doesn't clear it. */
-const SEEN_DELAY_MS = 1200;
-
-/**
- * Holds `true` from when `key` changes until the player next moves, types or
- * touches, so a line that just changed stays lit until it has been seen.
- */
-function useFreshUntilSeen(key: string): boolean {
-  const [seenKey, setSeenKey] = useState(key);
-  const fresh = seenKey !== key;
-  useEffect(() => {
-    if (!fresh) return;
-    const markSeen = () => setSeenKey(key);
-    const events = ['pointermove', 'keydown', 'touchstart'] as const;
-    const timer = window.setTimeout(() => {
-      for (const e of events) window.addEventListener(e, markSeen, { once: true, passive: true });
-    }, SEEN_DELAY_MS);
-    return () => {
-      window.clearTimeout(timer);
-      for (const e of events) window.removeEventListener(e, markSeen);
-    };
-  }, [fresh, key]);
-  return fresh;
-}
+import { useNextTask } from './useNextTask.ts';
 
 export interface NextStripProps {
   /** The tier on screen, when it isn't necessarily the player's current tier. */
@@ -46,15 +18,8 @@ export interface NextStripProps {
  * holds amber until seen.
  */
 export function NextStrip({ viewingTier }: NextStripProps) {
-  const currentTier = useSettings((s) => s.currentTier);
-  const setCurrentTier = useSettings((s) => s.setCurrentTier);
-  const flags = useProgressFlags();
-  const toggleTask = useProgress((s) => s.toggleTask);
-  const toggleSkipped = useProgress((s) => s.toggleSkipped);
+  const { tier, next, fresh, tick, skip, advanceTier } = useNextTask();
   const [figuresOpen, setFiguresOpen] = useState(false);
-  const tier = TIERS[currentTier] ?? TIERS[0]!;
-  const next = nextInTier(tier, flags);
-  const fresh = useFreshUntilSeen(next?.task.id ?? `complete-${tier.tier}`);
   const elsewhere = viewingTier !== undefined && viewingTier !== tier.tier;
   const layout = next ? stepLayout(next.step) : undefined;
 
@@ -79,7 +44,7 @@ export function NextStrip({ viewingTier }: NextStripProps) {
           <>
             <Switch
               checked={false}
-              onChange={() => toggleTask(next.task.id)}
+              onChange={tick}
               label={<span className="font-semibold sm:text-lg">{next.task.label}</span>}
               className="min-w-0 flex-1 sm:flex-none"
             />
@@ -92,7 +57,7 @@ export function NextStrip({ viewingTier }: NextStripProps) {
             {next.step.optional && (
               <button
                 type="button"
-                onClick={() => toggleSkipped(next.step.id)}
+                onClick={skip}
                 className="border-line-strong text-ink-muted hover:text-ink min-h-11 rounded border px-3 text-sm"
               >
                 Skip step
@@ -121,14 +86,15 @@ export function NextStrip({ viewingTier }: NextStripProps) {
             )}
           </>
         ) : (
-          <TierComplete tier={tier.tier} onAdvance={() => setCurrentTier(tier.tier + 1)} />
+          <TierComplete tier={tier.tier} onAdvance={advanceTier} />
         )}
       </div>
     </section>
   );
 }
 
-function TierComplete({ tier, onAdvance }: { tier: number; onAdvance: () => void }) {
+/** The end-of-tier offer: never advances by itself. */
+export function TierComplete({ tier, onAdvance }: { tier: number; onAdvance: () => void }) {
   if (tier >= TIERS.length - 1)
     return (
       <p className="min-h-11 py-2 font-semibold">Run complete. Project Assembly is launched.</p>
