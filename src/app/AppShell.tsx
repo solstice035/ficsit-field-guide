@@ -57,7 +57,8 @@ export function AppShell() {
       </a>
       <header
         ref={header}
-        className="border-line bg-panel/95 sticky top-0 z-40 border-b backdrop-blur"
+        // Blur only from sm: a backdrop filter would trap the phone NEXT bar (fixed) inside the header.
+        className="border-line bg-panel/95 sticky top-0 z-40 border-b sm:backdrop-blur"
       >
         <div className="mx-auto flex max-w-7xl flex-col gap-y-0.5 px-4 pt-2 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-6 sm:py-1.5">
           <NavLink

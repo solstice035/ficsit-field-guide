@@ -3,8 +3,8 @@ import { KindGlyph } from '../../components/KindGlyph.tsx';
 import { Switch } from '../../components/Switch.tsx';
 import { cx } from '../../components/cx.ts';
 import { GlanceLink } from '../guide/GlanceLink.tsx';
-import { TierComplete } from '../guide/NextStrip.tsx';
 import { TickReceipt } from '../guide/TickReceipt.tsx';
+import { TierCompleteMoment } from '../guide/TierCompleteMoment.tsx';
 import { StepFigures } from '../guide/StepFigures.tsx';
 import { KIND_LABEL, stepAnchor, stepLayout } from '../guide/stepMeta.ts';
 import { useNextTask } from '../guide/useNextTask.ts';
@@ -101,9 +101,7 @@ export function NextHero() {
           )}
         </>
       ) : (
-        <div className="mt-3">
-          <TierComplete tier={tier.tier} onAdvance={advanceTier} />
-        </div>
+        <TierCompleteMoment tier={tier} onAdvance={advanceTier} fresh={fresh} className="mt-4" />
       )}
     </section>
   );
