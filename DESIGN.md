@@ -169,7 +169,7 @@ Cool, blue-tinted graphite neutrals with a single warm amber signal, plus a smal
 ### Primary
 
 - **FICSIT Amber** (accent): the signal colour, for what to act on now: the NEXT tag and strip, the current step's border, the selected tier-tab border, the focus ring and the hero panel's tint. Progress fills are not amber (they use Dimmed Readout, turning Go Green at 100%). On the flow diagram it also strokes conveyor belts.
-- **Lit Amber** (accent-strong): amber at text-safe lightness. Use it for links, the selected tier label, accent badges and the amount in item chips (`120/min`, `4×`).
+- **Lit Amber** (accent-strong): amber at text-safe lightness. Use it for the selected tier label, accent badges and the amount in item chips (`120/min`, `4×`).
 - **Amber Ink** (accent-ink): near-black warm brown for text that sits on FICSIT Amber.
 
 ### Secondary
@@ -217,7 +217,9 @@ Collectible layers on the Explore map use fixed series colours from `src/feature
 **Body Font:** the same stack
 **Label/Mono Font:** ui-monospace, SF Mono or Menlo, used rarely
 
-Inter is declared first but not bundled or loaded, so most players see their system UI font. Treat the stack as "a neutral grotesque" and never rely on Inter-specific metrics.
+Inter Variable is self-hosted from `@fontsource-variable/inter` (OFL-1.1; no font CDN) and loads with `font-display: swap`, so the system sans shows briefly on a cold load. Keep the stack as the fallback and never depend on Inter-only features.
+
+**Links:** in-text links are Readout White with a 1px underline in Stencil Grey that turns Readout White on hover. The underline, not colour, marks a link; amber stays reserved for "act here". Links styled as buttons or nav items drop the underline.
 
 **Character:** a single utilitarian sans in a tight range of weights (400 to 700, one 900 for the logo mark). Hierarchy comes from size, weight and the ink ramp, not from contrasting families.
 
@@ -323,7 +325,7 @@ Ten tabs, each a small instrument card: "Tier n" in bold (Lit Amber when selecte
 
 ### NEXT strip (signature)
 
-The answer to "what do I do now?", pinned inside the sticky header on tier pages. A FICSIT Amber "NEXT" tag, a switch that ticks the next task, the task in semibold (18px from 640px), "Step nn · title" as a link to the step, and the step's lead layout figures (the lead figure in Lit Amber). It always follows the player's current tier; on another tier's page it starts "You're on Tier n ·". When a tick advances it, the new line holds an amber-tinted Raised Console fill until the player next moves, types or touches. A tick shows "Ticked: task · Undo" under the strip while the new line is fresh (a polite live region announces it and the new NEXT; the hero and glance show the same receipt). An optional step offers "Skip step". A finished tier offers "Move to Tier n+1" and never advances by itself. On phones the figures hide behind a "Figures" button.
+The answer to "what do I do now?", pinned inside the sticky header on tier pages from 640px. Below 640px it is a bottom thumb bar (fixed, safe-area padded); the page pads its foot and scroll padding by the bar's height so nothing focused sits under it (WCAG 2.4.11). A FICSIT Amber "NEXT" tag, a switch that ticks the next task, the task in semibold (18px from 640px), "Step nn · title" as a link to the step, and the step's lead layout figures (the lead figure in Lit Amber). It always follows the player's current tier; on another tier's page it starts "You're on Tier n ·". When a tick advances it, the new line holds an amber-tinted Raised Console fill until the player next moves, types or touches. A tick shows "Ticked: task · Undo" under the strip while the new line is fresh (a polite live region announces it and the new NEXT; the hero and glance show the same receipt). An optional step offers "Skip step". A finished tier offers "Move to Tier n+1" and never advances by itself (on that tier's own page the strip just says "Tier n complete." and leaves the offer to the moment). On phones the figures hide behind a "Figures" button.
 
 ### Work order queue (signature)
 
@@ -336,9 +338,13 @@ The tier's steps as one numbered list of APG accordion rows (an `h3` holding the
 
 Milestone cards inside a step are display only: their tick is the step's linked "Submit" task. Unlocks list five names then "+n more". "Hide completed" (persisted) removes done and skipped rows and says how many are hidden.
 
+### Tier-complete moment
+
+Finishing the current tier is marked on the NEXT hero and above the queue on that tier's page (a hero panel there): a 32px Go Green ring with a check, "Tier n complete" in Go Green, the tier title, a tabular line of what was done ("n steps done · n skipped · n milestones · Phase n delivered"), a 2px Go Green rule, then "Up next: Tier n+1 · title" with its tagline and a filled FICSIT Amber "Move to Tier n+1" button beside "Nothing moves until you choose." Right after the last tick the ring stamps in (420ms overshoot) and the rule draws left to right (700ms); both play once and collapse under reduced motion. The last tier reads "Run complete · Project Assembly is launched."
+
 ### Dashboard (signature)
 
-- **NEXT hero:** the enlarged NEXT on a hero panel. It shows the tier, then the zero-padded step number in Lit Amber and the step title (linked). The next task is a large switch (56px) in 18–20px semibold, with "After that:" showing the following task. The lead figures, "Skip step" on optional steps and "Open Tier n" come next, and "Then" lists the next three open steps with their kind glyphs. A finished tier shows the "Move to Tier n+1" offer; the last tier shows "Run complete".
+- **NEXT hero:** the enlarged NEXT on a hero panel. It shows the tier, then the zero-padded step number in Lit Amber and the step title (linked). The next task is a large switch (56px) in 18–20px semibold, with "After that:" showing the following task. The lead figures, "Skip step" on optional steps and "Open Tier n" come next, and "Then" lists the next three open steps with their kind glyphs. A finished tier shows the tier-complete moment; the last tier shows "Run complete".
 - **The run:** ten tier rows in the queue's rhythm: "Tn", title, progress bar, then status ("Current" in Lit Amber, "Done" with a check in Go Green, or "done / total"). The current tier's row carries the same amber border as the current step. Below 768px the bar drops to a second line.
 - **Space Elevator:** phases listed with "Phase n" in Elevator Violet, then "Delivered" with a check, or the tier it belongs to.
 

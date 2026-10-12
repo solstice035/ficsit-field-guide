@@ -59,4 +59,4 @@ Generic calculators (Satisfactory Tools, Satisfactory Calculator) answer "how ma
 
 ## Accessibility & Inclusion
 
-WCAG 2.1 AA: contrast ≥ 4.5:1, visible focus, labelled controls, WAI-ARIA tabs and disclosures, and no colour-only status (purity always pairs colour with text). The axe-core check is zero violations on every top-level page.
+WCAG 2.2 AA (adopted 2026-10-12, I-88): 24 px minimum targets, focus never hidden by sticky bars, a non-drag alternative for every drag, contrast ≥ 4.5:1, visible focus, labelled controls, WAI-ARIA tabs and disclosures, and no colour-only status (purity always pairs colour with text). The axe-core check is zero violations on every top-level page.
