@@ -224,7 +224,7 @@ Commits follow `{gitmoji} {scope}: {description}` at each phase boundary. Mergin
 
 Linear (project _FICSIT Field Guide_) is the source of truth for the backlog. See [BACKLOG_REVIEW.md](BACKLOG_REVIEW.md) for the coverage and MoSCoW review against the wider tools ecosystem (2026-10-11).
 
-- **Blueprint Schematics (proposed 2026-11-10):** import a local `.sbp` blueprint and view it as floor-by-floor plans, elevations, sections, a callout key and its cost against your tier, offline. This reverses BACKLOG_REVIEW #13 (_Won't_) for local files only, pending decision D1. Plan: [BLUEPRINTS_PLAN.md](BLUEPRINTS_PLAN.md).
+- **Blueprint Schematics (proposed 2026-11-10):** import a local `.sbp` blueprint and view it as floor-by-floor plans, elevations, sections, a callout key and its cost against your tier, offline. Approved 2026-11-10: BACKLOG_REVIEW #13 reversed for local files only (D1); files are not stored, only annotations (D2). Plan: [BLUEPRINTS_PLAN.md](BLUEPRINTS_PLAN.md).
 - Save-file import, to auto-tick collected items and detect unlocked alternates.
 - LP-optimal planner (minimise raw inputs or power), with an alternate-recipe recommender.
 - Train and drone logistics planner between sites.
